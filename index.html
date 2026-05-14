@@ -168,6 +168,9 @@
     .sides-card{display:grid;align-items:center;min-height:250px;background:linear-gradient(135deg,#fff8ec,#ffe3a3)}.sides-card .card-body{padding:28px}
     @media(max-width:900px){.menu-combo-cards{grid-template-columns:1fr}.proof-grid{grid-template-columns:1fr 1fr}.contact-cta .actions{justify-content:flex-start}.mobile-call{display:block!important}.map-frame{height:230px}}
     @media(max-width:560px){.story-panel p{font-size:15.5px}.proof-grid{grid-template-columns:1fr}.combo-card .photo{height:230px}.love-tags span,.combo-label{font-size:10.5px}.map-frame{height:210px}.contact-cta .actions .btn{width:100%}.footer{padding-bottom:86px!important}}
+
+    .about-owner-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:stretch}.about-owner-copy{display:flex;flex-direction:column;justify-content:center}.about-proof-grid{margin-top:24px}.about-proof-grid div{background:#fff7e8;border-color:rgba(24,9,0,.08)}.about-proof-grid b{color:#c82618}.about-proof-grid span{color:#6d4c36}.owner-headshot-placeholder{min-height:560px;border-radius:42px;padding:18px;background:linear-gradient(135deg,#1b0900,#5a170a 58%,#c82618);box-shadow:var(--shadow);position:relative;overflow:hidden}.owner-headshot-placeholder:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 26% 18%,rgba(255,189,53,.28),transparent 30%),radial-gradient(circle at 80% 85%,rgba(255,255,255,.15),transparent 34%);pointer-events:none}.headshot-frame{position:relative;z-index:1;height:100%;min-height:524px;border:1px dashed rgba(255,248,236,.45);border-radius:32px;display:grid;place-items:center;align-content:center;gap:12px;text-align:center;color:#fff8ec;background:rgba(17,7,0,.24);backdrop-filter:blur(8px)}.headshot-frame img{width:min(250px,72%);filter:drop-shadow(0 20px 38px rgba(0,0,0,.35))}.headshot-frame span{font-size:12px;font-weight:1000;letter-spacing:.14em;text-transform:uppercase;color:#ffbd35}.headshot-frame strong{font-size:clamp(24px,3vw,40px);line-height:.95;letter-spacing:-.04em;max-width:320px}
+    @media(max-width:900px){.about-owner-grid{grid-template-columns:1fr}.owner-headshot-placeholder{min-height:420px}.headshot-frame{min-height:382px}.headshot-frame img{width:min(220px,68%)}}
   </style>
 </head>
 <body>
@@ -213,23 +216,26 @@
 
     <div class="ticker"><div>MADE WITH LOVE • 100,000+ PLATES SERVED • OXTAIL MEALS • OXTAIL BOWLS • WING MEALS • WING BOWLS • CHOPPED CHICKEN • SHRIMP BOWLS • SALMON BOWLS • RICE & PEAS • MAC & CHEESE • CABBAGE • YAMS • CAKES • DRINKS • NO PORK COOKED • MADE WITH LOVE • 100,000+ PLATES SERVED • OXTAIL MEALS • OXTAIL BOWLS • WING MEALS • WING BOWLS • CHOPPED CHICKEN • SHRIMP BOWLS • SALMON BOWLS • RICE & PEAS • MAC & CHEESE • CABBAGE • YAMS • CAKES • DRINKS • NO PORK COOKED • </div></div>
 
-    <section class="story-section" id="about">
-      <div class="wrap split story-split">
-        <div class="panel story-panel">
-          <span class="kicker">Made with love</span>
-          <h3>Not just plates. A Charlotte comfort-food ritual.</h3>
+    <section class="story-section about-owner-section" id="about">
+      <div class="wrap about-owner-grid">
+        <div class="panel story-panel about-owner-copy">
+          <span class="kicker">About Island Boy Kreationz</span>
+          <h3>Made with love, not just for money.</h3>
           <p>Island Boy Kreationz is built on the kind of cooking that makes people feel remembered: Caribbean flavor, soul-food warmth, family-style portions, and a real care for the people pulling up.</p>
-          <p>The heart of the brand is simple: <strong>made with love, not just for money.</strong> That means consistency, quality, no shortcuts, and food that feels homemade even when it comes out of a truck window.</p>
+          <p>This is food with a person behind it — quality, consistency, community, and plates that feel homemade even when they come out of a truck window.</p>
           <div class="love-tags"><span>Black-owned</span><span>Family warmth</span><span>Community built</span><span>No pork cooked</span></div>
-        </div>
-        <div class="panel hot proof-panel">
-          <span class="kicker">Social proof</span>
-          <h3>100,000+ plates served.</h3>
-          <div class="proof-grid">
+          <div class="proof-grid about-proof-grid">
             <div><b>100K+</b><span>plates served</span></div>
             <div><b>Word of mouth</b><span>built the business</span></div>
             <div><b>Charlotte favorite</b><span>people come back</span></div>
             <div><b>Consistency</b><span>flavor that holds up</span></div>
+          </div>
+        </div>
+        <div class="owner-headshot-placeholder" aria-label="Owner headshot placeholder">
+          <div class="headshot-frame">
+            <img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo placeholder">
+            <span>Owner Headshot Placeholder</span>
+            <strong>Drop Deon’s photo here</strong>
           </div>
         </div>
       </div>
