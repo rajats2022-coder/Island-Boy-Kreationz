@@ -202,6 +202,9 @@
     .blog-list{display:grid;gap:18px}.blog-card{display:grid;grid-template-columns:260px 1fr;gap:22px;align-items:center;border-radius:32px;background:#fff;border:1px solid rgba(24,9,0,.08);box-shadow:0 16px 44px rgba(56,20,0,.08);overflow:hidden}.blog-card img{height:100%;min-height:210px;width:100%;object-fit:cover}.blog-card div{padding:24px}.blog-card h2{font-size:clamp(28px,3vw,46px);line-height:.95;letter-spacing:-.05em;margin:8px 0 12px}.article-body{max-width:860px}.article-body h2{font-size:clamp(32px,4vw,56px);line-height:.96;letter-spacing:-.055em}.article-body h3{font-size:30px;margin-top:34px}.article-body p,.article-body li{font-size:18px;line-height:1.65;color:#4a2d1a}.faq-grid{display:grid;gap:16px}.faq-item{border-radius:26px;background:#fff;border:1px solid rgba(24,9,0,.08);box-shadow:0 12px 35px rgba(56,20,0,.07);padding:24px}.faq-item h2{font-size:26px;letter-spacing:-.03em;margin:0 0 10px}.faq-item p{margin:0;color:#4a2d1a;line-height:1.55}
     @media(max-width:760px){.blog-card{grid-template-columns:1fr}.blog-card img{min-height:190px}.seo-heading-ladder h3{font-size:28px}}
 
+
+    .menu-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 0 24px}.menu-tab{border:1px solid rgba(24,9,0,.12);border-radius:999px;background:#fff;color:#180900;font-weight:1000;padding:13px 22px;cursor:pointer;box-shadow:0 10px 28px rgba(56,20,0,.06)}.menu-tab.active{background:#180900;color:#ffbd35}.menu-panel{display:none}.menu-panel.active{display:block}.catering-menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.catering-menu-card{border-radius:28px;background:#fff;border:1px solid rgba(24,9,0,.08);box-shadow:0 12px 35px rgba(56,20,0,.07);padding:22px}.catering-menu-card h3{font-size:26px;line-height:1;margin:8px 0}.catering-menu-card p{color:#5d3a24;line-height:1.45}.catering-menu-card ul{margin:12px 0 0;padding-left:18px;color:#3f2819;line-height:1.55}.catering-note{margin-top:16px;border-radius:24px;background:#180900;color:#fff8ec;padding:20px;display:flex;gap:16px;justify-content:space-between;align-items:center;flex-wrap:wrap}.catering-note p{margin:0;color:rgba(255,248,236,.84);max-width:760px}.catering-note .btn{background:#ffbd35;color:#180900;border-color:#ffbd35}
+    @media(max-width:900px){.catering-menu-grid{grid-template-columns:1fr}}
     .order-now-panel{margin-top:24px;border-radius:34px;background:linear-gradient(135deg,#180900,#5a170a 58%,#c82618);color:#fff8ec;padding:28px;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;box-shadow:var(--shadow)}.order-now-panel h3{font-size:clamp(30px,4vw,52px);line-height:.94;letter-spacing:-.055em;margin:8px 0 10px}.order-now-panel p{margin:0;color:rgba(255,248,236,.82);line-height:1.5;max-width:680px}.order-now-panel .kicker{color:#ffbd35}.order-now-panel .btn.primary{background:#ffbd35;color:#180900;border-color:#ffbd35}
     @media(max-width:760px){.order-now-panel{grid-template-columns:1fr}.order-now-panel .btn{width:100%}}
   </style>
@@ -277,21 +280,32 @@
     <section id="menu">
       <div class="wrap">
         <div class="section-head">
-          <div><span class="kicker">Signature menu</span><h2>Caribbean soul food combos.</h2></div>
-          <p>Oxtails are one of the biggest sellers, with oxtail bowls over rice and comfort sides made for real appetite. Menu can rotate by day — call/text or check the schedule before pulling up.</p>
+          <div><span class="kicker">Signature menu</span><h2>Truck menu and catering menu.</h2></div>
+          <p>Toggle between the walk-up truck menu for individual orders and the catering menu for events, trays, and food truck bookings around Charlotte and North Carolina.</p>
         </div>
-        <div class="cards menu-combo-cards">
-          <article class="card combo-card"><img class="photo" src="assets/yelp-oxtails.jpg" alt="Oxtail meal with Caribbean sides"><div class="card-body"><span class="combo-label">Big seller</span><h3>Oxtail Meal</h3><p>Tender oxtails plated with the soul-food sides people expect when they pull up hungry.</p><span class="menu-badge">Signature plate</span></div></article>
-          <article class="card combo-card"><img class="photo" src="assets/yelp-oxtail-sides.jpg" alt="Oxtail bowl with rice"><div class="card-body"><span class="combo-label">Popular combo</span><h3>Oxtail Bowl</h3><p>Rich oxtail flavor over rice for customers who want the comfort packed into one bowl.</p><span class="menu-badge">Rice combo</span></div></article>
-          <article class="card combo-card"><img class="photo" src="assets/yelp-meal.jpg" alt="Wing meal with sides"><div class="card-body"><span class="combo-label">Street food energy</span><h3>Wing Meal</h3><p>Wings served as a full plate with Caribbean-soul sides and the homemade feel.</p><span class="menu-badge">Full plate</span></div></article>
-          <article class="card combo-card"><img class="photo" src="assets/yelp-truck-vibes.jpg" alt="Wing bowl food truck special"><div class="card-body"><span class="combo-label">Quick pull-up</span><h3>Wing Bowl</h3><p>A bowl-style wing combo built for fast lunch stops, late cravings, and easy carryout.</p><span class="menu-badge">Bowl combo</span></div></article>
-          <article class="card combo-card"><img class="photo" src="assets/yelp-jerk-chicken.jpg" alt="Chopped chicken meal"><div class="card-body"><span class="combo-label">Chicken comfort</span><h3>Chopped Chicken Meal</h3><p>Chopped chicken served as a satisfying plate with rice and rotating comfort sides.</p><span class="menu-badge">Plate option</span></div></article>
-          <article class="card combo-card"><img class="photo" src="assets/yelp-pasta-cabbage.jpg" alt="Chopped chicken bowl"><div class="card-body"><span class="combo-label">Bowl favorite</span><h3>Chopped Chicken Bowl</h3><p>Chicken over rice with the same Island Boy seasoning and family-style comfort.</p><span class="menu-badge">Rice bowl</span></div></article>
-          <article class="card combo-card"><img class="photo" src="assets/doordash-jerk-shrimp.jpg" alt="Shrimp bowl"><div class="card-body"><span class="combo-label">Seafood favorite</span><h3>Shrimp Bowl</h3><p>Shrimp with Caribbean heat, rice, and a build that keeps it bold but easy to eat.</p><span class="menu-badge">Seafood bowl</span></div></article>
-          <article class="card combo-card"><img class="photo" src="assets/doordash-header.jpg" alt="Salmon bowl and Caribbean food spread"><div class="card-body"><span class="combo-label">Seafood comfort</span><h3>Salmon Bowl</h3><p>Salmon served bowl-style with rice and the warm, filling sides Island Boy is known for.</p><span class="menu-badge">Seafood bowl</span></div></article>
-          <article class="card combo-card sides-card"><div class="card-body"><span class="combo-label">Sides + sweets</span><h3>Sides, Cakes & Drinks</h3><p>Rice & peas, yellow rice, cabbage, candied yams, baked beans, cornbread, mac & cheese, cakes, and drinks.</p><span class="menu-badge">Complete the plate</span></div></article>
+        <div class="menu-tabs" role="tablist" aria-label="Island Boy menu types"><button class="menu-tab active" type="button" data-home-menu="truck">Truck Menu</button><button class="menu-tab" type="button" data-home-menu="catering">Catering Menu</button></div>
+        <div class="menu-panel active" id="home-menu-truck">
+          <div class="cards menu-combo-cards">
+            <article class="card combo-card"><img class="photo" src="assets/yelp-oxtails.jpg" alt="Oxtail meal with Caribbean sides"><div class="card-body"><span class="combo-label">Big seller</span><h3>Oxtail Meal</h3><p>Tender oxtails plated with rice and soul-food sides.</p><span class="menu-badge">$30</span></div></article>
+            <article class="card combo-card"><img class="photo" src="assets/yelp-oxtail-sides.jpg" alt="Oxtail bowl with rice"><div class="card-body"><span class="combo-label">Popular combo</span><h3>Oxtail Bowl</h3><p>Rich oxtail flavor over rice for a filling bowl.</p><span class="menu-badge">$20</span></div></article>
+            <article class="card combo-card"><img class="photo" src="assets/yelp-meal.jpg" alt="Wing meal with sides"><div class="card-body"><span class="combo-label">Street food energy</span><h3>Wing Meal</h3><p>Wings served as a full plate with Caribbean-soul sides.</p><span class="menu-badge">$24</span></div></article>
+            <article class="card combo-card"><img class="photo" src="assets/yelp-truck-vibes.jpg" alt="Wing bowl food truck special"><div class="card-body"><span class="combo-label">Quick pull-up</span><h3>Wing Bowl</h3><p>A bowl-style wing combo built for fast lunch stops.</p><span class="menu-badge">$15</span></div></article>
+            <article class="card combo-card"><img class="photo" src="assets/yelp-jerk-chicken.jpg" alt="Chopped chicken meal"><div class="card-body"><span class="combo-label">Chicken comfort</span><h3>Chopped Chicken Meal</h3><p>Chopped chicken served as a satisfying plate.</p><span class="menu-badge">$22</span></div></article>
+            <article class="card combo-card"><img class="photo" src="assets/yelp-pasta-cabbage.jpg" alt="Chopped chicken bowl"><div class="card-body"><span class="combo-label">Bowl favorite</span><h3>Chopped Chicken Bowl</h3><p>Chicken over rice with Island Boy seasoning.</p><span class="menu-badge">$15</span></div></article>
+            <article class="card combo-card"><img class="photo" src="assets/doordash-jerk-shrimp.jpg" alt="Shrimp bowl"><div class="card-body"><span class="combo-label">Seafood favorite</span><h3>Shrimp Bowl</h3><p>Shrimp with Caribbean heat, rice, and bold flavor.</p><span class="menu-badge">$16</span></div></article>
+            <article class="card combo-card"><img class="photo" src="assets/doordash-header.jpg" alt="Salmon bowl and Caribbean food spread"><div class="card-body"><span class="combo-label">Seafood comfort</span><h3>Salmon Bowl</h3><p>Salmon served bowl-style with rice.</p><span class="menu-badge">$18</span></div></article>
+            <article class="card combo-card sides-card"><div class="card-body"><span class="combo-label">Sides + sweets</span><h3>Sides, Cakes & Drinks</h3><p>Rice & peas, yellow rice, cabbage, candied yams, baked beans, cornbread, mac & cheese, cakes, and drinks.</p><span class="menu-badge">$5 each</span></div></article>
+          </div>
+          <div class="order-now-panel"><div><span class="kicker">Ready to eat?</span><h3>Build an order.</h3><p>Use the order page to build a bowl, add sides/extras, and review the cart total.</p></div><a class="btn primary" href="order.html">Order Now</a></div>
         </div>
-        <div class="order-now-panel"><div><span class="kicker">Ready to eat?</span><h3>Build an order or browse extras.</h3><p>Use the order page to see meals, bowls, sides, cakes, and drinks in one place. Stripe checkout will connect here later.</p></div><a class="btn primary" href="order.html">Order Now</a></div>
+        <div class="menu-panel" id="home-menu-catering">
+          <div class="catering-menu-grid">
+            <article class="catering-menu-card"><span class="kicker">Food truck pull-up</span><h3>Truck Event Service</h3><p>Bring Island Boy to your event, workplace, church function, school, or community day.</p><ul><li>Guest count planning</li><li>Service window coordination</li><li>Charlotte and nearby NC events</li></ul></article>
+            <article class="catering-menu-card"><span class="kicker">Catering trays</span><h3>Party Tray Setup</h3><p>Build an event menu around oxtails, chicken, bowls, sides, cakes, and drinks.</p><ul><li>Rice and side trays</li><li>Comfort-food spread</li><li>Quote based on headcount</li></ul></article>
+            <article class="catering-menu-card"><span class="kicker">Custom quote</span><h3>Large Orders</h3><p>For offices, birthdays, festivals, pop-ups, and private celebrations.</p><ul><li>Tell us date/time</li><li>Tell us location</li><li>Tell us number of guests</li></ul></article>
+          </div>
+          <div class="catering-note"><p><strong>Catering pricing depends on headcount, location, and service style.</strong><br>Use the inquiry form so Island Boy can quote the right setup instead of forcing one-size-fits-all pricing.</p><a class="btn" href="contact.html">Start Catering Inquiry</a></div>
+        </div>
       </div>
     </section>
 
@@ -397,5 +411,14 @@
   <footer class="footer">
     <div class="wrap foot"><div><strong>Island Boy Kreationz Food Truck & Catering</strong><br>6100 Hunter Ave, Charlotte, NC 28262 • Tue–Fri 2:30–8:30 PM • Black-owned food truck business</div><div><a href="tel:+19807858372">980-785-8372</a> · <a href="mailto:deonhenry756@gmail.com">deonhenry756@gmail.com</a> · <a href="blog.html">Blog</a> · <a href="faq.html">FAQ</a> · <a href="https://www.instagram.com/islandboy_kreationz/" target="_blank" rel="noopener">@islandboy_kreationz</a></div></div>
   </footer>
+
+<script>
+  document.querySelectorAll('[data-home-menu]').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelectorAll('[data-home-menu]').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.menu-panel').forEach(panel=>panel.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('home-menu-'+btn.dataset.homeMenu).classList.add('active');
+  }));
+</script>
 </body>
 </html>
