@@ -1,14 +1,18 @@
 (function () {
   const nav = document.querySelector(".nav");
   const desktopLinks = document.querySelector(".links");
-  if (!nav || !desktopLinks || document.querySelector(".mobile-nav-toggle")) return;
+  if (!nav || !desktopLinks || document.querySelector(".mobile-nav-panel")) return;
 
-  const button = document.createElement("button");
-  button.className = "mobile-nav-toggle";
-  button.type = "button";
-  button.setAttribute("aria-label", "Open navigation");
+  let button = document.querySelector(".mobile-nav-toggle");
+  const createdButton = !button;
+  if (!button) {
+    button = document.createElement("button");
+    button.className = "mobile-nav-toggle";
+    button.type = "button";
+    button.setAttribute("aria-label", "Open navigation");
+    button.textContent = "☰";
+  }
   button.setAttribute("aria-expanded", "false");
-  button.textContent = "☰";
 
   const panel = document.createElement("div");
   panel.className = "mobile-nav-panel";
@@ -67,6 +71,6 @@
     button.textContent = "☰";
   });
 
-  nav.appendChild(button);
+  if (createdButton) nav.appendChild(button);
   document.body.appendChild(panel);
 })();
