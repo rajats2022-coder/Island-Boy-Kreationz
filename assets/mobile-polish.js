@@ -18,11 +18,11 @@
   panel.className = "mobile-nav-panel";
   panel.setAttribute("aria-label", "Mobile navigation");
 
-  const requiredLinks = [
-    ["Home", "index.html"],
+  const mobileLinks = [
     ["Menu", "index.html#menu"],
-    ["Order Now", "order.html"],
-    ["Catering", "index.html#catering"],
+    ["Order Now", "order.html", true],
+    ["Book Catering", "contact.html#lead-form", true],
+    ["About", "about.html"],
     ["Gallery", "gallery.html"],
     ["Service Areas", "service-areas.html"],
     ["Blog", "blog.html"],
@@ -30,30 +30,18 @@
     ["Contact", "contact.html"],
   ];
 
-  const seen = new Set();
+  function closePanel() {
+    panel.classList.remove("open");
+    button.setAttribute("aria-expanded", "false");
+    button.textContent = "☰";
+  }
 
-  desktopLinks.querySelectorAll("a").forEach((link) => {
-    const clone = link.cloneNode(true);
-    const href = clone.getAttribute("href") || "";
-    seen.add(href.replace(/^.\//, ""));
-    clone.addEventListener("click", () => {
-      panel.classList.remove("open");
-      button.setAttribute("aria-expanded", "false");
-      button.textContent = "☰";
-    });
-    panel.appendChild(clone);
-  });
-
-  requiredLinks.forEach(([label, href]) => {
-    if (seen.has(href)) return;
+  mobileLinks.forEach(([label, href, primary]) => {
     const link = document.createElement("a");
     link.href = href;
     link.textContent = label;
-    link.addEventListener("click", () => {
-      panel.classList.remove("open");
-      button.setAttribute("aria-expanded", "false");
-      button.textContent = "☰";
-    });
+    if (primary) link.dataset.mobilePrimary = "true";
+    link.addEventListener("click", closePanel);
     panel.appendChild(link);
   });
 
@@ -66,9 +54,7 @@
   document.addEventListener("click", (event) => {
     if (!panel.classList.contains("open")) return;
     if (panel.contains(event.target) || button.contains(event.target)) return;
-    panel.classList.remove("open");
-    button.setAttribute("aria-expanded", "false");
-    button.textContent = "☰";
+    closePanel();
   });
 
   if (createdButton) nav.appendChild(button);
