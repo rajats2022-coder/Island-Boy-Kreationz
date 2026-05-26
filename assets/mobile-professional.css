@@ -1,0 +1,613 @@
+/* Last-loaded mobile presentation layer.
+   Goal: phone layouts should feel deliberate, calm, and easy to scan. */
+@media (max-width: 760px) {
+  :root {
+    --mobile-pad: 18px;
+    --mobile-radius: 24px;
+  }
+
+  html,
+  body {
+    width: 100% !important;
+    overflow-x: hidden !important;
+    background: linear-gradient(180deg, #fff8ec 0%, #fff3df 48%, #fff8ec 100%) !important;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box !important;
+  }
+
+  body {
+    color: #180900 !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+  }
+
+  body:before,
+  body:after,
+  main > section:before,
+  main > section:after,
+  .story-panel:before,
+  .booking-focus-card:before,
+  .order-now-panel:before,
+  .contact-cta:before,
+  .catering-photo-placeholder:before {
+    display: none !important;
+    content: none !important;
+  }
+
+  .wrap,
+  .nav,
+  .hero-shell,
+  .hero-fullscreen .wrap,
+  main > section > .wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: var(--mobile-pad) !important;
+    padding-right: var(--mobile-pad) !important;
+    transform: none !important;
+  }
+
+  section,
+  main > section:not(.hero-fullscreen):not(.liquid-hero) {
+    padding-top: 46px !important;
+    padding-bottom: 46px !important;
+    overflow: hidden !important;
+    background:
+      radial-gradient(circle at 12% 0%, rgba(255, 189, 53, 0.14), transparent 28%),
+      linear-gradient(180deg, #fffaf0 0%, #fff5e6 100%) !important;
+  }
+
+  .topbar {
+    position: sticky !important;
+    top: 0 !important;
+    background: rgba(17, 7, 0, 0.96) !important;
+    border-bottom: 1px solid rgba(255, 189, 53, 0.24) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+  }
+
+  .nav {
+    height: 70px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .brand {
+    gap: 9px !important;
+  }
+
+  .brand strong {
+    font-size: 14px !important;
+    line-height: 1.05 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .brand small {
+    font-size: 10px !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .brand img,
+  .logo-mark,
+  .mark.logo-mark {
+    width: 48px !important;
+    height: 48px !important;
+    flex-basis: 48px !important;
+    border-radius: 15px !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  .section-head h2,
+  .solo h2,
+  .board-copy h2,
+  .panel h3,
+  .booking-focus-card h2,
+  .order-now-panel h3,
+  .contact-hero h1,
+  .hero h1 {
+    max-width: 100% !important;
+    letter-spacing: 0 !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    text-wrap: balance;
+  }
+
+  h1,
+  .contact-hero h1,
+  .hero h1 {
+    font-size: clamp(38px, 11vw, 52px) !important;
+    line-height: 0.98 !important;
+  }
+
+  h2,
+  .section-head h2,
+  .solo h2,
+  .board-copy h2,
+  .booking-focus-card h2 {
+    font-size: clamp(32px, 9vw, 44px) !important;
+    line-height: 1 !important;
+  }
+
+  h3,
+  .panel h3,
+  .card h3,
+  .blog-card h2 {
+    font-size: clamp(24px, 7vw, 34px) !important;
+    line-height: 1.05 !important;
+  }
+
+  p,
+  li,
+  .lead,
+  .section-head p,
+  .panel p,
+  .panel li,
+  .card p,
+  .quote p,
+  .note {
+    max-width: 100% !important;
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .kicker,
+  .combo-label,
+  .menu-badge,
+  .vi-chip {
+    max-width: 100% !important;
+    width: fit-content !important;
+    min-height: 0 !important;
+    padding: 8px 11px !important;
+    border-radius: 999px !important;
+    font-size: 11px !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0.10em !important;
+    white-space: normal !important;
+  }
+
+  .btn,
+  .glass-btn,
+  button,
+  .mobile-call {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 48px !important;
+    padding: 13px 16px !important;
+    border-radius: 999px !important;
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .actions,
+  .social-cta-row,
+  .gallery-cta,
+  .catering-note,
+  .builder-actions,
+  .order-hero-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+  }
+
+  .actions .btn,
+  .social-cta-row .btn,
+  .gallery-cta .btn,
+  .catering-note .btn,
+  .builder-actions .btn,
+  .builder-actions button,
+  .order-hero-actions .btn {
+    width: 100% !important;
+  }
+
+  .card,
+  .panel,
+  .quote,
+  .gallery-card,
+  .blog-card,
+  .faq-item,
+  .booking-focus-card,
+  .order-now-panel,
+  .catering-menu-card,
+  .seo-heading-ladder,
+  .story-panel,
+  .lead-form-card,
+  .cart-panel,
+  .builder,
+  .menu-picker,
+  .checkout-dialog {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    border-radius: var(--mobile-radius) !important;
+    padding: 20px !important;
+    box-shadow: 0 14px 36px rgba(24, 9, 0, 0.08) !important;
+  }
+
+  .grid,
+  .cards,
+  .split,
+  .quote-row,
+  .gallery,
+  .gallery-grid,
+  .menu-board,
+  .hero-grid,
+  .section-head,
+  .catering-menu-grid,
+  .about-owner-grid,
+  .proof-grid,
+  .order-layout,
+  #catering .split,
+  .booking-focus-card,
+  .page-service-areas .grid,
+  .page-blog .blog-list,
+  .page-faq .faq-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    align-items: start !important;
+  }
+
+  .section-head {
+    margin-bottom: 20px !important;
+  }
+
+  .section-head > *,
+  .booking-focus-card > *,
+  .menu-board > *,
+  .split > *,
+  #catering .split > * {
+    min-width: 0 !important;
+  }
+
+  .story-section,
+  .about-owner-section {
+    padding-top: 42px !important;
+    padding-bottom: 42px !important;
+  }
+
+  .about-owner-copy,
+  .story-panel {
+    padding: 20px !important;
+  }
+
+  .about-owner-copy h3 {
+    font-size: 34px !important;
+  }
+
+  .about-owner-copy p {
+    font-size: 15.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  .about-proof-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .owner-headshot-placeholder,
+  .headshot-frame {
+    min-height: auto !important;
+  }
+
+  .headshot-frame {
+    padding: 22px !important;
+  }
+
+  .menu-clean-section .cards,
+  .menu-combo-cards,
+  .compact-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .card .photo,
+  .combo-card .photo,
+  .blog-card img,
+  .gallery-card img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 250px !important;
+    aspect-ratio: 4 / 3 !important;
+    object-fit: cover !important;
+  }
+
+  .card-body,
+  .blog-card div,
+  .gallery-card div {
+    padding: 18px !important;
+  }
+
+  .menu-tabs,
+  .category-tabs {
+    display: flex !important;
+    gap: 8px !important;
+    padding: 6px !important;
+    border-radius: 18px !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    scroll-snap-type: x proximity;
+    background: rgba(255, 253, 246, 0.88) !important;
+  }
+
+  .menu-tab,
+  .category-tab {
+    flex: 0 0 auto !important;
+    min-height: 42px !important;
+    padding: 10px 14px !important;
+    scroll-snap-align: start;
+  }
+
+  .booking-focus-strip {
+    padding: 40px 0 !important;
+  }
+
+  .booking-focus-card {
+    padding: 22px !important;
+    text-align: left !important;
+  }
+
+  .booking-focus-card p {
+    font-size: 17px !important;
+  }
+
+  .booking-focus-card .btn {
+    width: 100% !important;
+    margin-top: 4px !important;
+  }
+
+  .why-section {
+    color: #180900 !important;
+    background: linear-gradient(180deg, #fff8ec 0%, #fff0d7 100%) !important;
+  }
+
+  .why-section .menu-board,
+  .why-section .love-board {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    padding-left: var(--mobile-pad) !important;
+    padding-right: var(--mobile-pad) !important;
+  }
+
+  .catering-photo-placeholder {
+    min-height: 0 !important;
+    padding: 20px !important;
+    border-radius: var(--mobile-radius) !important;
+    background:
+      radial-gradient(circle at 10% 10%, rgba(255, 189, 53, 0.18), transparent 30%),
+      linear-gradient(135deg, #fffdf8, #fff2d5) !important;
+    border: 1px solid rgba(0, 90, 169, 0.13) !important;
+  }
+
+  .catering-photo-placeholder div {
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .catering-photo-placeholder strong {
+    display: block !important;
+    margin: 12px 0 10px !important;
+    font-size: clamp(30px, 8vw, 40px) !important;
+    line-height: 1.04 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .catering-photo-placeholder p {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+  }
+
+  .why-section .board-copy {
+    padding: 20px !important;
+    background: #fffdf8 !important;
+    color: #180900 !important;
+  }
+
+  .love-list,
+  .menu-list {
+    gap: 0 !important;
+  }
+
+  .menu-row,
+  .hours div {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+    padding: 14px 0 !important;
+    text-align: left !important;
+  }
+
+  .menu-row span,
+  .menu-row small,
+  .menu-row b,
+  .hours span {
+    display: block !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    text-align: left !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+  }
+
+  .menu-row span:first-child,
+  .hours span:first-child {
+    font-size: 17px !important;
+    font-weight: 1000 !important;
+  }
+
+  .menu-row small,
+  .hours span:last-child {
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+    color: #5d3a24 !important;
+  }
+
+  .menu-row b {
+    width: fit-content !important;
+    color: #c82618 !important;
+    font-size: 12px !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  #catering .panel,
+  #catering .panel.hot,
+  #catering .location-panel {
+    background: #fffdf8 !important;
+    color: #180900 !important;
+  }
+
+  #catering .panel.hot h3,
+  #catering .location-panel h3 {
+    font-size: clamp(31px, 8.6vw, 42px) !important;
+    line-height: 1.02 !important;
+  }
+
+  #catering .panel.hot ul {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    padding-left: 20px !important;
+  }
+
+  #catering .panel.hot li {
+    font-size: 15.5px !important;
+    line-height: 1.45 !important;
+  }
+
+  .hours {
+    gap: 0 !important;
+  }
+
+  .map-frame,
+  #catering .location-panel .map-frame {
+    height: 210px !important;
+    margin-top: 18px !important;
+    border-radius: 20px !important;
+  }
+
+  .gallery {
+    grid-auto-rows: auto !important;
+  }
+
+  .gallery img,
+  .gallery img:first-child {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 4 / 3 !important;
+    object-fit: cover !important;
+    border-radius: 20px !important;
+  }
+
+  .city-cloud {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .city-cloud a {
+    min-height: 44px !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .contact-hero,
+  .hero:not(.hero-fullscreen),
+  .page-service-areas .hero,
+  .page-blog .contact-hero,
+  .page-faq .contact-hero {
+    min-height: auto !important;
+    padding: 96px 0 46px !important;
+  }
+
+  .page-service-areas .hero .wrap,
+  .page-blog .contact-hero .wrap,
+  .page-faq .contact-hero .wrap {
+    margin: 0 auto !important;
+    padding: 20px !important;
+    border-radius: var(--mobile-radius) !important;
+  }
+
+  .page-service-areas main > section:nth-of-type(2) > .wrap,
+  .page-blog .blog-list,
+  .page-faq .faq-grid {
+    padding: 18px !important;
+    border-radius: var(--mobile-radius) !important;
+  }
+
+  body:has(.order-layout) .order-hero {
+    min-height: auto !important;
+    padding: 92px 0 36px !important;
+  }
+
+  body:has(.order-layout) .order-copy {
+    padding: 20px !important;
+  }
+
+  body:has(.order-layout) .builder-grid,
+  body:has(.order-layout) .compact-grid,
+  body:has(.order-layout) .menu-groups {
+    grid-template-columns: 1fr !important;
+  }
+
+  body:has(.order-layout) .choice {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  body:has(.order-layout) .cart-item strong {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 8px !important;
+  }
+
+  .footer,
+  footer {
+    padding-bottom: max(86px, env(safe-area-inset-bottom)) !important;
+  }
+
+  .ib-chat {
+    display: none !important;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --mobile-pad: 16px;
+  }
+
+  .about-proof-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  h1,
+  .contact-hero h1,
+  .hero h1 {
+    font-size: clamp(35px, 10.4vw, 46px) !important;
+  }
+
+  h2,
+  .section-head h2,
+  .solo h2,
+  .board-copy h2,
+  .booking-focus-card h2 {
+    font-size: clamp(30px, 8.8vw, 39px) !important;
+  }
+}
