@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">Virgin Islands inspired order header artwork</title>
+  <desc id="desc">White plank texture with blue VI letters, gold eagle, red shield stripes, green branch, and blue arrows.</desc>
+  <defs>
+    <linearGradient id="plank" x1="0" x2="0" y1="0" y2="1">
+      <stop stop-color="#fffaf0"/>
+      <stop offset=".52" stop-color="#f4eadb"/>
+      <stop offset="1" stop-color="#fff4df"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#ffe083"/>
+      <stop offset=".5" stop-color="#d69a25"/>
+      <stop offset="1" stop-color="#9a6116"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#2a1100" flood-opacity=".22"/>
+    </filter>
+    <pattern id="grain" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M0 17 H80 M0 42 H80 M0 66 H80" stroke="#3b2415" stroke-opacity=".08" stroke-width="2"/>
+      <path d="M8 12 C26 4 46 5 69 11 M12 51 C30 44 51 46 76 54" fill="none" stroke="#3b2415" stroke-opacity=".1" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="520" fill="url(#plank)"/>
+  <rect width="1200" height="520" fill="url(#grain)" opacity=".78"/>
+  <path d="M0 92 H1200 M0 192 H1200 M0 296 H1200 M0 402 H1200" stroke="#2c170b" stroke-opacity=".18" stroke-width="8"/>
+  <text x="118" y="315" font-family="Georgia, serif" font-size="190" font-weight="700" fill="#005aa9">V</text>
+  <text x="1016" y="315" font-family="Georgia, serif" font-size="190" font-weight="700" fill="#005aa9">I</text>
+  <g filter="url(#shadow)" transform="translate(600 258)">
+    <path d="M-60-122 C-135-128-250-104-372-44 C-282-38-186-26-88 18 Z" fill="url(#gold)" stroke="#7b4b11" stroke-width="6"/>
+    <path d="M60-122 C135-128 250-104 372-44 C282-38 186-26 88 18 Z" fill="url(#gold)" stroke="#7b4b11" stroke-width="6"/>
+    <path d="M-43-137 C-24-171 23-172 43-137 C26-146-25-146-43-137 Z" fill="url(#gold)" stroke="#7b4b11" stroke-width="6"/>
+    <circle cx="0" cy="-116" r="30" fill="url(#gold)" stroke="#7b4b11" stroke-width="6"/>
+    <path d="M25-121 L74-129 L31-101 Z" fill="#d69a25" stroke="#7b4b11" stroke-width="5"/>
+    <path d="M-88-70 H88 V70 C63 108 34 138 0 154 C-34 138-63 108-88 70 Z" fill="#f8f6ee" stroke="#7b4b11" stroke-width="7"/>
+    <path d="M-88-70 H88 V-25 H-88 Z" fill="#004b93"/>
+    <path d="M-56-25 H-25 V94 H-56 Z M-10-25 H21 V133 H-10 Z M36-25 H67 V93 H36 Z" fill="#c82618"/>
+    <path d="M-128 92 C-92 128-52 154 0 172 C52 154 92 128 128 92 C74 106 36 108 0 104 C-36 108-74 106-128 92 Z" fill="url(#gold)" stroke="#7b4b11" stroke-width="6"/>
+  </g>
+  <g transform="translate(310 340)" stroke="#00733f" stroke-width="10" stroke-linecap="round">
+    <path d="M0 80 C42 22 78-20 125-76"/>
+    <path d="M42 26 L8 9 M64 0 L27-14 M86-27 L48-42 M108-54 L73-70"/>
+  </g>
+  <g transform="translate(895 330)" stroke="#0067b1" stroke-width="9" stroke-linecap="round">
+    <path d="M0 94 L56 16 M24 105 L82 28 M47 112 L106 36"/>
+    <path d="M56 16 L80 18 L67-4 M82 28 L106 30 L93 9 M106 36 L130 39 L117 18"/>
+  </g>
+  <rect x="0" y="0" width="1200" height="520" fill="none" stroke="#180900" stroke-opacity=".14" stroke-width="12"/>
+</svg>
