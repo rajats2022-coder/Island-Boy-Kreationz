@@ -4,6 +4,7 @@
   :root {
     --mobile-pad: 18px;
     --mobile-radius: 24px;
+    --mobile-header-height: 70px;
   }
 
   html {
@@ -36,6 +37,7 @@
     background:
       radial-gradient(circle at 12% 0%, rgba(255, 189, 53, 0.12), transparent 28%),
       linear-gradient(180deg, #fff8ec 0%, #fff3df 48%, #fff8ec 100%) !important;
+    padding-top: calc(var(--mobile-header-height) + env(safe-area-inset-top, 0px)) !important;
   }
 
   body:before,
@@ -76,8 +78,11 @@
   }
 
   .topbar {
-    position: sticky !important;
+    position: fixed !important;
     top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 180 !important;
     overflow: visible !important;
     background: rgba(17, 7, 0, 0.96) !important;
     border-bottom: 1px solid rgba(255, 189, 53, 0.24) !important;
@@ -104,7 +109,7 @@
   }
 
   .nav {
-    height: 70px !important;
+    height: var(--mobile-header-height) !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
@@ -682,6 +687,11 @@
   .mobile-nav-panel a:active {
     background: rgba(255, 189, 53, 0.18) !important;
     color: #fff8ec !important;
+  }
+
+  .mobile-nav-panel {
+    top: calc(var(--mobile-header-height) + env(safe-area-inset-top, 0px) + 8px) !important;
+    z-index: 170 !important;
   }
 
   .ib-chat {
