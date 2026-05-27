@@ -876,3 +876,68 @@
     line-height: 0.98 !important;
   }
 }
+
+@media (max-width: 760px) {
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero),
+  .page-about .hero {
+    --mobile-hero-image: url("usvi-flag-official.svg") !important;
+    background-image:
+      linear-gradient(135deg, rgba(9, 3, 0, 0.78), rgba(0, 90, 169, 0.34) 46%, rgba(31, 123, 77, 0.28)),
+      url("usvi-flag-official.svg") !important;
+    background-size: cover !important;
+    background-position: center 48% !important;
+  }
+
+  body.page-about .hero .wrap {
+    width: calc(100% - 32px) !important;
+    max-width: 560px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 20px !important;
+  }
+
+  main > section.story-section.about-owner-section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero),
+  .about-owner-section {
+    background:
+      linear-gradient(180deg, rgba(255, 248, 236, 0.96), rgba(255, 248, 236, 0.88)),
+      url("usvi-flag-official.svg") center top / cover no-repeat !important;
+  }
+
+  .vi-raised-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 260px !important;
+    margin: 12px auto 0 !important;
+  }
+
+  .vi-raised-pill img {
+    width: 50px !important;
+    height: 32px !important;
+    object-fit: contain !important;
+  }
+
+  .why-section .catering-photo-placeholder {
+    min-height: 560px !important;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255, 189, 53, 0.22), transparent 28%),
+      linear-gradient(180deg, #eaf6f7 0%, #fff3d9 55%, #f9e4b3 100%) !important;
+  }
+
+  .why-section .catering-photo-placeholder:after {
+    content: "" !important;
+    display: block !important;
+    position: absolute !important;
+    left: 6% !important;
+    right: 6% !important;
+    bottom: 18px !important;
+    height: 32% !important;
+    z-index: 1 !important;
+    border-radius: 22px !important;
+    background: #fff url("usvi-flag-official.svg") center center / contain no-repeat !important;
+    filter: drop-shadow(0 14px 22px rgba(24, 9, 0, 0.12)) !important;
+    pointer-events: none !important;
+  }
+}
