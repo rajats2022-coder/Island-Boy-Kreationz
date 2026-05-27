@@ -1335,6 +1335,27 @@
     text-align: center !important;
   }
 
+  .page-blog .blog-card .btn,
+  .article-body .btn {
+    width: min(100%, 300px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-self: center !important;
+    align-self: center !important;
+  }
+
+  .article-body p:has(.btn) {
+    text-align: center !important;
+  }
+
+  .article-actions,
+  .page-blog .blog-hub-cta .actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    align-items: center !important;
+  }
+
   .page-service-areas main > section:nth-of-type(2) h2 {
     font-size: clamp(29px, 7.5vw, 36px) !important;
     line-height: 1.03 !important;

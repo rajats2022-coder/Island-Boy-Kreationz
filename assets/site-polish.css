@@ -338,7 +338,9 @@ main > section:not(.hero):not(.contact-hero):not(.liquid-hero):not(.hero-fullscr
 
 .blog-card .btn {
   margin-top: auto !important;
-  align-self: flex-start !important;
+  align-self: center !important;
+  min-width: 150px !important;
+  text-align: center !important;
 }
 
 .article-body {
@@ -380,14 +382,41 @@ main > section:not(.hero):not(.contact-hero):not(.liquid-hero):not(.hero-fullscr
   border-top: 1px solid rgba(24, 9, 0, 0.1) !important;
 }
 
-.blog-hub-cta {
-  justify-content: space-between !important;
+.article-body p:has(.btn) {
+  text-align: center !important;
+}
+
+.article-body .btn {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+
+.article-actions {
+  justify-content: center !important;
   align-items: center !important;
+}
+
+.article-actions .btn {
+  min-width: 160px !important;
+}
+
+.blog-hub-cta {
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
   border-radius: 28px !important;
   background: linear-gradient(135deg, #fff, #fff0cf) !important;
   border: 1px solid rgba(24, 9, 0, 0.08) !important;
   box-shadow: var(--site-shadow) !important;
   padding: 24px !important;
+}
+
+.blog-hub-cta .actions {
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 4px !important;
 }
 
 .blog-hub-cta p {
