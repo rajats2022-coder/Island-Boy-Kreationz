@@ -16,7 +16,8 @@
   body {
     width: 100% !important;
     overflow-x: hidden !important;
-    background: linear-gradient(180deg, #fff8ec 0%, #fff3df 48%, #fff8ec 100%) !important;
+    background: #110700 !important;
+    background-color: #110700 !important;
   }
 
   *,
@@ -29,6 +30,12 @@
     color: #180900 !important;
     font-size: 16px !important;
     line-height: 1.5 !important;
+  }
+
+  main {
+    background:
+      radial-gradient(circle at 12% 0%, rgba(255, 189, 53, 0.12), transparent 28%),
+      linear-gradient(180deg, #fff8ec 0%, #fff3df 48%, #fff8ec 100%) !important;
   }
 
   body:before,
@@ -80,12 +87,6 @@
   }
 
   @supports (padding-top: env(safe-area-inset-top)) {
-    body {
-      background:
-        linear-gradient(#110700 0 env(safe-area-inset-top), transparent env(safe-area-inset-top)),
-        linear-gradient(180deg, #fff8ec 0%, #fff3df 48%, #fff8ec 100%) !important;
-    }
-
     .topbar {
       padding-top: env(safe-area-inset-top) !important;
     }
