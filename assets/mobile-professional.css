@@ -376,6 +376,31 @@
     background: rgba(255, 253, 246, 0.88) !important;
   }
 
+  #menu .section-head {
+    text-align: center !important;
+  }
+
+  #menu .section-head .kicker {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  #menu .section-head p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  #menu .menu-tabs {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: min(100%, 440px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    overflow: visible !important;
+  }
+
   .menu-tab,
   .category-tab {
     flex: 0 0 auto !important;
@@ -569,6 +594,37 @@
   .page-faq .contact-hero {
     min-height: auto !important;
     padding: 96px 0 46px !important;
+  }
+
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) {
+    background-color: #110700 !important;
+    background-image:
+      linear-gradient(135deg, rgba(17, 7, 0, 0.94), rgba(90, 23, 10, 0.86)),
+      var(--mobile-hero-image, url("yelp-truck-vibes.jpg")) !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-blend-mode: multiply, normal !important;
+    color: #fff8ec !important;
+  }
+
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p {
+    color: #fff8ec !important;
+    opacity: 1 !important;
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.58) !important;
+  }
+
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .kicker,
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .hero-markers span,
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .hero-reference {
+    background: rgba(255, 248, 236, 0.92) !important;
+    color: #180900 !important;
+    border-color: rgba(255, 189, 53, 0.45) !important;
+    text-shadow: none !important;
+  }
+
+  body:has(.gallery-grid) main > section.hero:not(.hero-fullscreen):not(.liquid-hero) {
+    --mobile-hero-image: url("vi-national-park-trunk-bay.jpg");
   }
 
   main > section.contact-hero:not(.hero-fullscreen):not(.liquid-hero),
