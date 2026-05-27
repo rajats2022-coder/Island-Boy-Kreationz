@@ -843,3 +843,36 @@
     font-size: clamp(30px, 8.8vw, 39px) !important;
   }
 }
+
+@media (max-width: 700px) {
+  .page-about .hero,
+  .page-gallery .hero,
+  .page-service-areas .hero,
+  .page-blog .contact-hero,
+  .page-faq .contact-hero {
+    min-height: 420px !important;
+    height: 420px !important;
+    box-sizing: border-box !important;
+    padding: 88px 0 36px !important;
+  }
+
+  .page-about .hero .wrap,
+  .page-gallery .hero .wrap,
+  .page-service-areas .hero .wrap,
+  .page-blog .contact-hero .wrap,
+  .page-faq .contact-hero .wrap {
+    min-height: 260px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+
+  .page-about .hero h1,
+  .page-gallery .hero h1,
+  .page-service-areas .hero h1,
+  .page-blog .contact-hero h1,
+  .page-faq .contact-hero h1 {
+    font-size: 38px !important;
+    line-height: 0.98 !important;
+  }
+}
