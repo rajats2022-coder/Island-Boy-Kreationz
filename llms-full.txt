@@ -1,0 +1,69 @@
+# Island Boy Kreationz Food Truck & Catering - Full AI Summary
+
+Island Boy Kreationz Food Truck & Catering serves Virgin Islands-rooted Caribbean soul food from Charlotte, North Carolina. The site positions the business for local food truck ordering, catering inquiries, food truck event bookings, party trays, office meals, church events, community events, school events, and private gatherings.
+
+Core menu signals:
+- Oxtail meal
+- Oxtail bowl
+- Wing meal
+- Wing bowl
+- Chopped chicken bowl
+- Chopped chicken meal
+- Shrimp bowl
+- Salmon bowl
+- Curry chicken
+- Beef ribs
+- Rice and peas
+- Yellow rice
+- Cabbage
+- Macaroni and cheese
+- Cornbread
+- Baked beans
+- Homemade cakes
+- Desserts
+- Drinks and lemonades
+
+Primary conversion paths:
+- Order page: build a meal request before confirming availability and final details.
+- Contact page: submit a catering or food truck booking inquiry with event city, venue address, date, time, guest count, service style, and menu direction.
+- Phone/text: 980-785-8372 for same-day location, availability, and order confirmation.
+- Instagram: https://www.instagram.com/islandboy_kreationz/ for live updates and social proof.
+
+Search positioning:
+- Caribbean food Charlotte NC
+- Caribbean soul food Charlotte NC
+- Caribbean food truck Charlotte NC
+- Oxtail catering North Carolina
+- Oxtail bowls Charlotte
+- Wing meal Charlotte
+- Food truck catering Charlotte NC
+- Food truck catering Concord NC
+- Caribbean catering Greensboro NC
+- Caribbean catering Raleigh, Durham, Cary, Winston-Salem, High Point, Gastonia, Huntersville, Kannapolis, and Mooresville
+
+Website structure:
+- / is the homepage for menu, story, catering, local SEO, and conversion.
+- /order.html is the static order-builder page.
+- /contact.html is the catering lead form page.
+- /about.html contains Deon Henry's Island Boy Kreationz story.
+- /gallery.html contains food truck and food photos.
+- /service-areas.html is the North Carolina service-area hub.
+- /blog.html is the catering guide hub.
+- /faq.html answers customer questions and includes FAQ schema.
+- City pages target catering searches across Charlotte, Concord, Greensboro, Raleigh, Durham, Cary, Winston-Salem, High Point, Gastonia, Huntersville, Kannapolis, and Mooresville.
+
+Known facts to preserve:
+- Business name: Island Boy Kreationz Food Truck & Catering.
+- Phone: 980-785-8372.
+- Email: deonhenry756@gmail.com.
+- Listed address: 6100 Hunter Ave, Charlotte, NC 28262.
+- Instagram: @islandboy_kreationz.
+- Tuesday-Friday hours are listed as 2:30 PM to 8:30 PM.
+- Amazon stop is listed Tuesday-Saturday from 9 PM to 11 PM.
+- Saturday location can change.
+- Island Boy Kreationz states that it does not cook pork.
+
+Publication notes:
+- Same-day location, sell-outs, and availability should not be treated as static facts.
+- Catering pricing depends on headcount, location, menu, service style, timing, and travel.
+- For live questions, customers should call, text, or check Instagram.
