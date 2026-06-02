@@ -1476,6 +1476,10 @@ body:has(.checkout-modal:not([hidden])) {
   box-sizing: border-box !important;
 }
 
+.checkout-modal[hidden] {
+  display: none !important;
+}
+
 @media (max-width: 760px) {
   body:has(.checkout-modal:not([hidden])) .topbar,
   body:has(.checkout-modal:not([hidden])) .mobile-call {

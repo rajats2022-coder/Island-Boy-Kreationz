@@ -498,6 +498,7 @@
     document.body.style.overflow='';
     document.body.classList.remove('checkout-keyboard-open');
   }
+  closeCheckout();
   function wireCards(){
     document.querySelectorAll('.order-card').forEach(card=>{
       const addBtn=card.querySelector('button');
