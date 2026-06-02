@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Order Island Boy Kreationz | Meals, Bowls, Sides &amp; Extras</title>
-  <meta name="description" content="Browse Island Boy Kreationz meals, bowls, sides, cakes, drinks, and extras. Build an order and add items to your cart before payment is connected later.">
+  <meta name="description" content="Browse Island Boy Kreationz meals, bowls, sides, cakes, drinks, and extras. Build an order and pay with Cash App, Venmo, or Apple Cash.">
   <link rel="canonical" href="https://islandboykreationz.com/order.html">
   <style>
     :root{
@@ -211,6 +211,11 @@
     .flame-strip,.order-proof{display:none!important}
     @media(max-width:920px){.order-hero{padding:92px 0 34px!important}.order-hero-grid{grid-template-columns:1fr}.flag-stage{display:none}.order-copy{max-width:none}.order-hero h1{font-size:clamp(40px,10vw,68px)!important}}
     @media(max-width:560px){.order-hero{padding:76px 0 30px!important}.order-hero .wrap{width:100%!important;max-width:100%!important;padding-left:16px!important;padding-right:16px!important}.order-hero-grid{display:block!important;width:100%!important;max-width:100%!important;overflow:hidden}.order-copy{width:100%!important;max-width:100%!important}.order-hero-actions{display:grid!important;grid-template-columns:1fr!important}.order-hero-actions .btn{width:100%;max-width:100%}.order-kicker{border-radius:18px;white-space:normal;line-height:1.25}.order-hero h1{font-size:40px!important;line-height:.95!important;letter-spacing:-.035em!important}.order-hero p{font-size:15.5px!important;max-width:360px!important}.flag-stage{display:none!important}}
+    body:has(.order-layout) .choice{justify-content:flex-start!important;text-align:left!important}
+    body:has(.order-layout) .choice input{flex:0 0 auto!important;margin:0!important}
+    body:has(.order-layout) .choice strong{margin-left:auto!important}
+    body:has(.checkout-modal:not([hidden])) .ib-chat{display:none!important}
+    .payment-intro{border-radius:20px;background:#fffaf0;border:1px solid rgba(24,9,0,.12);padding:16px;display:grid;gap:6px;line-height:1.38}.payment-intro strong{font-size:18px}.payment-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.payment-option{border:1px solid rgba(24,9,0,.12);border-radius:18px;background:#fff;padding:14px;display:grid;gap:10px}.payment-option label{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;font-weight:1000}.payment-option input{margin-top:3px;accent-color:#c82618}.payment-copy{display:grid;gap:3px}.payment-copy small{color:#6d4c36;line-height:1.34;font-weight:750}.pay-button{min-height:50px;border:0;border-radius:999px;color:#fff;font-weight:1000;text-align:center;display:inline-flex;align-items:center;justify-content:center;padding:13px 14px;box-shadow:0 12px 28px rgba(24,9,0,.16);transition:.2s transform,.2s box-shadow}.pay-button:hover{transform:translateY(-1px);box-shadow:0 18px 36px rgba(24,9,0,.2)}.pay-button.cashapp{background:#00d632;color:#071907}.pay-button.venmo{background:#008cff}.pay-button.applecash{background:#111;color:#fff}.payment-note{border-radius:16px;background:#fff2d7;color:#5d3a24;padding:12px;line-height:1.4;font-size:13px;font-weight:750}@media(max-width:760px){.payment-options{grid-template-columns:1fr}.payment-option{padding:13px}.pay-button{width:100%}}
   </style>
 
   <link rel="stylesheet" href="assets/mobile-polish.css">
@@ -220,7 +225,7 @@
   <link rel="stylesheet" href="assets/vi-theme-unity.css">
   <link rel="stylesheet" href="assets/mobile-professional.css" />
 </head>
-<body style="overflow: hidden;">
+<body>
   <a class="mobile-call" href="order.html">Order Now</a>
     <header class="topbar">
     <div class="wrap nav">
@@ -273,7 +278,7 @@
   <div class="checkout-modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" hidden>
     <div class="checkout-dialog">
       <div class="checkout-head">
-        <div><span class="kicker">Secure checkout preview</span><h2 id="checkoutTitle">Complete your order.</h2><p>No card is charged here yet. This collects the normal checkout details and prepares the order for Island Boy Kreationz.</p></div>
+        <div><span class="kicker">Checkout</span><h2 id="checkoutTitle">Complete your order.</h2><p>Choose pickup details, then pay with Cash App, Venmo, or Apple Cash using Island Boy Kreationz's current accounts.</p></div>
         <button class="checkout-close" id="checkoutClose" type="button" aria-label="Close checkout">×</button>
       </div>
       <div class="checkout-progress" aria-label="Checkout progress"><span class="active" data-step-label="0">Contact</span><span data-step-label="1">Pickup</span><span data-step-label="2">Payment</span><span data-step-label="3">Review</span></div>
@@ -299,14 +304,22 @@
           </div>
         </section>
         <section class="checkout-step" data-step="2">
-          <div class="payment-card"><strong>Payment method</strong><small>Stripe is not connected yet, so this screen behaves like a checkout placeholder. Card details entered here are not submitted to a processor or saved.</small></div>
-          <div class="checkout-grid">
-            <div class="checkout-field full"><label for="cardName">Name on card</label><input id="cardName" name="cardName" autocomplete="cc-name" required=""></div>
-            <div class="checkout-field full"><label for="cardNumber">Card number</label><input id="cardNumber" name="cardNumber" inputmode="numeric" maxlength="19" placeholder="4242 4242 4242 4242" required=""></div>
-            <div class="checkout-field"><label for="cardExpiry">Expiration</label><input id="cardExpiry" name="cardExpiry" placeholder="MM / YY" maxlength="7" required=""></div>
-            <div class="checkout-field"><label for="cardCvc">CVC</label><input id="cardCvc" name="cardCvc" inputmode="numeric" maxlength="4" placeholder="123" required=""></div>
+          <div class="payment-intro"><strong>Pay your menu total: <span id="paymentTotal">$0</span></strong><small>Island Boy Kreationz currently accepts Apple Cash, Venmo, and Cash App. Use the button for your app, then continue to review and text the order details.</small></div>
+          <div class="payment-options">
+            <div class="payment-option">
+              <label><input type="radio" name="paymentMethod" value="Cash App" checked required> <span class="payment-copy">Cash App<small>$islandboyKreationz1</small></span></label>
+              <a class="pay-button cashapp" id="cashAppPay" href="https://cash.app/$islandboyKreationz1" target="_blank" rel="noopener">Pay with Cash App</a>
+            </div>
+            <div class="payment-option">
+              <label><input type="radio" name="paymentMethod" value="Venmo" required> <span class="payment-copy">Venmo<small>@Deon-Henry-3</small></span></label>
+              <a class="pay-button venmo" id="venmoPay" href="venmo://paycharge?txn=pay&amp;recipients=Deon-Henry-3" target="_blank" rel="noopener">Pay with Venmo</a>
+            </div>
+            <div class="payment-option">
+              <label><input type="radio" name="paymentMethod" value="Apple Cash" required> <span class="payment-copy">Apple Cash<small>980-785-8372</small></span></label>
+              <a class="pay-button applecash" id="appleCashPay" href="sms:+19807858372">Pay with Apple Cash</a>
+            </div>
           </div>
-          <p class="checkout-hint">When Stripe is added later, these fields can be replaced with Stripe Elements while keeping this same checkout flow.</p>
+          <p class="payment-note">Payment apps open outside this website. The final review step still prepares a text message so the team receives the order, pickup details, and payment method.</p>
         </section>
         <section class="checkout-step" data-step="3">
           <div class="checkout-summary" id="checkoutSummary"></div>
@@ -337,6 +350,13 @@
   const checkoutSummary=document.getElementById('checkoutSummary');
   const checkoutConfirmation=document.getElementById('checkoutConfirmation');
   const checkoutSms=document.getElementById('checkoutSms');
+  const paymentTotal=document.getElementById('paymentTotal');
+  const cashAppPay=document.getElementById('cashAppPay');
+  const venmoPay=document.getElementById('venmoPay');
+  const appleCashPay=document.getElementById('appleCashPay');
+  const cashAppHandle='$islandboyKreationz1';
+  const venmoHandle='@Deon-Henry-3';
+  const appleCashPhone='980-785-8372';
 	  let checkoutStep=0;
 	  function showToast(text='Added to cart') { toast.textContent=text; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 1300); }
 	  function formatMoney(value=0){
@@ -351,6 +371,22 @@
 	  function orderText(){
 	    return cart.map(item=>`${item.qty||1}x ${item.name} (${formatMoney((item.price||0) * (item.qty||1))}) - ${item.details||'Island Boy menu item'}`).join('\n');
 	  }
+  function checkoutNote(){
+    const form=new FormData(checkoutForm);
+    const name=form.get('name')||'Island Boy customer';
+    return `Island Boy order - ${name}`;
+  }
+  function selectedPaymentMethod(){
+    return checkoutForm.querySelector('input[name="paymentMethod"]:checked')?.value || 'Cash App';
+  }
+  function updatePaymentLinks(){
+    const amount=cartSubtotal().toFixed(2);
+    const note=checkoutNote();
+    paymentTotal.textContent=formatMoney(cartSubtotal());
+    cashAppPay.href=`https://cash.app/$islandboyKreationz1/${encodeURIComponent(amount)}`;
+    venmoPay.href=`venmo://paycharge?txn=pay&recipients=Deon-Henry-3&amount=${encodeURIComponent(amount)}&note=${encodeURIComponent(note)}`;
+    appleCashPay.href=`sms:+19807858372?&body=${encodeURIComponent(`Apple Cash payment for Island Boy order\nAmount: ${formatMoney(cartSubtotal())}\nNote: ${note}`)}`;
+  }
 	  function renderCart(){
 	    if(!cart.length){ cartItems.innerHTML='<div class="cart-empty">Your cart is empty.</div>'; cartTotal.textContent=formatMoney(0); return; }
 	    cartItems.innerHTML=cart.map((item,i)=>`<div class="cart-item"><strong>${escapeHTML(item.name)} × ${item.qty||1} <span>${formatMoney((item.price||0) * (item.qty||1))}</span></strong><small>${escapeHTML(item.details||'Island Boy menu item')}</small><button type="button" data-remove="${i}">Remove</button></div>`).join('');
@@ -365,6 +401,7 @@
     document.getElementById('checkoutBack').disabled=checkoutStep===0;
     document.getElementById('checkoutNext').hidden=checkoutStep===3;
     document.getElementById('checkoutPlace').hidden=checkoutStep!==3;
+    if(checkoutStep===2) updatePaymentLinks();
     if(checkoutStep===3) renderCheckoutSummary();
   }
   function validateCheckoutStep(){
@@ -391,9 +428,15 @@
 	      <div class="checkout-summary-item"><strong>Fulfillment</strong><span>${escapeHTML(fulfillment)} · ${escapeHTML(date)} at ${escapeHTML(time)}</span><small>${escapeHTML(form.get('address')||'Pickup location from Island Boy Kreationz')}</small></div>
 	      <div class="checkout-summary-item"><strong>Order</strong><small>${escapeHTML(orderText()).replace(/\n/g,'<br>')}</small></div>
 	      <div class="checkout-summary-item"><strong>Menu total</strong><span>${formatMoney(cartSubtotal())}</span><small>Location, availability, tax, delivery, and payment are finalized directly with Island Boy Kreationz.</small></div>
-	      <div class="checkout-summary-item"><strong>Payment</strong><span>Card ending ${escapeHTML((form.get('cardNumber')||'').replace(/\D/g,'').slice(-4)||'----')}</span><small>Stripe is not connected yet, so no payment is charged or saved.</small></div>
+	      <div class="checkout-summary-item"><strong>Payment</strong><span>${escapeHTML(selectedPaymentMethod())}</span><small>${escapeHTML(paymentRecipientText())}. Opened outside the website; customer should confirm payment in the app.</small></div>
 	      <div class="checkout-summary-item"><strong>Notes</strong><small>${escapeHTML(notes)}</small></div>
     `;
+  }
+  function paymentRecipientText(){
+    const method=selectedPaymentMethod();
+    if(method==='Cash App') return `Recipient: ${cashAppHandle}`;
+    if(method==='Venmo') return `Recipient: ${venmoHandle}`;
+    return `Recipient: Apple Cash ${appleCashPhone}`;
   }
   function smsBody(){
     const form=new FormData(checkoutForm);
@@ -409,7 +452,7 @@
 	      'Order:',
 	      orderText(),
       `Notes: ${form.get('notes')||'None'}`,
-      'Payment: Card flow completed on site preview; no Stripe charge yet.'
+      `Payment: ${selectedPaymentMethod()} (${paymentRecipientText()})`
     ].join('\n');
   }
   function openCheckout(){
@@ -419,6 +462,7 @@
     checkoutConfirmation.hidden=true;
     checkoutConfirmation.textContent='';
     checkoutSms.hidden=true;
+    document.querySelector('input[name="paymentMethod"][value="Cash App"]').checked=true;
     const today=new Date().toISOString().split('T')[0];
     document.getElementById('checkoutDate').value=today;
     document.getElementById('checkoutDate').min=today;
@@ -473,17 +517,14 @@
   document.addEventListener('keydown',event=>{ if(event.key==='Escape' && !checkoutModal.hidden) closeCheckout(); });
   document.getElementById('checkoutBack').addEventListener('click',()=>setCheckoutStep(checkoutStep-1));
   document.getElementById('checkoutNext').addEventListener('click',()=>{ if(validateCheckoutStep()) setCheckoutStep(checkoutStep+1); });
-  document.getElementById('cardNumber').addEventListener('input',event=>{
-    event.target.value=event.target.value.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim();
-  });
-  document.getElementById('cardExpiry').addEventListener('input',event=>{
-    const value=event.target.value.replace(/\D/g,'').slice(0,4);
-    event.target.value=value.length>2 ? `${value.slice(0,2)} / ${value.slice(2)}` : value;
-  });
+  document.querySelectorAll('input[name="paymentMethod"]').forEach(input=>input.addEventListener('change',updatePaymentLinks));
+  cashAppPay.addEventListener('click',()=>{ document.querySelector('input[name="paymentMethod"][value="Cash App"]').checked=true; updatePaymentLinks(); });
+  venmoPay.addEventListener('click',()=>{ document.querySelector('input[name="paymentMethod"][value="Venmo"]').checked=true; updatePaymentLinks(); });
+  appleCashPay.addEventListener('click',()=>{ document.querySelector('input[name="paymentMethod"][value="Apple Cash"]').checked=true; updatePaymentLinks(); });
   checkoutForm.addEventListener('submit',event=>{
     event.preventDefault();
     renderCheckoutSummary();
-    checkoutConfirmation.innerHTML='<strong>Order request ready.</strong><br>Your checkout details are complete. Since Stripe is not connected yet, use the text button to send this order request to Island Boy Kreationz for total, location, and payment.';
+    checkoutConfirmation.innerHTML='<strong>Order request ready.</strong><br>Use the text button to send Island Boy Kreationz the order, pickup details, total, and selected payment app.';
     checkoutConfirmation.hidden=false;
     checkoutSms.href=`sms:+19807858372?&body=${encodeURIComponent(smsBody())}`;
     checkoutSms.hidden=false;
