@@ -369,6 +369,15 @@
   const venmoHandle='@Deon-Henry-3';
   const appleCashPhone='980-785-8372';
 	  let checkoutStep=0;
+  const initialViewportHeight=window.innerHeight;
+  function isMobileCheckout(){
+    return window.matchMedia('(max-width: 760px), (pointer: coarse)').matches;
+  }
+  function syncCheckoutViewport(){
+    const visibleHeight=window.visualViewport?.height || window.innerHeight;
+    document.documentElement.style.setProperty('--checkout-vh', `${Math.round(visibleHeight)}px`);
+    document.body.classList.toggle('checkout-keyboard-open', isMobileCheckout() && visibleHeight < initialViewportHeight - 120);
+  }
 	  function showToast(text='Added to cart') { toast.textContent=text; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'), 1300); }
 	  function formatMoney(value=0){
 	    return `$${Number(value || 0).toFixed(2).replace(/\.00$/,'')}`;
@@ -412,6 +421,7 @@
     document.getElementById('checkoutBack').disabled=checkoutStep===0;
     document.getElementById('checkoutNext').hidden=checkoutStep===3;
     document.getElementById('checkoutPlace').hidden=checkoutStep!==3;
+    document.querySelector('.checkout-actions').classList.toggle('single-action', checkoutStep===0);
     if(checkoutStep===2) updatePaymentLinks();
     if(checkoutStep===3) renderCheckoutSummary();
   }
@@ -478,13 +488,15 @@
     document.getElementById('checkoutDate').value=today;
     document.getElementById('checkoutDate').min=today;
     setCheckoutStep(0);
+    syncCheckoutViewport();
     checkoutModal.hidden=false;
     document.body.style.overflow='hidden';
-    document.getElementById('checkoutName').focus();
+    if(!isMobileCheckout()) document.getElementById('checkoutName').focus();
   }
   function closeCheckout(){
     checkoutModal.hidden=true;
     document.body.style.overflow='';
+    document.body.classList.remove('checkout-keyboard-open');
   }
   function wireCards(){
     document.querySelectorAll('.order-card').forEach(card=>{
@@ -528,6 +540,14 @@
   document.addEventListener('keydown',event=>{ if(event.key==='Escape' && !checkoutModal.hidden) closeCheckout(); });
   document.getElementById('checkoutBack').addEventListener('click',()=>setCheckoutStep(checkoutStep-1));
   document.getElementById('checkoutNext').addEventListener('click',()=>{ if(validateCheckoutStep()) setCheckoutStep(checkoutStep+1); });
+  window.visualViewport?.addEventListener('resize', syncCheckoutViewport);
+  window.addEventListener('resize', syncCheckoutViewport);
+  checkoutForm.querySelectorAll('input, textarea, select').forEach(field=>{
+    field.addEventListener('focus',()=>{
+      syncCheckoutViewport();
+      if(isMobileCheckout()) setTimeout(()=>field.scrollIntoView({block:'center', behavior:'smooth'}), 80);
+    });
+  });
   document.querySelectorAll('input[name="paymentMethod"]').forEach(input=>input.addEventListener('change',updatePaymentLinks));
   cashAppPay.addEventListener('click',()=>{ document.querySelector('input[name="paymentMethod"][value="Cash App"]').checked=true; updatePaymentLinks(); });
   venmoPay.addEventListener('click',()=>{ document.querySelector('input[name="paymentMethod"][value="Venmo"]').checked=true; updatePaymentLinks(); });

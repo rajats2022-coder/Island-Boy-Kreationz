@@ -1465,3 +1465,250 @@
     margin-top: 16px !important;
   }
 }
+
+/* Mobile checkout: keep the order flow roomy, keyboard-safe, and navigable. */
+body:has(.checkout-modal:not([hidden])) {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
+
+.checkout-modal {
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 760px) {
+  body:has(.checkout-modal:not([hidden])) .topbar,
+  body:has(.checkout-modal:not([hidden])) .mobile-call {
+    display: none !important;
+  }
+
+  .checkout-modal {
+    inset: 0 !important;
+    z-index: 1000 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    padding: max(8px, env(safe-area-inset-top)) 8px max(8px, env(safe-area-inset-bottom)) !important;
+    background: rgba(17, 7, 0, 0.78) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+
+  .checkout-dialog {
+    width: 100% !important;
+    max-width: 540px !important;
+    height: min(760px, calc(var(--checkout-vh, 100dvh) - max(16px, env(safe-area-inset-top)) - max(16px, env(safe-area-inset-bottom)))) !important;
+    max-height: calc(var(--checkout-vh, 100dvh) - max(16px, env(safe-area-inset-top)) - max(16px, env(safe-area-inset-bottom))) !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    border-radius: 26px !important;
+    background: #fff8ec !important;
+    box-shadow: 0 22px 74px rgba(0, 0, 0, 0.42) !important;
+  }
+
+  .checkout-head {
+    flex: 0 0 auto !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 18px 18px 14px !important;
+  }
+
+  .checkout-head .kicker {
+    display: inline-flex !important;
+    padding: 6px 9px !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  .checkout-head h2 {
+    font-size: clamp(31px, 9vw, 42px) !important;
+    line-height: 0.98 !important;
+    letter-spacing: 0 !important;
+    margin: 9px 0 7px !important;
+    max-width: 310px !important;
+  }
+
+  .checkout-head p {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    max-width: 330px !important;
+  }
+
+  .checkout-close {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    flex: 0 0 42px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-top: 0 !important;
+    font-size: 24px !important;
+  }
+
+  .checkout-progress {
+    flex: 0 0 auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    padding: 10px 14px !important;
+    overflow: visible !important;
+  }
+
+  .checkout-progress span {
+    min-height: 36px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 7px 4px !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .checkout-body {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 16px 16px calc(14px + env(safe-area-inset-bottom)) !important;
+    scroll-padding: 88px 0 110px !important;
+  }
+
+  .checkout-step.active {
+    gap: 13px !important;
+  }
+
+  .checkout-grid,
+  .checkout-choice,
+  .payment-options {
+    grid-template-columns: 1fr !important;
+    gap: 11px !important;
+  }
+
+  .checkout-field {
+    gap: 6px !important;
+  }
+
+  .checkout-field label {
+    font-size: 12.5px !important;
+    line-height: 1.15 !important;
+  }
+
+  .checkout-field input,
+  .checkout-field textarea,
+  .checkout-field select {
+    min-height: 50px !important;
+    border-radius: 16px !important;
+    padding: 13px 14px !important;
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+  }
+
+  .checkout-field textarea {
+    min-height: 78px !important;
+  }
+
+  .checkout-choice label,
+  .payment-card,
+  .payment-option,
+  .checkout-summary-item,
+  .checkout-confirmation,
+  .payment-intro,
+  .payment-note {
+    border-radius: 16px !important;
+    padding: 13px !important;
+  }
+
+  .checkout-actions {
+    position: sticky !important;
+    bottom: calc(-1 * env(safe-area-inset-bottom)) !important;
+    z-index: 3 !important;
+    display: grid !important;
+    grid-template-columns: 0.8fr 1.2fr !important;
+    gap: 8px !important;
+    margin: 14px -16px calc(-14px - env(safe-area-inset-bottom)) !important;
+    padding: 10px 16px calc(12px + env(safe-area-inset-bottom)) !important;
+    background: linear-gradient(180deg, rgba(255, 248, 236, 0.84), #fff8ec 22%) !important;
+    border-top: 1px solid rgba(24, 9, 0, 0.08) !important;
+  }
+
+  .checkout-actions button,
+  .checkout-actions a {
+    width: 100% !important;
+    min-height: 46px !important;
+    padding: 12px 13px !important;
+    font-size: 13px !important;
+  }
+
+  .checkout-actions.single-action {
+    grid-template-columns: 1fr !important;
+  }
+
+  .checkout-actions.single-action .secondary[disabled] {
+    display: none !important;
+  }
+
+  body.checkout-keyboard-open .checkout-dialog {
+    height: calc(var(--checkout-vh, 100dvh) - 10px) !important;
+    max-height: calc(var(--checkout-vh, 100dvh) - 10px) !important;
+    border-radius: 18px !important;
+  }
+
+  body.checkout-keyboard-open .checkout-head {
+    padding: 10px 14px 9px !important;
+  }
+
+  body.checkout-keyboard-open .checkout-head .kicker,
+  body.checkout-keyboard-open .checkout-head p {
+    display: none !important;
+  }
+
+  body.checkout-keyboard-open .checkout-head h2 {
+    font-size: 24px !important;
+    line-height: 1.05 !important;
+    margin: 0 !important;
+  }
+
+  body.checkout-keyboard-open .checkout-close {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    flex-basis: 38px !important;
+  }
+
+  body.checkout-keyboard-open .checkout-progress {
+    padding: 7px 10px !important;
+    gap: 5px !important;
+  }
+
+  body.checkout-keyboard-open .checkout-progress span {
+    min-height: 30px !important;
+    font-size: 10px !important;
+    padding: 5px 3px !important;
+  }
+
+  body.checkout-keyboard-open .checkout-body {
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom)) !important;
+    scroll-padding: 58px 0 96px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .checkout-head h2 {
+    font-size: 29px !important;
+    max-width: 250px !important;
+  }
+
+  .checkout-head p {
+    font-size: 13px !important;
+  }
+
+  .checkout-progress span {
+    font-size: 10px !important;
+  }
+}
