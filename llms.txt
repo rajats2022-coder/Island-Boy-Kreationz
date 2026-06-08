@@ -13,12 +13,20 @@ Known menu and catering directions:
 Primary pages:
 - Home: /
 - Order: /order.html
+- Catering services: /services.html
 - Catering inquiry: /contact.html
 - About: /about.html
 - Gallery: /gallery.html
 - Service areas: /service-areas.html
 - Blog: /blog.html
 - FAQ: /faq.html
+
+Primary service SEO pages:
+- /oxtail-catering-nc.html
+- /food-truck-catering-nc.html
+- /office-lunch-catering-nc.html
+- /private-party-catering-nc.html
+- /church-community-event-catering-nc.html
 
 Primary local SEO pages:
 - /catering-charlotte-nc.html

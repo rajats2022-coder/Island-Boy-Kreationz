@@ -127,8 +127,81 @@ body:after {
   white-space: nowrap !important;
 }
 
+.links button {
+  font: inherit !important;
+}
+
 .links a:hover {
   color: var(--site-gold) !important;
+}
+
+.nav-dropdown {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.nav-dropdown-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #fff3d4 !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+}
+
+.nav-dropdown-toggle span {
+  font-size: 11px !important;
+  transform: translateY(1px) !important;
+}
+
+.nav-dropdown-menu {
+  position: absolute !important;
+  top: calc(100% + 14px) !important;
+  right: 0 !important;
+  z-index: 150 !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 7px !important;
+  width: min(560px, calc(100vw - 32px)) !important;
+  padding: 12px !important;
+  border: 1px solid rgba(255, 232, 184, 0.24) !important;
+  border-radius: 18px !important;
+  background: rgba(17, 7, 0, 0.98) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-6px) !important;
+  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease !important;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu,
+.nav-dropdown.open .nav-dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+
+.nav-dropdown-menu a {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 38px !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: #fff8ec !important;
+}
+
+.nav-dropdown-menu a:hover {
+  background: rgba(255, 189, 53, 0.2) !important;
 }
 
 .pill,
