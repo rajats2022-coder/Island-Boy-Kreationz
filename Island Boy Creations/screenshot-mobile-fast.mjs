@@ -1,0 +1,28 @@
+import { spawn } from 'child_process';
+import { writeFile, mkdir } from 'fs/promises';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const OUT_DIR = join(__dirname, 'temporary screenshots');
+await mkdir(OUT_DIR,{recursive:true});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const port=9252;
+const chrome=spawn(CHROME,[`--remote-debugging-port=${port}`,'--headless=new','--no-sandbox','--disable-gpu','--window-size=430,932','--hide-scrollbars','about:blank'],{stdio:'ignore'});
+await sleep(1200);
+const tabs=await (await fetch(`http://127.0.0.1:${port}/json`)).json();
+const ws=new WebSocket(tabs[0].webSocketDebuggerUrl);
+let id=1; const pending=new Map();
+ws.addEventListener('message',e=>{const m=JSON.parse(e.data); if(m.id&&pending.has(m.id)){pending.get(m.id)(m); pending.delete(m.id)}});
+await new Promise(r=>ws.addEventListener('open',r,{once:true}));
+function send(method,params={}){return new Promise((res,rej)=>{const i=id++; pending.set(i,res); ws.send(JSON.stringify({id:i,method,params})); setTimeout(()=>rej(new Error('timeout '+method)),60000)})}
+await send('Page.enable');
+await send('Emulation.setDeviceMetricsOverride',{width:430,height:932,deviceScaleFactor:1,mobile:true,screenWidth:430,screenHeight:932});
+await send('Emulation.setUserAgentOverride',{userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 19_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/19.0 Mobile/15E148 Safari/604.1'});
+await send('Page.navigate',{url:process.argv[2]||'http://localhost:3016/'});
+await sleep(3500);
+const evalRes=await send('Runtime.evaluate',{expression:'JSON.stringify({innerWidth, scrollWidth:document.documentElement.scrollWidth})',returnByValue:true});
+console.log(evalRes.result.result.value);
+const shot=await send('Page.captureScreenshot',{format:'jpeg',quality:85,captureBeyondViewport:false,fromSurface:false});
+await writeFile(join(OUT_DIR,'cdp-mobile-real.jpg'),Buffer.from(shot.result.data,'base64'));
+ws.close(); chrome.kill();

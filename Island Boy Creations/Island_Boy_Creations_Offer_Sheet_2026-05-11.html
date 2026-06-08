@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Island Boy Creations Offer Sheet | S4 AI Agency</title>
+  <style>
+    :root {
+      --lava: #110700;
+      --ocean: #1f7b4d;
+      --lagoon: #009b92;
+      --coral: #ff6b1a;
+      --sand: #fff8ec;
+      --gold: #ffbd35;
+      --red: #c82618;
+      --ink: #180900;
+      --muted: #6d4c36;
+      --paper: #fff8ec;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 12% 4%, rgba(255,189,53,.34), transparent 25%), radial-gradient(circle at 88% 8%, rgba(0,155,146,.20), transparent 28%), linear-gradient(180deg, #fff3d5 0%, #fff8ec 46%, #fff4df 100%);
+      line-height: 1.45;
+    }
+    .page {
+      width: min(960px, calc(100% - 28px));
+      margin: 24px auto;
+      background: var(--paper);
+      border: 1px solid rgba(24, 9, 0, .10);
+      box-shadow: 0 24px 70px rgba(56, 20, 0, .20);
+      overflow: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, var(--lava), #3a1205 58%, var(--red));
+      color: var(--sand);
+      padding: 38px 44px 34px;
+      position: relative;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 7px;
+      background: linear-gradient(90deg, var(--gold), var(--coral), var(--red), var(--lagoon));
+    }
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .brand-lockup img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 20px;
+      background: #0d0500;
+      box-shadow: 0 12px 34px rgba(255,107,26,.32);
+    }
+    .eyebrow {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin: 0 0 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: .96;
+      letter-spacing: -0.02em;
+      max-width: 760px;
+    }
+    .subhead {
+      margin: 18px 0 0;
+      max-width: 720px;
+      color: rgba(255, 241, 214, .84);
+      font-size: 18px;
+    }
+    .prepared {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 28px;
+      color: rgba(255, 241, 214, .72);
+      font-size: 13px;
+      flex-wrap: wrap;
+    }
+    main { padding: 34px 44px 42px; }
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .price-card {
+      background: white;
+      border: 1px solid rgba(16, 10, 8, .1);
+      border-radius: 8px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(16, 10, 8, .08);
+    }
+    .price-card h2 {
+      margin: 0 0 12px;
+      color: var(--ocean);
+      font-size: 20px;
+    }
+    .price {
+      color: var(--red);
+      font-size: 44px;
+      font-weight: 950;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    .price span { font-size: 17px; color: var(--muted); font-weight: 800; letter-spacing: 0; }
+    .section {
+      border-top: 1px solid rgba(16, 10, 8, .12);
+      padding-top: 24px;
+      margin-top: 24px;
+    }
+    h3 {
+      color: var(--lava);
+      font-size: 24px;
+      margin: 0 0 12px;
+      letter-spacing: -0.01em;
+    }
+    ul {
+      margin: 12px 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 18px;
+      list-style: none;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #303235;
+      font-size: 15px;
+    }
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .62em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+    .highlight {
+      background: linear-gradient(135deg, rgba(255, 189, 53, .24), rgba(0, 155, 146, .14));
+      border: 1px solid rgba(11, 61, 73, .14);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 22px;
+    }
+    .highlight p { margin: 0; color: #263033; font-weight: 700; }
+    .lead-copy {
+      margin: 0;
+      color: #3e281a;
+      font-size: 17px;
+      line-height: 1.58;
+      max-width: 820px;
+      font-weight: 650;
+    }
+    .roi-highlight {
+      border-left: 7px solid var(--red);
+    }
+    .explain-grid {
+      margin-top: 18px;
+    }
+    .terms {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .term-box {
+      background: #fff;
+      border: 1px solid rgba(16, 10, 8, .1);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .term-box strong { color: var(--ocean); }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px 44px;
+      background: var(--lava);
+      color: rgba(255, 241, 214, .74);
+      font-size: 13px;
+      flex-wrap: wrap;
+    }
+    footer strong { color: var(--sand); }
+    @media (max-width: 720px) {
+      header, main, footer { padding-left: 22px; padding-right: 22px; }
+      .price-grid, .terms, ul { grid-template-columns: 1fr; }
+    }
+    @media print {
+      @page { size: Letter; margin: 0; }
+      body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .page { margin: 0; width: 100%; box-shadow: none; border: none; }
+      .price-card, .term-box, .highlight, footer { break-inside: avoid; page-break-inside: avoid; }
+      .lead-page { break-before: page; page-break-before: always; }
+      .project-terms { break-before: auto; page-break-before: auto; }
+      .terms { break-before: auto; page-break-before: auto; }
+    }
+  </style>
+</head>
+<body>
+  <article class="page">
+    <header>
+      <div class="brand-lockup"><img src="offer-assets/island-boy-logo.png" alt="Island Boy Kreationz logo"><p class="eyebrow">S4 AI Agency Offer Sheet</p></div>
+      <h1>Island Boy Kreationz Website + App Partnership</h1>
+      <p class="subhead">A custom website, optional personalized app, lead form, ongoing maintenance, hosting, security, and creative content support for the brand.</p>
+      <div class="prepared"><span>Prepared for Island Boy Kreationz / Island Boy Creations</span><span>May 11, 2026</span></div>
+    </header>
+
+    <main>
+      <section class="price-grid" aria-label="Pricing summary">
+        <div class="price-card">
+          <h2>Custom Website Build</h2>
+          <p class="price">$350 <span>one-time</span></p>
+          <p>Built around the exact vision, style, content, and design direction the owner wants.</p>
+        </div>
+        <div class="price-card">
+          <h2>Personalized App Add-On</h2>
+          <p class="price">+$150 <span>one-time</span></p>
+          <p>Add a personalized app-style experience on top of the website build. Website + app setup is $500 total.</p>
+        </div>
+        <div class="price-card">
+          <h2>Website + Creative Partnership</h2>
+          <p class="price">$97 <span>per month</span></p>
+          <p>Ongoing support to keep the website, app, brand, and social content active.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>What the $350 Website Includes</h3>
+        <ul>
+          <li>Custom website design and layout</li>
+          <li>Mobile-friendly page design</li>
+          <li>Lead/contact form for customer inquiries</li>
+          <li>Business story, photos, menu/services, and calls to action</li>
+          <li>Design direction based on the owner’s feedback</li>
+          <li>Final launch-ready website setup</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h3>Personalized App Add-On</h3>
+        <ul>
+          <li>Personalized app-style experience for the business or brand</li>
+          <li>Built around the same design direction as the website</li>
+          <li>Lead/contact or customer action flow where useful</li>
+          <li>Simple structure for services, content, reviews, menu items, events, or offers</li>
+          <li>Quality management and maintenance throughout our time working together</li>
+          <li>Included in the monthly support once the app is active</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h3>What the $97 Monthly Partnership Includes</h3>
+        <ul>
+          <li>Website hosting</li>
+          <li>Website security and basic protection</li>
+          <li>Google Business Profile management and optimization</li>
+          <li>SEO and AEO improvement for better search and AI visibility</li>
+          <li>Ongoing website maintenance</li>
+          <li>Website text, photo, menu, offer, and layout changes</li>
+          <li>Updates whenever the business wants to change something</li>
+          <li>Continued support so the site does not get outdated</li>
+          <li>Ongoing app quality checks, maintenance, and updates if the personalized app is included</li>
+        </ul>
+      </section>
+
+      <section class="section lead-page">
+        <h3>Why This Helps the Business Get Leads</h3>
+        <p class="lead-copy">A website gives the business a real online home that is open 24/7. Social media is important, but the website gives customers one clear place to see the food, story, menu or services, contact form, booking options, reviews, photos, and next steps.</p>
+        <div class="highlight roi-highlight">
+          <p>We have had clients make their website investment back in less than 24 hours by getting leads from the site and online presence. Results depend on the offer, market, traffic, and follow-up, so this is not a guarantee, but it shows what can happen when the website is built to convert.</p>
+        </div>
+        <div class="terms explain-grid">
+          <div class="term-box"><strong>Google Business Profile:</strong> We can manage and optimize the Google listing so the business looks stronger on Google Maps and local search with better photos, services, updates, descriptions, keywords, review strategy, and accurate information.</div>
+          <div class="term-box"><strong>SEO:</strong> Search Engine Optimization helps the business show up when people search on Google for things like Caribbean food, catering, food truck, local eats, or the business name.</div>
+          <div class="term-box"><strong>AEO:</strong> Answer Engine Optimization helps AI tools, voice search, Google answers, and future search assistants understand what the business does and recommend it clearly.</div>
+          <div class="term-box"><strong>Modern Discovery:</strong> Customers use Google, Maps, Instagram, TikTok, AI search, voice assistants, and reviews. The goal is to make Island Boy easy to find, easy to trust, and easy to contact everywhere customers are looking.</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h3>Creative Content Support Included</h3>
+        <ul>
+          <li>Social media post designs</li>
+          <li>Instagram graphics and promotional posts</li>
+          <li>Logo concepts or logo updates as needed</li>
+          <li>Food review content ideas and support</li>
+          <li>Content for the business page and owner’s personal/brand page</li>
+          <li>Creative direction for menu items, catering, events, customer reactions, behind-the-scenes moments, and reviews</li>
+        </ul>
+        <div class="highlight">
+          <p>Goal: build a professional online presence that makes the brand look legit, helps customers understand the offer, and makes it easy for people to contact, book, or follow.</p>
+        </div>
+      </section>
+
+      <section class="section project-terms">
+        <h3>Project Terms</h3>
+        <div class="terms">
+        <div class="term-box"><strong>Start:</strong> Website build starts after the $350 setup payment. Website + personalized app setup is $500 total.</div>
+        <div class="term-box"><strong>Monthly:</strong> The $97/month partnership begins when ongoing support starts or the site/app goes live.</div>
+        <div class="term-box"><strong>Included:</strong> Website updates and creative assets while the partnership is active.</div>
+        <div class="term-box"><strong>Separate if needed:</strong> Paid ads, ad spend, domain purchases, professional shoots, and third-party platform fees.</div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span><strong>S4 AI Agency</strong> · Website + Creative Systems</span>
+      <span>Recommended next step: start the $350 website build, or $500 website + app setup, then continue with the $97/month partnership.</span>
+    </footer>
+  </article>
+</body>
+</html>
