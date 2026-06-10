@@ -1,103 +1,182 @@
+/**
+ * mobile-polish.js — Island Boy nav behavior.
+ * Wires the desktop dropdowns (Catering / Locations / About) and builds the
+ * grouped mobile menu. Injects its own critical CSS so the menu can never
+ * render as unstyled links, even on a page missing site-shell.css.
+ */
 (function () {
-  const nav = document.querySelector(".nav");
-  const desktopLinks = document.querySelector(".links");
-  if (!nav || !desktopLinks || document.querySelector(".mobile-nav-panel")) return;
+  if (window.__ibShellInit) return;
+  window.__ibShellInit = true;
 
-  if (!document.getElementById("ib-nav-dropdown-fallback")) {
-    const style = document.createElement("style");
-    style.id = "ib-nav-dropdown-fallback";
-    style.textContent = ".nav-dropdown{position:relative;display:inline-flex;align-items:center}.nav-dropdown-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0;border:0;background:transparent;color:#fff3d4;font:inherit;font-weight:900;line-height:1;white-space:nowrap;cursor:pointer}.nav-dropdown-toggle span{font-size:11px;transform:translateY(1px)}.nav-dropdown-menu{position:absolute;top:calc(100% + 14px);right:0;z-index:150;display:grid;grid-template-columns:1fr 1fr;gap:7px;width:min(560px,calc(100vw - 32px));padding:12px;border:1px solid rgba(255,232,184,.24);border-radius:18px;background:rgba(17,7,0,.98);box-shadow:0 24px 70px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity 160ms ease,transform 160ms ease,visibility 160ms ease}.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}.nav-dropdown-menu a{display:flex;align-items:center;min-height:38px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.07);color:#fff8ec!important}.nav-dropdown-menu a:hover{background:rgba(255,189,53,.2)}@media(max-width:920px){.links{display:none!important}}";
+  var nav = document.querySelector(".nav");
+  if (!nav) return;
+
+  /* critical fallback styles (site-shell.css normally wins; this is a safety net) */
+  if (!document.getElementById("ib-shell-fallback")) {
+    var style = document.createElement("style");
+    style.id = "ib-shell-fallback";
+    style.textContent =
+      ".ib-mobile-panel{position:fixed;top:0;left:0;right:0;bottom:0;z-index:65;display:none;flex-direction:column;padding:calc(96px + env(safe-area-inset-top)) 18px calc(28px + env(safe-area-inset-bottom));background:rgba(13,5,0,.985);overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}" +
+      ".ib-mobile-panel.open{opacity:1;visibility:visible;transform:translateY(0)}" +
+      ".ib-mobile-panel .ib-mp-primary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}" +
+      ".ib-mobile-panel .ib-mp-primary a{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:999px;font-weight:1000;font-size:15px;color:#160805;background:#ffbd35;text-decoration:none}" +
+      ".ib-mobile-panel .ib-mp-primary a:last-child{background:linear-gradient(135deg,#005aa9,#00a7a7);color:#fffdf6}" +
+      ".ib-mobile-panel .ib-mp-label{display:block;color:#ffbd35;font-size:11px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase;padding:12px 6px 6px}" +
+      ".ib-mobile-panel .ib-mp-links{display:grid;grid-template-columns:1fr 1fr;gap:6px}" +
+      ".ib-mobile-panel .ib-mp-links.ib-mp-1col{grid-template-columns:1fr}" +
+      ".ib-mobile-panel .ib-mp-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;border-radius:14px;background:rgba(255,248,236,.07);color:#fff8ec;font-weight:800;font-size:14.5px;text-decoration:none}" +
+      ".mobile-nav-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid rgba(255,232,184,.32);border-radius:999px;background:rgba(255,248,236,.08);color:#fff8ec;font-size:19px;cursor:pointer}" +
+      "@media(max-width:920px){.topbar .links{display:none!important}.mobile-nav-toggle{display:inline-flex}body.ib-menu-open{overflow:hidden}.ib-mobile-panel{display:flex}}" +
+      "@media(min-width:921px){.ib-mobile-panel,.mobile-nav-toggle{display:none!important}}";
     document.head.appendChild(style);
   }
 
-  const dropdown = desktopLinks.querySelector(".nav-dropdown");
-  const dropdownButton = desktopLinks.querySelector(".nav-dropdown-toggle");
-  if (dropdown && dropdownButton) {
-    dropdownButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      const open = dropdown.classList.toggle("open");
-      dropdownButton.setAttribute("aria-expanded", String(open));
-    });
+  /* remove any legacy injected panel */
+  document.querySelectorAll(".mobile-nav-panel").forEach(function (n) { n.remove(); });
 
-    dropdown.addEventListener("keydown", (event) => {
-      if (event.key !== "Escape") return;
-      dropdown.classList.remove("open");
-      dropdownButton.setAttribute("aria-expanded", "false");
-      dropdownButton.focus();
-    });
+  /* ---------- desktop dropdowns ---------- */
+  var dropdowns = Array.prototype.slice.call(document.querySelectorAll(".nav-dropdown"));
 
-    dropdown.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        dropdown.classList.remove("open");
-        dropdownButton.setAttribute("aria-expanded", "false");
-      });
+  function closeDropdowns(except) {
+    dropdowns.forEach(function (d) {
+      if (d === except) return;
+      d.classList.remove("open");
+      var b = d.querySelector(".nav-dropdown-toggle");
+      if (b) b.setAttribute("aria-expanded", "false");
     });
   }
 
-  let button = document.querySelector(".mobile-nav-toggle");
-  const createdButton = !button;
+  dropdowns.forEach(function (dropdown) {
+    var button = dropdown.querySelector(".nav-dropdown-toggle");
+    if (!button) return;
+
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+      var open = dropdown.classList.toggle("open");
+      closeDropdowns(dropdown);
+      button.setAttribute("aria-expanded", String(open));
+    });
+
+    dropdown.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape") return;
+      dropdown.classList.remove("open");
+      button.setAttribute("aria-expanded", "false");
+      button.focus();
+    });
+
+    dropdown.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        dropdown.classList.remove("open");
+        button.setAttribute("aria-expanded", "false");
+      });
+    });
+  });
+
+  /* ---------- mobile menu ---------- */
+  var button = document.querySelector(".mobile-nav-toggle");
   if (!button) {
     button = document.createElement("button");
     button.className = "mobile-nav-toggle";
     button.type = "button";
     button.setAttribute("aria-label", "Open navigation");
     button.textContent = "☰";
+    nav.appendChild(button);
   }
   button.setAttribute("aria-expanded", "false");
 
-  const panel = document.createElement("div");
-  panel.className = "mobile-nav-panel";
+  var panel = document.createElement("nav");
+  panel.className = "ib-mobile-panel";
   panel.setAttribute("aria-label", "Mobile navigation");
 
-  const mobileLinks = [
-    ["Menu", "index.html#menu"],
-    ["Order Now", "order.html", true],
-    ["Book Catering", "contact.html#lead-form", true],
-    ["Services", "services.html"],
-    ["Food Truck Catering", "food-truck-catering-nc.html"],
-    ["Oxtail Catering", "oxtail-catering-nc.html"],
-    ["Private Parties", "private-party-catering-nc.html"],
-    ["Office Lunch", "office-lunch-catering-nc.html"],
-    ["Church & Community", "church-community-event-catering-nc.html"],
-    ["About", "about.html"],
-    ["Gallery", "gallery.html"],
-    ["Service Areas", "service-areas.html"],
-    ["Blog", "blog.html"],
-    ["FAQ", "faq.html"],
-    ["Contact", "contact.html"],
+  var GROUPS = [
+    { primary: [["Order Now", "order.html"], ["Book Catering", "contact.html#lead-form"]] },
+    { label: "Explore", cols: 2, links: [
+      ["Menu", "index.html#menu"], ["Our Story", "about.html"],
+      ["Gallery", "gallery.html"], ["Blog", "blog.html"],
+      ["FAQ", "faq.html"], ["Contact", "contact.html"]
+    ] },
+    { label: "Catering", cols: 1, links: [
+      ["All Catering Services", "services.html"],
+      ["Food Truck Catering", "food-truck-catering-nc.html"],
+      ["Oxtail Catering", "oxtail-catering-nc.html"],
+      ["Private Party Catering", "private-party-catering-nc.html"],
+      ["Office Lunch Catering", "office-lunch-catering-nc.html"],
+      ["Church & Community Events", "church-community-event-catering-nc.html"],
+      ["Party Trays & Drop-Off", "tray-catering-nc.html"]
+    ] },
+    { label: "Service Areas", cols: 2, links: [
+      ["All Service Areas", "service-areas.html"],
+      ["Charlotte", "catering-charlotte-nc.html"],
+      ["Concord", "catering-concord-nc.html"],
+      ["Matthews", "catering-matthews-nc.html"],
+      ["Huntersville", "catering-huntersville-nc.html"],
+      ["Gastonia", "catering-gastonia-nc.html"],
+      ["Raleigh", "catering-raleigh-nc.html"],
+      ["Greensboro", "catering-greensboro-nc.html"]
+    ] }
   ];
 
   function closePanel() {
     panel.classList.remove("open");
+    document.body.classList.remove("ib-menu-open");
     button.setAttribute("aria-expanded", "false");
     button.textContent = "☰";
   }
 
-  mobileLinks.forEach(([label, href, primary]) => {
-    const link = document.createElement("a");
-    link.href = href;
-    link.textContent = label;
-    if (primary) link.dataset.mobilePrimary = "true";
-    link.addEventListener("click", closePanel);
-    panel.appendChild(link);
+  GROUPS.forEach(function (group) {
+    if (group.primary) {
+      var row = document.createElement("div");
+      row.className = "ib-mp-primary";
+      group.primary.forEach(function (item) {
+        var a = document.createElement("a");
+        a.href = item[1];
+        a.textContent = item[0];
+        a.addEventListener("click", closePanel);
+        row.appendChild(a);
+      });
+      panel.appendChild(row);
+      return;
+    }
+    var wrap = document.createElement("div");
+    wrap.className = "ib-mp-group";
+    var label = document.createElement("span");
+    label.className = "ib-mp-label";
+    label.textContent = group.label;
+    wrap.appendChild(label);
+    var list = document.createElement("div");
+    list.className = "ib-mp-links" + (group.cols === 1 ? " ib-mp-1col" : "");
+    group.links.forEach(function (item) {
+      var a = document.createElement("a");
+      a.href = item[1];
+      a.textContent = item[0];
+      a.addEventListener("click", closePanel);
+      list.appendChild(a);
+    });
+    wrap.appendChild(list);
+    panel.appendChild(wrap);
   });
 
-  button.addEventListener("click", () => {
-    const open = panel.classList.toggle("open");
+  button.addEventListener("click", function () {
+    var open = panel.classList.toggle("open");
+    document.body.classList.toggle("ib-menu-open", open);
     button.setAttribute("aria-expanded", String(open));
     button.textContent = open ? "×" : "☰";
+    button.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
   });
 
-  document.addEventListener("click", (event) => {
-    if (dropdown && dropdownButton && !dropdown.contains(event.target)) {
-      dropdown.classList.remove("open");
-      dropdownButton.setAttribute("aria-expanded", "false");
-    }
+  document.addEventListener("click", function (event) {
+    if (!event.target.closest(".nav-dropdown")) closeDropdowns();
     if (!panel.classList.contains("open")) return;
     if (panel.contains(event.target) || button.contains(event.target)) return;
     closePanel();
   });
 
-  if (createdButton) nav.appendChild(button);
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && panel.classList.contains("open")) {
+      closePanel();
+      button.focus();
+    }
+  });
+
   document.body.appendChild(panel);
 })();

@@ -67,8 +67,8 @@
     transform: none !important;
   }
 
-  section,
-  main > section:not(.hero-fullscreen):not(.liquid-hero) {
+  section:not(.ibx-hero),
+  main > section:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) {
     padding-top: 46px !important;
     padding-bottom: 46px !important;
     overflow: hidden !important;
@@ -596,7 +596,7 @@
     padding: 96px 0 46px !important;
   }
 
-  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) {
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) {
     background-color: #110700 !important;
     background-image:
       linear-gradient(135deg, rgba(17, 7, 0, 0.94), rgba(90, 23, 10, 0.86)),
@@ -607,27 +607,27 @@
     color: #fff8ec !important;
   }
 
-  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
-  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p {
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1,
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p {
     color: #fff8ec !important;
     opacity: 1 !important;
     text-shadow: 0 3px 18px rgba(0, 0, 0, 0.58) !important;
   }
 
-  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .kicker,
-  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .hero-markers span,
-  main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .hero-reference {
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .kicker,
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .hero-markers span,
+  main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .hero-reference {
     background: rgba(255, 248, 236, 0.92) !important;
     color: #180900 !important;
     border-color: rgba(255, 189, 53, 0.45) !important;
     text-shadow: none !important;
   }
 
-  body:has(.gallery-grid) main > section.hero:not(.hero-fullscreen):not(.liquid-hero) {
+  body:has(.gallery-grid) main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) {
     --mobile-hero-image: url("vi-national-park-trunk-bay.jpg");
   }
 
-  main > section.contact-hero:not(.hero-fullscreen):not(.liquid-hero),
+  main > section.contact-hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero),
   main > section.contact-hero,
   .contact-hero {
     background-color: #110700 !important;
@@ -878,7 +878,7 @@
 }
 
 @media (max-width: 760px) {
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero),
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero),
   .page-about .hero {
     --mobile-hero-image: url("usvi-flag-official.svg") !important;
     background-image:
@@ -896,7 +896,7 @@
     padding: 20px !important;
   }
 
-  main > section.story-section.about-owner-section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero),
+  main > section.story-section.about-owner-section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero),
   .about-owner-section {
     background:
       linear-gradient(180deg, rgba(255, 248, 236, 0.96), rgba(255, 248, 236, 0.88)),
@@ -1036,12 +1036,12 @@
     border-radius: var(--mobile-radius) !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1,
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1,
   body.page-faq main > section.contact-hero h1,
   body.page-contact main > section.contact-hero h1,
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
   body.page-faq main > section.contact-hero p,
   body.page-contact main > section.contact-hero p {
     width: calc(100vw - 92px) !important;
@@ -1051,8 +1051,8 @@
     word-break: normal !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
   body.page-faq main > section.contact-hero p,
   body.page-contact main > section.contact-hero p {
     width: calc(100vw - 164px) !important;
@@ -1144,9 +1144,9 @@
 }
 
 @media (max-width: 700px) {
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero),
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero),
-  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero),
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero),
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero),
+  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero),
   body.page-blog main > section.contact-hero,
   body.page-faq main > section.contact-hero,
   body.page-contact main > section.contact-hero {
@@ -1159,9 +1159,9 @@
     overflow: hidden !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .wrap,
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .wrap,
-  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .wrap,
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .wrap,
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .wrap,
+  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .wrap,
   body.page-blog main > section.contact-hero .wrap,
   body.page-faq main > section.contact-hero .wrap,
   body.page-contact main > section.contact-hero .wrap {
@@ -1178,15 +1178,15 @@
     text-align: center !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .wrap {
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .wrap {
     width: min(calc(100% - 70px), 380px) !important;
     max-width: min(calc(100% - 70px), 380px) !important;
     padding: 18px 16px !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
-  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1,
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1,
+  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1,
   body.page-blog main > section.contact-hero h1,
   body.page-faq main > section.contact-hero h1,
   body.page-contact main > section.contact-hero h1 {
@@ -1203,13 +1203,13 @@
     text-wrap: balance !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1 {
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1 {
     font-size: clamp(25px, 6.9vw, 30px) !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
-  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
+  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
   body.page-blog main > section.contact-hero p,
   body.page-faq main > section.contact-hero p,
   body.page-contact main > section.contact-hero p {
@@ -1229,13 +1229,13 @@
     word-break: normal !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p {
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p {
     font-size: 13.5px !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .kicker,
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .kicker,
-  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero) .kicker,
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .kicker,
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .kicker,
+  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) .kicker,
   body.page-blog main > section.contact-hero .glass-eyebrow,
   body.page-faq main > section.contact-hero .glass-eyebrow,
   body.page-contact main > section.contact-hero .glass-eyebrow {
@@ -1367,9 +1367,9 @@
 }
 
 @media (max-width: 700px) {
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
-  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1,
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1,
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1,
+  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1,
   body.page-blog main > section.contact-hero h1,
   body.page-faq main > section.contact-hero h1,
   body.page-contact main > section.contact-hero h1 {
@@ -1380,13 +1380,13 @@
     text-wrap: auto !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) h1 {
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) h1 {
     font-size: clamp(22px, 5.8vw, 26px) !important;
   }
 
-  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
-  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
-  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero) p,
+  body.page-about main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
+  body.page-gallery main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
+  body.page-service-areas main > section.hero:not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) p,
   body.page-blog main > section.contact-hero p,
   body.page-faq main > section.contact-hero p,
   body.page-contact main > section.contact-hero p {

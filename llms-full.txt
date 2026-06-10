@@ -25,7 +25,7 @@ Core menu signals:
 
 Primary conversion paths:
 - Order page: build a meal request before confirming availability and final details.
-- Services page: route catering prospects by service type, including oxtail catering, food truck event catering, office lunch catering, private party catering, and church or community event catering.
+- Services page: route catering prospects by service type, including oxtail catering, food truck event catering, office lunch catering, private party catering, church or community event catering, and party tray drop-off catering.
 - Contact page: submit a catering or food truck booking inquiry with event city, venue address, date, time, guest count, service style, and menu direction.
 - Phone/text: 980-785-8372 for same-day location, availability, and order confirmation.
 - Instagram: https://www.instagram.com/islandboy_kreationz/ for live updates and social proof.
@@ -51,13 +51,14 @@ Website structure:
 - /office-lunch-catering-nc.html targets office lunch catering searches.
 - /private-party-catering-nc.html targets private party catering searches.
 - /church-community-event-catering-nc.html targets church, school, and community event catering searches.
+- /tray-catering-nc.html targets party tray and drop-off catering searches.
 - /contact.html is the catering lead form page.
 - /about.html contains Deon Henry's Island Boy Kreationz story.
 - /gallery.html contains food truck and food photos.
 - /service-areas.html is the North Carolina service-area hub.
 - /blog.html is the catering guide hub.
 - /faq.html answers customer questions and includes FAQ schema.
-- City pages target catering searches across Charlotte, Concord, Greensboro, Raleigh, Durham, Cary, Winston-Salem, High Point, Gastonia, Huntersville, Kannapolis, and Mooresville.
+- City pages target catering searches across 24 North Carolina cities: Charlotte, Concord, Huntersville, Kannapolis, Mooresville, Gastonia, Matthews, Mint Hill, Indian Trail, Monroe, Pineville, Harrisburg, Salisbury, Statesville, Hickory, Greensboro, Winston-Salem, High Point, Raleigh, Durham, Cary, Asheville, Fayetteville, and Wilmington.
 
 Known facts to preserve:
 - Business name: Island Boy Kreationz Food Truck & Catering.

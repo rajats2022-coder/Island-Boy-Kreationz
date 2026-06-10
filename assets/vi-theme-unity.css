@@ -103,7 +103,7 @@ footer a {
   border-image: linear-gradient(90deg, #fffdf6, var(--vi-gold), var(--vi-green), var(--vi-blue), var(--vi-coral), #fffdf6) 1 !important;
 }
 
-main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero) {
+main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) {
   background:
     linear-gradient(90deg, rgba(0, 90, 169, 0.10) 0 8px, transparent 8px calc(100% - 8px), rgba(0, 90, 169, 0.10) calc(100% - 8px)),
     radial-gradient(circle at 12% 8%, rgba(255, 189, 53, 0.18), transparent 26%),
@@ -111,7 +111,7 @@ main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-h
     linear-gradient(180deg, #fffaf0 0%, #fff4df 100%) !important;
 }
 
-main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):before {
+main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero):before {
   background:
     repeating-linear-gradient(90deg, rgba(255, 253, 246, 0.28) 0 18px, rgba(255, 189, 53, 0.055) 18px 36px, rgba(31, 123, 77, 0.045) 36px 54px, rgba(0, 90, 169, 0.045) 54px 72px, rgba(240, 90, 67, 0.04) 72px 90px),
     linear-gradient(90deg, rgba(0, 90, 169, 0.18) 0 10px, transparent 10px calc(100% - 10px), rgba(0, 90, 169, 0.18) calc(100% - 10px)) !important;
@@ -286,7 +286,7 @@ footer {
     background-color: #120600 !important;
   }
 
-  main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):before {
+  main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero):before {
     background:
       linear-gradient(90deg, rgba(0, 90, 169, 0.16) 0 6px, transparent 6px calc(100% - 6px), rgba(0, 90, 169, 0.16) calc(100% - 6px)),
       radial-gradient(circle at 16% 8%, rgba(255, 189, 53, 0.14), transparent 34%) !important;
@@ -715,13 +715,13 @@ body:has(.order-layout) .ib-chat-launcher > span:not(.ib-chat-launcher-icon) {
   }
 }
 
-body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero) {
+body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) {
   background:
     radial-gradient(circle at 86% 20%, rgba(255, 189, 53, 0.24), transparent 30%),
     linear-gradient(135deg, #160805 0%, #2b0f05 44%, #063846 100%) !important;
 }
 
-body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):before {
+body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero):before {
   background:
     linear-gradient(90deg, rgba(10, 3, 0, 0.94) 0%, rgba(10, 3, 0, 0.74) 44%, rgba(0, 90, 169, 0.30) 100%),
     url("new-hero-pic-island.png") !important;
@@ -732,7 +732,7 @@ body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):
 }
 
 /* Order pricing pass: calm logo hero and clearer category groups. */
-body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero),
+body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero),
 body:has(.order-layout) .order-hero {
   min-height: 420px !important;
   background:
@@ -741,7 +741,7 @@ body:has(.order-layout) .order-hero {
     linear-gradient(135deg, #fff7e5 0%, #f5dfad 48%, #cfdcc8 100%) !important;
 }
 
-body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):before,
+body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero):before,
 body:has(.order-layout) .order-hero:before {
   background:
     linear-gradient(90deg, rgba(255, 248, 236, 0.82), rgba(255, 248, 236, 0.52)),

@@ -234,7 +234,7 @@ body:after {
   display: none !important;
 }
 
-main > section:not(.hero):not(.contact-hero):not(.liquid-hero):not(.hero-fullscreen) {
+main > section:not(.hero):not(.contact-hero):not(.liquid-hero):not(.ibx-hero):not(.hero-fullscreen) {
   padding: 64px 0 !important;
 }
 
@@ -801,7 +801,7 @@ body:has(.cart-panel) .ib-chat {
     display: block !important;
   }
 
-  main > section:not(.hero):not(.contact-hero):not(.liquid-hero):not(.hero-fullscreen) {
+  main > section:not(.hero):not(.contact-hero):not(.liquid-hero):not(.ibx-hero):not(.hero-fullscreen) {
     padding: 46px 0 !important;
   }
 
