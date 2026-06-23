@@ -435,22 +435,24 @@
         <div class="lead-form-card">
           <span class="kicker">Catering / truck booking</span>
           <h2 style="margin:8px 0 18px">Submit your inquiry.</h2>
-          <form class="lead-form" action="mailto:deonhenry756@gmail.com" method="post" enctype="text/plain">
+          <form class="lead-form" action="https://formspree.io/f/mzdlzaee" method="POST">
+            <input type="hidden" name="_subject" value="New Island Boy Kreationz catering inquiry">
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none">
             <div class="field-grid">
-              <label>Full name<input name="Name" autocomplete="name" required></label>
-              <label>Phone number<input name="Phone" autocomplete="tel" required></label>
+              <label>Full name<input name="name" autocomplete="name" required></label>
+              <label>Phone number<input name="phone" autocomplete="tel" required></label>
             </div>
             <div class="field-grid">
-              <label>Email<input type="email" name="Email" autocomplete="email"></label>
-              <label>Event date<input type="date" name="Event date"></label>
+              <label>Email<input type="email" name="email" autocomplete="email" required></label>
+              <label>Event date<input type="date" name="event_date"></label>
             </div>
             <div class="field-grid">
-              <label>Event type<select name="Event type"><option>Catering trays</option><option>Food truck pull-up</option><option>Corporate / office lunch</option><option>Private party</option><option>Church / community event</option><option>Other</option></select></label>
-              <label>Estimated guest count<input name="Guest count" placeholder="Example: 50-75"></label>
+              <label>Event type<select name="event_type"><option>Catering trays</option><option>Food truck pull-up</option><option>Corporate / office lunch</option><option>Private party</option><option>Church / community event</option><option>Other</option></select></label>
+              <label>Estimated guest count<input name="guest_count" placeholder="Example: 50-75"></label>
             </div>
-            <label>Event location<input name="Event location" placeholder="Venue, business, neighborhood, or city"></label>
-            <label>What are you interested in?<textarea name="Menu / event notes" placeholder="Oxtails, wings, jerk chicken, shrimp bowls, sides, lemonades, truck pull-up, catering trays, timing, budget range, etc."></textarea></label>
-            <p class="form-note">This form opens your email app with the inquiry details addressed to Island Boy Kreationz. If your email app does not open, call/text 980-785-8372 or email deonhenry756@gmail.com directly.</p>
+            <label>Event location<input name="event_location" placeholder="Venue, business, neighborhood, or city"></label>
+            <label>What are you interested in?<textarea name="message" placeholder="Oxtails, wings, jerk chicken, shrimp bowls, sides, lemonades, truck pull-up, catering trays, timing, budget range, etc." required></textarea></label>
+            <p class="form-note">This inquiry sends directly to Island Boy Kreationz through the secure booking form. For same-day questions or Saturday pull-ups, call/text 980-785-8372.</p>
             <div class="submit-row"><button class="btn primary" type="submit">Send Catering Inquiry</button><a class="btn sun" href="tel:+19807858372">Call / Text Instead</a></div>
           </form>
         </div>

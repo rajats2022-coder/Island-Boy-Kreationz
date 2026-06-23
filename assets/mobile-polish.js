@@ -21,8 +21,11 @@
       ".ib-mobile-panel .ib-mp-primary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}" +
       ".ib-mobile-panel .ib-mp-primary a{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:999px;font-weight:1000;font-size:15px;color:#160805;background:#ffbd35;text-decoration:none}" +
       ".ib-mobile-panel .ib-mp-primary a:last-child{background:linear-gradient(135deg,#005aa9,#00a7a7);color:#fffdf6}" +
-      ".ib-mobile-panel .ib-mp-label{display:block;color:#ffbd35;font-size:11px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase;padding:12px 6px 6px}" +
+      ".ib-mobile-panel .ib-mp-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:50px;margin:0 0 6px;padding:13px 15px;border:1px solid rgba(255,232,184,.14);border-radius:16px;background:rgba(255,248,236,.06);color:#ffbd35;font-size:11px;font-weight:1000;letter-spacing:.16em;text-transform:uppercase;text-align:left;cursor:pointer}" +
+      ".ib-mobile-panel .ib-mp-toggle:after{content:'+';display:grid;place-items:center;width:24px;height:24px;border-radius:999px;background:rgba(255,189,53,.18);color:#fff8ec;font-size:17px;line-height:1;letter-spacing:0}" +
+      ".ib-mobile-panel .ib-mp-group.open .ib-mp-toggle:after{content:'-'}" +
       ".ib-mobile-panel .ib-mp-links{display:grid;grid-template-columns:1fr 1fr;gap:6px}" +
+      ".ib-mobile-panel .ib-mp-links[hidden]{display:none!important}" +
       ".ib-mobile-panel .ib-mp-links.ib-mp-1col{grid-template-columns:1fr}" +
       ".ib-mobile-panel .ib-mp-links a{display:flex;align-items:center;min-height:48px;padding:10px 14px;border-radius:14px;background:rgba(255,248,236,.07);color:#fff8ec;font-weight:800;font-size:14.5px;text-decoration:none}" +
       ".mobile-nav-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid rgba(255,232,184,.32);border-radius:999px;background:rgba(255,248,236,.08);color:#fff8ec;font-size:19px;cursor:pointer}" +
@@ -121,6 +124,14 @@
     document.body.classList.remove("ib-menu-open");
     button.setAttribute("aria-expanded", "false");
     button.textContent = "☰";
+    button.setAttribute("aria-label", "Open navigation");
+    panel.querySelectorAll(".ib-mp-group.open").forEach(function (group) {
+      var toggle = group.querySelector(".ib-mp-toggle");
+      var list = group.querySelector(".ib-mp-links");
+      group.classList.remove("open");
+      if (toggle) toggle.setAttribute("aria-expanded", "false");
+      if (list) list.hidden = true;
+    });
   }
 
   GROUPS.forEach(function (group) {
@@ -139,18 +150,29 @@
     }
     var wrap = document.createElement("div");
     wrap.className = "ib-mp-group";
-    var label = document.createElement("span");
-    label.className = "ib-mp-label";
-    label.textContent = group.label;
-    wrap.appendChild(label);
+    var id = "ib-mp-group-" + group.label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    var toggle = document.createElement("button");
+    toggle.className = "ib-mp-toggle";
+    toggle.type = "button";
+    toggle.textContent = group.label;
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", id);
+    wrap.appendChild(toggle);
     var list = document.createElement("div");
+    list.id = id;
     list.className = "ib-mp-links" + (group.cols === 1 ? " ib-mp-1col" : "");
+    list.hidden = true;
     group.links.forEach(function (item) {
       var a = document.createElement("a");
       a.href = item[1];
       a.textContent = item[0];
       a.addEventListener("click", closePanel);
       list.appendChild(a);
+    });
+    toggle.addEventListener("click", function () {
+      var open = wrap.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+      list.hidden = !open;
     });
     wrap.appendChild(list);
     panel.appendChild(wrap);
