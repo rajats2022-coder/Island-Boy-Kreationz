@@ -203,6 +203,11 @@
     input,select,textarea{width:100%;border:1px solid rgba(24,9,0,.14);border-radius:18px;background:#fffaf0;min-height:52px;padding:13px 14px;font:inherit;color:var(--ink)}
     textarea{min-height:138px;resize:vertical}
     .form-note{font-size:13px;line-height:1.45;color:var(--muted);margin:0}
+    .form-status{border-radius:16px;border:1px solid transparent;padding:13px 14px;font-weight:900;line-height:1.35;margin:0}
+    .form-status[hidden]{display:none}
+    .form-status.success{background:#e7f8ed;border-color:#62bf7e;color:#145c32}
+    .form-status.error{background:#fff0ed;border-color:#f05a43;color:#8a1f10}
+    .lead-form.is-submitting button[type="submit"]{opacity:.72;cursor:wait}
     .booking-sidebar{display:grid;gap:18px}
     .booking-sidebar .panel{padding:28px}
     .booking-steps{display:grid;gap:12px;margin-top:16px}
@@ -453,6 +458,7 @@
             <label>Event location<input name="event_location" placeholder="Venue, business, neighborhood, or city"></label>
             <label>What are you interested in?<textarea name="message" placeholder="Oxtails, wings, jerk chicken, shrimp bowls, sides, lemonades, truck pull-up, catering trays, timing, budget range, etc." required></textarea></label>
             <p class="form-note">This inquiry sends directly to Island Boy Kreationz through the secure booking form. For same-day questions or Saturday pull-ups, call/text 980-785-8372.</p>
+            <p class="form-status" data-form-status role="status" aria-live="polite" hidden></p>
             <div class="submit-row"><button class="btn primary" type="submit">Send Catering Inquiry</button><a class="btn sun" href="tel:+19807858372">Call / Text Instead</a></div>
           </form>
         </div>
@@ -475,6 +481,62 @@
   </main>
 
   <footer class="site-footer"><div class="wrap"><div class="foot-grid"><div class="foot-brand"><a class="brand" href="index.html"><span class="mark logo-mark"><img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo"></span><span><strong>Island Boy Kreationz</strong><small>Food Truck &amp; Catering</small></span></a><p class="foot-tag">Virgin Islands born, Charlotte based. Caribbean soul food from the truck or delivered in trays — oxtails, wings, bowls, and full event spreads. No pork kitchen.</p><p class="foot-contact">6100 Hunter Ave, Charlotte, NC 28262<br><a href="tel:+19807858372">980-785-8372</a> · <a href="mailto:deonhenry756@gmail.com">deonhenry756@gmail.com</a><br><a href="https://www.instagram.com/islandboy_kreationz/" target="_blank" rel="noopener">@islandboy_kreationz</a></p><p class="foot-hours">Truck: Tue–Fri 2:30–8:30 PM · Amazon stop: Tue–Sat 9–11 PM<br>Saturday spots move — call, text, or check Instagram first.</p></div><nav class="foot-col" aria-label="Catering services"><span class="foot-title">Catering</span><a href="services.html">All Services</a><a href="food-truck-catering-nc.html">Food Truck Catering</a><a href="oxtail-catering-nc.html">Oxtail Catering</a><a href="private-party-catering-nc.html">Private Party Catering</a><a href="office-lunch-catering-nc.html">Office Lunch Catering</a><a href="church-community-event-catering-nc.html">Church & Community Events</a><a href="tray-catering-nc.html">Party Trays & Drop-Off</a><a class="foot-cta" href="contact.html#lead-form">Book Catering →</a></nav><nav class="foot-col" aria-label="Service areas"><span class="foot-title">Service Areas</span><a href="catering-charlotte-nc.html">Charlotte</a><a href="catering-concord-nc.html">Concord</a><a href="catering-huntersville-nc.html">Huntersville</a><a href="catering-matthews-nc.html">Matthews</a><a href="catering-mooresville-nc.html">Mooresville</a><a href="catering-gastonia-nc.html">Gastonia</a><a href="catering-raleigh-nc.html">Raleigh</a><a href="catering-durham-nc.html">Durham</a><a href="catering-greensboro-nc.html">Greensboro</a><a href="catering-winston-salem-nc.html">Winston-Salem</a><a class="foot-cta" href="service-areas.html">All 24 service areas →</a></nav><nav class="foot-col" aria-label="Explore"><span class="foot-title">Explore</span><a href="index.html#menu">Menu</a><a href="order.html">Order Online</a><a href="about.html">Our Story</a><a href="gallery.html">Gallery</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></nav></div><div class="foot-bottom"><span>© 2026 Island Boy Kreationz Food Truck & Catering · Charlotte, NC</span><span>Site by S4 AI Agency</span></div></div></footer>
+<script>
+  (function () {
+    var form = document.querySelector(".lead-form");
+    if (!form || !window.fetch || !window.FormData) return;
+
+    var status = form.querySelector("[data-form-status]");
+    var submitButton = form.querySelector('button[type="submit"]');
+    var defaultButtonText = submitButton ? submitButton.textContent : "";
+
+    function setStatus(type, message) {
+      if (!status) return;
+      status.textContent = message || "";
+      status.className = "form-status" + (type ? " " + type : "");
+      status.hidden = !message;
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      if (form.classList.contains("is-submitting")) return;
+
+      setStatus("", "");
+      form.classList.add("is-submitting");
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+      }
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { "Accept": "application/json" }
+      }).then(function (response) {
+        if (response.ok) return response.json().catch(function () { return {}; });
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          var message = "Something went wrong. Please call or text 980-785-8372.";
+          if (data && data.errors && data.errors.length && data.errors[0].message) {
+            message = data.errors[0].message;
+          }
+          throw new Error(message);
+        });
+      }).then(function () {
+        form.reset();
+        setStatus("success", "Success - your catering inquiry was sent.");
+      }).catch(function (error) {
+        setStatus("error", error.message || "Something went wrong. Please call or text 980-785-8372.");
+      }).finally(function () {
+        form.classList.remove("is-submitting");
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = defaultButtonText;
+        }
+      });
+    });
+  })();
+</script>
 <script src="assets/mobile-polish.js"></script>
 <script src="assets/island-chatbot.js"></script>
 </body>
