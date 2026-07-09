@@ -14,6 +14,7 @@ Known menu and catering directions:
 Primary pages:
 - Home: /
 - Order: /order.html
+- July 26 free event sign-up: /july-26-free-event-signup.html
 - Catering services hub: /services.html
 - Catering inquiry: /contact.html
 - About: /about.html

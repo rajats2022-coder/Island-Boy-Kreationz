@@ -6,6 +6,7 @@ Static website for Island Boy Kreationz Food Truck & Catering.
 
 - `index.html` - homepage
 - `order.html` - static order builder and checkout-style inquiry flow
+- `july-26-free-event-signup.html` - July 26 free food event and 7-year anniversary RSVP page
 - `services.html` - catering services hub (generated)
 - `contact.html` - catering and food truck booking inquiry page
 - `about.html` - owner story page

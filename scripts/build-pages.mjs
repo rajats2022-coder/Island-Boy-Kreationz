@@ -15,7 +15,7 @@ import {
 } from './shell-snippets.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const DATE = '2026-06-09';
+const DATE = '2026-07-09';
 
 const TILES = [
   ['island-boy-oxtail-trays.jpg', 'Oxtails & rice and peas'],
@@ -200,7 +200,7 @@ ${sections}
 /* -------------------------------------------------- sitemap + llms.txt */
 
 function sitemap() {
-  const statics = ['', 'order.html', 'services.html', 'service-areas.html', 'contact.html', 'about.html', 'gallery.html', 'blog.html', 'blog-oxtail-catering-nc.html', 'blog-caribbean-catering-charlotte.html', 'blog-food-truck-catering-concord-greensboro.html', 'faq.html'];
+  const statics = ['', 'order.html', SITE.eventHref, 'services.html', 'service-areas.html', 'contact.html', 'about.html', 'gallery.html', 'blog.html', 'blog-oxtail-catering-nc.html', 'blog-caribbean-catering-charlotte.html', 'blog-food-truck-catering-concord-greensboro.html', 'faq.html'];
   const urls = [
     ...statics,
     ...SERVICES.map((s) => serviceHref(s)),
@@ -226,6 +226,7 @@ Known menu and catering directions:
 Primary pages:
 - Home: /
 - Order: /order.html
+- July 26 free event sign-up: /${SITE.eventHref}
 - Catering services hub: /services.html
 - Catering inquiry: /contact.html
 - About: /about.html

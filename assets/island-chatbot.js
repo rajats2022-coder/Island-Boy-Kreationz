@@ -43,6 +43,7 @@
 
   const actions = {
     order: { label: "Order now", href: "order.html", style: "primary" },
+    event: { label: "Free event signup", href: "july-26-free-event-signup.html#event-signup", style: "primary" },
     catering: { label: "Book catering", href: "contact.html#lead-form", style: "primary" },
     call: { label: "Call", href: PHONE_LINK, style: "dark" },
     text: { label: "Text now", href: SMS_LINK, style: "dark" },
@@ -63,6 +64,7 @@
     ["menu", ["menu", "food", "serve", "oxtail", "oxtails", "wing", "wings", "chicken", "curry", "shrimp", "salmon", "beef", "ribs", "dessert", "desserts", "side", "sides", "rice", "mac", "cheese", "cake", "drink", "lemonade", "island", "caribbean", "soul food"]],
     ["today", ["today", "tonight", "right now", "where are you", "where yall", "where y'all", "where u", "where you at", "location today", "pull up", "popup", "pop up", "schedule", "open now"]],
     ["hoursLocation", ["hour", "hours", "open", "closed", "when", "hunter", "address", "location", "where", "directions", "amazon", "tuckaseegee", "6100", "charlotte"]],
+    ["event", ["anniversary", "july 26", "july 26th", "free event", "free food", "giveaway", "7 year", "7-year", "seven year", "seven-year", "rsvp", "sign up", "signup", "secure spot"]],
     ["catering", ["cater", "catering", "event", "events", "party", "wedding", "office", "church", "school", "corporate", "truck", "food truck", "book", "booking", "quote", "tray", "trays", "function", "festival", "birthday", "graduation"]],
     ["order", ["order", "online", "pickup", "cart", "buy", "checkout", "meal", "plate", "plates", "bowl", "bowls", "get food", "doordash"]],
     ["price", ["price", "prices", "pricing", "cost", "how much", "quote", "minimum", "budget", "cheap", "expensive"]],
@@ -77,11 +79,11 @@
   const responseMap = {
     greeting: {
       text: "Hey, welcome to Island Boy Kreationz. Ask me like a normal conversation: menu, where the truck is today, hours, ordering, catering, service areas, or how to reach the team.",
-      actions: ["menu", "location", "order", "catering"]
+      actions: ["event", "menu", "order", "catering"]
     },
     help: {
       text: "I can guide you to the right next step. For food now, use Order Now or call/text. For an event, send the date, time, address, guest count, and whether you want the truck or trays. For same-day location, check Instagram or text before driving.",
-      actions: ["order", "catering", "text", "instagram"]
+      actions: ["event", "order", "catering", "text"]
     },
     menu: {
       text: "The menu includes " + business.menu.join(", ") + ". Availability can rotate, so use the menu page for the full view and text/call for same-day confirmation.",
@@ -94,6 +96,10 @@
     hoursLocation: {
       text: "Home base is " + business.address + ". Posted hours are " + business.regularHours + ". The Amazon stop runs " + business.amazonHours + ". Saturday location can change, so check Instagram or text before driving.",
       actions: ["maps", "location", "text", "instagram"]
+    },
+    event: {
+      text: "The July 26 free food event is the Island Boy Kreationz 7-year anniversary celebration. Sign up with your name, email, phone, and party size so the team can plan portions and check registered guests before walk-up service where possible. Food is while supplies last, so check final updates before driving.",
+      actions: ["event", "text", "instagram"]
     },
     catering: {
       text: "Yes, Island Boy Kreationz takes catering and food truck booking inquiries. Send the event date, time, city/address, guest count, service style, and food direction. If you tell me those details here, I can help you make a clean message to send.",

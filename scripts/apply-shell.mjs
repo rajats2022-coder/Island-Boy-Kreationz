@@ -13,7 +13,7 @@ import { headerHTML, footerHTML, CSS_LINKS } from './shell-snippets.mjs';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 const PAGES = [
-  'index.html', 'order.html', 'contact.html', 'about.html', 'gallery.html',
+  'index.html', 'order.html', 'july-26-free-event-signup.html', 'contact.html', 'about.html', 'gallery.html',
   'blog.html', 'blog-oxtail-catering-nc.html', 'blog-caribbean-catering-charlotte.html',
   'blog-food-truck-catering-concord-greensboro.html', 'faq.html',
 ];

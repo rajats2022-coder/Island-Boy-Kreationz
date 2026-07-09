@@ -39,6 +39,7 @@
 
   /* ---------- desktop dropdowns ---------- */
   var dropdowns = Array.prototype.slice.call(document.querySelectorAll(".nav-dropdown"));
+  var EVENT_HREF = "july-26-free-event-signup.html";
 
   function closeDropdowns(except) {
     dropdowns.forEach(function (d) {
@@ -94,7 +95,8 @@
   var GROUPS = [
     { primary: [["Order Now", "order.html"], ["Book Catering", "contact.html#lead-form"]] },
     { label: "Explore", cols: 2, links: [
-      ["Menu", "index.html#menu"], ["Our Story", "about.html"],
+      ["Menu", "index.html#menu"], ["Free Event Signup", EVENT_HREF],
+      ["Our Story", "about.html"],
       ["Gallery", "gallery.html"], ["Blog", "blog.html"],
       ["FAQ", "faq.html"], ["Contact", "contact.html"]
     ] },
@@ -201,4 +203,54 @@
   });
 
   document.body.appendChild(panel);
+
+  /* ---------- July 26 anniversary scroll CTA ---------- */
+  (function initEventScrollCta() {
+    if (document.querySelector(".ib-event-scroll-cta")) return;
+
+    var isEventPage = /\/july-26-free-event-signup\.html$/.test(window.location.pathname);
+    var eventTarget = isEventPage ? "#event-signup" : EVENT_HREF + "#event-signup";
+    var dismissed = false;
+
+    try {
+      dismissed = window.sessionStorage.getItem("ibEventCtaDismissed") === "1";
+    } catch (error) {
+      dismissed = false;
+    }
+
+    var cta = document.createElement("aside");
+    cta.className = "ib-event-scroll-cta";
+    cta.setAttribute("aria-label", "July 26 free event sign-up");
+    cta.innerHTML =
+      '<button type="button" aria-label="Dismiss anniversary sign-up reminder">×</button>' +
+      '<span>July 26 free event</span>' +
+      '<strong>Come out to the 7-year anniversary.</strong>' +
+      '<p>Sign up so the team can plan food and check registered guests before walk-up service where possible.</p>' +
+      '<a href="' + eventTarget + '">Secure your spot</a>';
+
+    var close = cta.querySelector("button");
+    close.addEventListener("click", function () {
+      dismissed = true;
+      cta.classList.remove("is-visible");
+      try {
+        window.sessionStorage.setItem("ibEventCtaDismissed", "1");
+      } catch (error) {}
+    });
+
+    cta.querySelector("a").addEventListener("click", function () {
+      cta.classList.remove("is-visible");
+    });
+
+    function updateCta() {
+      if (dismissed) return;
+      var scrollable = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      var threshold = Math.max(160, scrollable * 0.3);
+      cta.classList.toggle("is-visible", window.scrollY >= threshold);
+    }
+
+    document.body.appendChild(cta);
+    updateCta();
+    window.addEventListener("scroll", updateCta, { passive: true });
+    window.addEventListener("resize", updateCta);
+  })();
 })();
