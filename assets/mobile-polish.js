@@ -209,7 +209,8 @@
     if (document.querySelector(".ib-event-scroll-cta")) return;
 
     var isEventPage = /\/july-26-free-event-signup\.html$/.test(window.location.pathname);
-    var eventTarget = isEventPage ? "#event-signup" : EVENT_HREF + "#event-signup";
+    if (isEventPage) return;
+    var eventTarget = EVENT_HREF + "#event-signup";
     var dismissed = false;
 
     try {

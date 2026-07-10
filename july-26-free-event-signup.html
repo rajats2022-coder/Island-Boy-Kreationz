@@ -577,9 +577,15 @@
     }
 
     @media (max-width: 900px) {
-      .event-hero {
+      .event-hero,
+      body.page-event-signup main > section#event-top.event-hero {
         min-height: auto;
-        padding: 104px 0 54px;
+        padding: 300px 0 44px !important;
+        background-position: 60% 30% !important;
+      }
+
+      .event-hero-glass {
+        max-width: none;
       }
 
       .event-hero-grid,
@@ -600,10 +606,15 @@
     }
 
     @media (max-width: 560px) {
-      .event-hero {
-        padding: 96px 0 42px;
+      .event-hero,
+      body.page-event-signup main > section#event-top.event-hero {
+        padding: 250px 0 36px !important;
         text-align: center;
-        background-position: center top;
+      }
+
+      .event-hero-glass {
+        padding: 20px 16px;
+        border-radius: 24px;
       }
 
       .event-kicker,
