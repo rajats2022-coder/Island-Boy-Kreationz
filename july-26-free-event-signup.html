@@ -6,13 +6,13 @@
   <meta name="theme-color" content="#110700">
   <title>July 26 Free Event Sign-Up | Island Boy Kreationz 7-Year Anniversary</title>
   <meta name="description" content="Sign up for Island Boy Kreationz Food Truck & Catering's July 26 free food event and 7-year anniversary celebration. RSVP with name, email, phone, and guests. While supplies last.">
-  <link rel="canonical" href="https://islandboykreationz.com/july-26-free-event-signup.html">
+  <link rel="icon" type="image/png" href="/assets/island-boy-logo.png"><link rel="canonical" href="https://islandboykreationz.com/july-26-free-event-signup.html">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:title" content="July 26 Free Event Sign-Up | Island Boy Kreationz">
   <meta property="og:description" content="Come out to the 7-year anniversary of Island Boy Kreationz. Sign up so the team can plan portions and check registered guests before walk-up service where possible.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://islandboykreationz.com/july-26-free-event-signup.html">
-  <meta property="og:image" content="https://islandboykreationz.com/assets/yelp-truck-vibes.jpg">
+  <meta property="og:image" content="https://islandboykreationz.com/assets/july-event-photo.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
   {
@@ -73,30 +73,25 @@
       overflow: hidden;
       color: #fff8ec;
       background:
-        linear-gradient(90deg, rgba(12, 5, 2, 0.88), rgba(12, 5, 2, 0.56) 46%, rgba(12, 5, 2, 0.24)),
-        url("assets/yelp-truck-vibes.jpg") !important;
+        linear-gradient(100deg, rgba(12, 5, 2, 0.28) 30%, rgba(12, 5, 2, 0.10) 58%, rgba(12, 5, 2, 0.02)),
+        url("assets/july-event-photo.jpg") !important;
       background-size: cover !important;
-      background-position: center !important;
-      border-bottom: 7px solid transparent;
-      border-image: linear-gradient(90deg, #fffdf6, var(--event-gold), var(--event-green), var(--event-blue), #f05a43, #fffdf6) 1;
+      background-position: center 38% !important;
+      border-bottom: 4px solid transparent;
+      border-image: linear-gradient(90deg, var(--event-gold), #f05a43 32%, var(--event-blue) 62%, var(--event-green)) 1;
     }
 
     body.page-event-signup main > section#event-top.event-hero {
       background:
-        linear-gradient(90deg, rgba(12, 5, 2, 0.88), rgba(12, 5, 2, 0.56) 46%, rgba(12, 5, 2, 0.24)),
-        url("assets/yelp-truck-vibes.jpg") !important;
+        linear-gradient(100deg, rgba(12, 5, 2, 0.28) 30%, rgba(12, 5, 2, 0.10) 58%, rgba(12, 5, 2, 0.02)),
+        url("assets/july-event-photo.jpg") !important;
       background-size: cover !important;
-      background-position: center !important;
+      background-position: center 38% !important;
     }
 
     .event-hero:before {
       content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 17% 18%, rgba(255, 189, 53, 0.24), transparent 28%),
-        radial-gradient(circle at 86% 18%, rgba(0, 167, 167, 0.18), transparent 30%);
-      pointer-events: none;
+      display: none;
     }
 
     .event-hero .wrap {
@@ -106,9 +101,42 @@
 
     .event-hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
-      gap: clamp(24px, 5vw, 58px);
+      grid-template-columns: minmax(0, 1fr);
       align-items: end;
+    }
+
+    .event-hero-glass {
+      max-width: 560px;
+      padding: clamp(20px, 2.4vw, 26px);
+      border-radius: 28px;
+      border: 1px solid rgba(255, 248, 236, 0.30);
+      background: linear-gradient(135deg, rgba(12, 5, 2, 0.60), rgba(12, 5, 2, 0.36));
+      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.40), inset 1px 1px rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    }
+
+    .event-hero-glass h1 {
+      max-width: none;
+      margin: 14px 0 12px;
+      font-size: clamp(34px, 3.6vw, 48px);
+    }
+
+    .event-hero-glass .event-lead {
+      font-size: clamp(15px, 1.4vw, 17px);
+    }
+
+    .event-hero-glass .event-actions {
+      margin-top: 20px;
+    }
+
+    .event-hero-glass .event-proof {
+      margin-top: 18px;
+    }
+
+    .event-hero .wrap {
+      max-width: none;
+      padding: 0 clamp(20px, 3vw, 44px);
     }
 
     .event-kicker,
@@ -135,10 +163,18 @@
       max-width: 880px;
       margin: 18px 0 18px;
       color: #fffdf6;
-      font-size: clamp(48px, 7vw, 94px);
-      line-height: 0.92;
-      letter-spacing: 0;
+      font-size: clamp(44px, 6vw, 82px);
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
       text-shadow: 0 4px 28px rgba(0, 0, 0, 0.48);
+    }
+
+    .event-grad {
+      background: linear-gradient(100deg, #fff6d1, var(--event-gold) 45%, #ff8b24);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .event-lead {
@@ -174,6 +210,22 @@
       color: #fffdf6 !important;
       font-weight: 1000;
       text-align: center;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .event-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.20);
+    }
+
+    .event-btn:active {
+      transform: translateY(0) scale(0.98);
+      box-shadow: none;
+    }
+
+    .event-btn:focus-visible {
+      outline: 3px solid rgba(255, 139, 36, 0.55);
+      outline-offset: 2px;
     }
 
     .event-btn.primary {
@@ -214,37 +266,6 @@
       letter-spacing: 0.09em;
     }
 
-    .event-hero-card {
-      overflow: hidden;
-      border: 1px solid rgba(255, 248, 236, 0.28);
-      border-radius: 28px;
-      background: rgba(17, 7, 0, 0.5);
-      box-shadow: 0 28px 82px rgba(0, 0, 0, 0.36);
-    }
-
-    .event-hero-card img {
-      width: 100%;
-      height: 330px;
-      object-fit: cover;
-    }
-
-    .event-hero-card div {
-      padding: 18px;
-    }
-
-    .event-hero-card strong {
-      display: block;
-      color: #fffdf6;
-      font-size: 24px;
-      line-height: 1.05;
-    }
-
-    .event-hero-card p {
-      margin: 8px 0 0;
-      color: rgba(255, 248, 236, 0.84);
-      line-height: 1.45;
-    }
-
     .event-section {
       padding: 70px 0;
     }
@@ -255,7 +276,8 @@
       color: var(--event-ink);
       font-size: clamp(34px, 5vw, 62px);
       line-height: 0.98;
-      letter-spacing: 0;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
     }
 
     .event-sub {
@@ -319,6 +341,46 @@
       align-items: start;
     }
 
+    .event-food-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .event-food-strip figure {
+      position: relative;
+      margin: 0;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 18px 50px rgba(22, 8, 5, 0.14);
+    }
+
+    .event-food-strip img {
+      display: block;
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      object-position: center 42%;
+      filter: saturate(1.06) contrast(1.03);
+    }
+
+    .event-food-strip figcaption {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(17, 7, 0, 0.72);
+      color: #ffe8b8;
+      font-size: 12.5px;
+      font-weight: 1000;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
     .event-form-card,
     .event-side-card {
       padding: clamp(22px, 3vw, 34px);
@@ -326,37 +388,60 @@
 
     .event-form {
       display: grid;
-      gap: 14px;
+      gap: 16px;
+      margin-top: 18px;
     }
 
     .event-field-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 16px;
     }
 
     .event-form label {
       display: grid;
-      gap: 7px;
+      gap: 8px;
       color: #2b1206;
       font-weight: 950;
     }
 
     .event-form input,
     .event-form textarea {
+      box-sizing: border-box;
       width: 100%;
       min-height: 52px;
-      padding: 13px 14px;
+      padding: 14px 15px;
       border: 1px solid rgba(24, 9, 0, 0.14);
-      border-radius: 18px;
+      border-radius: 16px;
       background: #fffaf0;
       color: var(--event-ink);
       font: inherit;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .event-form input:focus-visible,
+    .event-form textarea:focus-visible {
+      outline: none;
+      border-color: #ff8b24;
+      box-shadow: 0 0 0 4px rgba(255, 139, 36, 0.22);
+    }
+
+    .event-form-card .event-kicker,
+    .event-side-card .event-kicker {
+      border-color: rgba(200, 38, 24, 0.22);
+      background: #fff0cf;
+      color: #a03a00;
     }
 
     .event-form textarea {
-      min-height: 118px;
+      min-height: 120px;
       resize: vertical;
+    }
+
+    .event-check,
+    .event-disclaimer,
+    .event-status {
+      box-sizing: border-box;
     }
 
     .event-check {
@@ -504,9 +589,14 @@
         grid-template-columns: 1fr;
       }
 
-      .event-hero-card {
-        display: none;
+      .event-food-strip {
+        grid-template-columns: 1fr;
       }
+
+      .event-food-strip img {
+        height: 300px;
+      }
+
     }
 
     @media (max-width: 560px) {
@@ -552,9 +642,9 @@
   <main>
     <section class="event-hero" id="event-top">
       <div class="wrap event-hero-grid">
-        <div>
+        <div class="event-hero-glass">
           <span class="event-kicker">July 26 free event sign-up</span>
-          <h1>Come out to the Island Boy Kreationz 7-year anniversary.</h1>
+          <h1>Come celebrate <span class="event-grad">7 years</span> of Island Boy Kreationz.</h1>
           <p class="event-lead">Island Boy Kreationz is celebrating seven years with free food for the community. Sign up so the team can plan portions and check registered guests before the walk-up line where possible.</p>
           <div class="event-actions">
             <a class="event-btn primary" href="#event-signup">Secure Your Free Food Spot</a>
@@ -567,13 +657,6 @@
             <li>While supplies last</li>
           </ul>
         </div>
-        <aside class="event-hero-card" aria-label="Event food preview">
-          <img src="assets/island-boy-wing-plate-mac-cabbage.jpg" alt="Island Boy Kreationz wing meal with sides">
-          <div>
-            <strong>Registered guests get checked first where possible.</strong>
-            <p>RSVPs help the team estimate headcount before walk-up service starts. Arrive during the posted window and check in under the name on your form.</p>
-          </div>
-        </aside>
       </div>
     </section>
 
@@ -594,6 +677,11 @@
             <h3>Important</h3>
             <p>Food is free while supplies last. Menu items, timing, portions, and exact service flow can change based on turnout and availability.</p>
           </article>
+        </div>
+        <div class="event-food-strip" aria-label="Island Boy Kreationz plates">
+          <figure><img src="assets/island-boy-oxtail-plate.jpg" alt="Oxtail plate with rice and peas" loading="lazy"><figcaption>Oxtails</figcaption></figure>
+          <figure><img src="assets/island-boy-curry-chicken-meal.jpg" alt="Curry chicken meal with sides" loading="lazy"><figcaption>Curry chicken</figcaption></figure>
+          <figure><img src="assets/wing-meal-with-sides.jpg" alt="Wing meal with mac and cheese and cabbage" loading="lazy"><figcaption>Wing meals</figcaption></figure>
         </div>
       </div>
     </section>

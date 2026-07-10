@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Island Boy Kreationz Anniversary Shoot Board</title>
+  <style>
+    :root {
+      --ink: #1b1712;
+      --brown: #5f2f19;
+      --red: #ba2f2f;
+      --gold: #f4b93f;
+      --green: #126943;
+      --blue: #1f6f8b;
+      --cream: #fff8e8;
+      --paper: #fffdf6;
+      --line: rgba(33, 22, 10, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      align-items: end;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.18)),
+        url("../assets/yelp-truck-vibes.jpg") center / cover no-repeat;
+      color: #fff;
+    }
+
+    .hero-inner {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 68px 0 76px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: rgba(0, 0, 0, 0.26);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 880px;
+      margin: 18px 0 12px;
+      font-size: clamp(46px, 8vw, 92px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 0;
+      font-size: clamp(18px, 2.2vw, 24px);
+    }
+
+    .meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .meta-strip span {
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--ink);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-weight: 850;
+    }
+
+    .section {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 58px 0;
+    }
+
+    .section-head {
+      max-width: 860px;
+      margin-bottom: 26px;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+      line-height: 1.14;
+      letter-spacing: 0;
+    }
+
+    p { margin: 0 0 14px; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1.05fr 1.2fr 1.05fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .flow-column {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: 0 16px 40px rgba(32, 20, 9, 0.08);
+    }
+
+    .flow-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 9px;
+      color: #fff;
+      background: var(--green);
+      font-size: 12px;
+    }
+
+    .flow-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .flow-list li {
+      border-left: 5px solid var(--gold);
+      background: #fff7e1;
+      padding: 11px 12px;
+      border-radius: 6px;
+      font-weight: 750;
+    }
+
+    .flow-list .red { border-color: var(--red); background: #fff0ed; }
+    .flow-list .green { border-color: var(--green); background: #eef8f1; }
+    .flow-list .blue { border-color: var(--blue); background: #eef8ff; }
+    .flow-list .brown { border-color: var(--brown); background: #fff2e6; }
+
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .output {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .output strong { display: block; margin-bottom: 4px; }
+
+    .needs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .need {
+      min-height: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .need ul,
+    .shot ul,
+    .hook ul,
+    .interview ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .need li,
+    .shot li,
+    .hook li,
+    .interview li { margin: 6px 0; }
+
+    .shot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .shot {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .shot img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display: block;
+    }
+
+    .shot-body { padding: 16px; }
+
+    .angle-label {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 5px 8px;
+      border-radius: 5px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .interview,
+    .hook {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+    }
+
+    .hook-map {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .hook-step {
+      min-height: 112px;
+      border-radius: 8px;
+      padding: 13px;
+      color: #fff;
+      background: var(--brown);
+      font-weight: 850;
+    }
+
+    .hook-step:nth-child(2) { background: var(--red); }
+    .hook-step:nth-child(3) { background: var(--green); }
+    .hook-step:nth-child(4) { background: var(--blue); }
+    .hook-step:nth-child(5) { background: var(--ink); }
+
+    .hook-step small {
+      display: block;
+      margin-top: 8px;
+      font-weight: 650;
+      opacity: 0.9;
+    }
+
+    .idea-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .idea-table th,
+    .idea-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .idea-table th {
+      color: #fff;
+      background: var(--ink);
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    .sources {
+      border-top: 1px solid var(--line);
+      color: rgba(27, 23, 18, 0.72);
+      font-size: 13px;
+    }
+
+    .sources a { color: var(--brown); font-weight: 800; }
+
+    @media (max-width: 980px) {
+      .flow,
+      .needs-grid,
+      .shot-grid,
+      .split,
+      .hook-map {
+        grid-template-columns: 1fr;
+      }
+
+      .output-grid { grid-template-columns: 1fr; }
+      .hero { min-height: 82vh; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Seven-year anniversary content shoot</span>
+      <h1>What we are shooting and why it matters.</h1>
+      <p>One shoot day becomes announcement videos, weekly schedule clips, food B-roll, interview clips, hook-style posts, Stories, and registration content for the free food event.</p>
+      <div class="meta-strip" aria-label="Campaign facts">
+        <span>Event target: Sunday, July 26, 2026</span>
+        <span>Primary CTA: register for faster check-in</span>
+        <span>Platforms: TikTok, Instagram, Facebook</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="section-head">
+        <h2>The shoot-day content engine</h2>
+        <p>This is the simple visual to present: we film five buckets of footage, then turn them into the weekly content required to promote the anniversary and collect names/emails.</p>
+      </div>
+      <div class="flow">
+        <div class="flow-column">
+          <div class="flow-title">Before shoot <span class="pill">prep</span></div>
+          <ul class="flow-list">
+            <li>Confirm event time, address, menu, and free food limit.</li>
+            <li class="green">Create registration link and QR code.</li>
+            <li class="blue">Prep camera-ready plates, trays, signage, and owner talking points.</li>
+            <li class="red">Clean truck exterior, order window, prep counter, and menu area.</li>
+          </ul>
+        </div>
+
+        <div class="flow-column">
+          <div class="flow-title">Shoot five footage buckets <span class="pill">capture</span></div>
+          <ul class="flow-list">
+            <li>Food proof: steam, sauce, trays, plate reveals, first bites.</li>
+            <li class="green">Owner story: seven years, giveback, business lessons.</li>
+            <li class="blue">Truck identity: yellow truck, window, logo, hands at work.</li>
+            <li class="red">Event CTA: register now, faster check-in, while supplies last.</li>
+            <li class="brown">Community proof: customers, line energy, handoffs, reactions.</li>
+          </ul>
+        </div>
+
+        <div class="flow-column">
+          <div class="flow-title">Weekly outputs <span class="pill">post</span></div>
+          <div class="output-grid">
+            <div class="output"><strong>Announcement video</strong>Owner invites the public and explains the seven-year anniversary.</div>
+            <div class="output"><strong>Schedule B-roll</strong>Where, when, what food, and the registration CTA.</div>
+            <div class="output"><strong>Hook clip</strong>Fast food visual plus funny, surprising, or urgent first line.</div>
+            <div class="output"><strong>Interview clip</strong>Business tips, favorite plate, or why he is giving back.</div>
+            <div class="output"><strong>Registration post</strong>QR/link, date, time, location, while supplies last.</div>
+            <div class="output"><strong>Stories</strong>Polls, countdowns, reposts, customer questions, event day updates.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>What he needs ready</h2>
+        <p>The shoot only works if the food, truck, owner, and registration flow are prepared before the camera arrives.</p>
+      </div>
+      <div class="needs-grid">
+        <article class="need">
+          <h3>Food</h3>
+          <ul>
+            <li>One hero oxtail plate or bowl.</li>
+            <li>One wing meal or wing bowl.</li>
+            <li>One chopped chicken bowl.</li>
+            <li>One curry chicken plate.</li>
+            <li>One shrimp or salmon bowl.</li>
+            <li>One tray setup with rice, cabbage, mac, yams, cornbread, cake, and drinks if available.</li>
+          </ul>
+        </article>
+        <article class="need">
+          <h3>Truck and set</h3>
+          <ul>
+            <li>Truck washed and parked where the logo and window are visible.</li>
+            <li>Clean counter, utensils, gloves, napkins, bags, and branded items.</li>
+            <li>Menu board or printed menu nearby.</li>
+            <li>Small table for plates and tray shots.</li>
+            <li>QR code sign for registration.</li>
+          </ul>
+        </article>
+        <article class="need">
+          <h3>Owner</h3>
+          <ul>
+            <li>Solid shirt or apron, no tiny patterns.</li>
+            <li>3-5 story points, not memorized lines.</li>
+            <li>Ready to answer in full sentences.</li>
+            <li>One direct-to-camera invite.</li>
+            <li>One sincere thank-you to the community.</li>
+          </ul>
+        </article>
+        <article class="need">
+          <h3>Production</h3>
+          <ul>
+            <li>Phone/camera shooting vertical 9:16.</li>
+            <li>Lav mic or wireless mic.</li>
+            <li>Tripod or gimbal.</li>
+            <li>Small light or shade plan.</li>
+            <li>Extra batteries, wipes, backup storage, and customer permission plan.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Menu B-roll shot map</h2>
+        <p>These shots come from the current Island Boy menu: oxtails, wings, chopped chicken, curry chicken, shrimp, salmon, beef ribs, rice, cabbage, yams, beans, mac, cornbread, cake, and drinks.</p>
+      </div>
+      <div class="shot-grid">
+        <article class="shot">
+          <img src="../assets/island-boy-oxtail-plate.jpg" alt="Island Boy oxtail plate">
+          <div class="shot-body">
+            <span class="angle-label">Signature hero</span>
+            <h3>Oxtail bowl or meal</h3>
+            <ul>
+              <li>45-degree plate push-in as gravy hits rice.</li>
+              <li>Macro fork pull on tender oxtail.</li>
+              <li>Overhead full plate reveal with sides.</li>
+              <li>Owner line: "This is the plate people come back for."</li>
+            </ul>
+          </div>
+        </article>
+        <article class="shot">
+          <img src="../assets/island-boy-wing-plate-mac-cabbage.jpg" alt="Island Boy wing plate with sides">
+          <div class="shot-body">
+            <span class="angle-label">Texture shot</span>
+            <h3>Wings</h3>
+            <ul>
+              <li>Low-angle tray open at the truck window.</li>
+              <li>Slow sauce toss or sauce brush.</li>
+              <li>Handheld bite reaction from customer.</li>
+              <li>Close-up of wings beside mac and cabbage.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="shot">
+          <img src="../assets/island-boy-chopped-chicken-bowl.jpg" alt="Island Boy chopped chicken bowl">
+          <div class="shot-body">
+            <span class="angle-label">Build sequence</span>
+            <h3>Chopped chicken bowl</h3>
+            <ul>
+              <li>Top-down bowl build: rice, chicken, sides, sauce.</li>
+              <li>Side angle scoop across the bowl.</li>
+              <li>Fast cut from empty bowl to finished bowl.</li>
+              <li>Caption hook: "This is lunch with a real plate behind it."</li>
+            </ul>
+          </div>
+        </article>
+        <article class="shot">
+          <img src="../assets/island-boy-curry-chicken-meal.jpg" alt="Island Boy curry chicken meal">
+          <div class="shot-body">
+            <span class="angle-label">Steam and sauce</span>
+            <h3>Curry chicken</h3>
+            <ul>
+              <li>Macro ladle pour over rice.</li>
+              <li>Steam shot from backlight or side light.</li>
+              <li>Fork press to show tenderness.</li>
+              <li>Owner line: "This is comfort food with island flavor."</li>
+            </ul>
+          </div>
+        </article>
+        <article class="shot">
+          <img src="../assets/yelp-jerk-shrimp.jpg" alt="Island Boy shrimp plate">
+          <div class="shot-body">
+            <span class="angle-label">Color pop</span>
+            <h3>Shrimp or salmon bowl</h3>
+            <ul>
+              <li>Close-up of shrimp/salmon going onto rice.</li>
+              <li>Overhead final bowl with cabbage/yams for color.</li>
+              <li>Fork scoop toward lens.</li>
+              <li>Schedule clip opener: "Here is what we are serving this week."</li>
+            </ul>
+          </div>
+        </article>
+        <article class="shot">
+          <img src="../assets/island-boy-bbq-ribs-plate.jpg" alt="Island Boy beef ribs plate">
+          <div class="shot-body">
+            <span class="angle-label">Limited item</span>
+            <h3>Beef ribs and trays</h3>
+            <ul>
+              <li>Side-profile glaze brush or tray reveal.</li>
+              <li>Two-hand tray lift from table to truck window.</li>
+              <li>Overhead catering spread with serving spoons.</li>
+              <li>Hook: "We only bring this out when the event needs it."</li>
+            </ul>
+          </div>
+        </article>
+        <article class="shot">
+          <img src="../assets/yelp-oxtail-sides.jpg" alt="Island Boy sides plate">
+          <div class="shot-body">
+            <span class="angle-label">Side story</span>
+            <h3>Sides</h3>
+            <ul>
+              <li>Mac scoop with texture, not too close to lens.</li>
+              <li>Yams spoon pull with shine.</li>
+              <li>Cabbage toss or tray pan.</li>
+              <li>Cornbread break and rice/peas spoon mound.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="shot">
+          <img src="../assets/yelp-meal.jpg" alt="Island Boy meal close-up">
+          <div class="shot-body">
+            <span class="angle-label">First bite</span>
+            <h3>Customer reaction</h3>
+            <ul>
+              <li>Ask permission first.</li>
+              <li>One-word review: "flavorful," "tender," "worth it."</li>
+              <li>Film waist-up near truck with plate visible.</li>
+              <li>Use as duet/reply/social proof content.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="shot">
+          <img src="../assets/yelp-truck.jpg" alt="Island Boy food truck">
+          <div class="shot-body">
+            <span class="angle-label">Location utility</span>
+            <h3>Truck and schedule</h3>
+            <ul>
+              <li>Wide establishing shot of truck and address area.</li>
+              <li>Order-window handoff from inside/outside.</li>
+              <li>Owner walking up to open the window.</li>
+              <li>Text overlay: date, time, location, register link.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Interview and hook clips</h2>
+        <p>The research points to raw, useful, owner-led clips: real process, real people, real questions, and a clear CTA.</p>
+      </div>
+      <div class="split">
+        <article class="interview">
+          <h3>Interview setup</h3>
+          <p>Film him near the truck, not in a blank room. The truck, food, and hands working should prove the story while he talks.</p>
+          <ul>
+            <li>A-cam: chest-up 45 degrees, owner looking at interviewer.</li>
+            <li>B-roll: hands plating, truck window, line, sauce pour.</li>
+            <li>Direct lens only for the event invite and thank-you.</li>
+            <li>Best questions: "What does seven years mean to you?", "Why give food away?", "What dish tells your story?", "What is the hardest part of running a food truck?", "What should someone try first?"</li>
+          </ul>
+        </article>
+        <article class="hook">
+          <h3>Hook/stitch structure</h3>
+          <p>Each short clip should move fast: no logo intro, no long setup, no vague caption.</p>
+          <div class="hook-map" aria-label="Short-form hook structure">
+            <div class="hook-step">0-1 sec<small>Strongest sensory food visual.</small></div>
+            <div class="hook-step">1-3 sec<small>5-8 word hook text.</small></div>
+            <div class="hook-step">3-8 sec<small>Proof: food, crowd, prep, or reaction.</small></div>
+            <div class="hook-step">8-15 sec<small>Event details: date, location, free food.</small></div>
+            <div class="hook-step">15-20 sec<small>One CTA: register or comment PLATE.</small></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Content ideas to shoot first</h2>
+        <p>These are the highest-value concepts for the July anniversary push.</p>
+      </div>
+      <table class="idea-table">
+        <thead>
+          <tr>
+            <th>Clip idea</th>
+            <th>Opening hook</th>
+            <th>What to film</th>
+            <th>CTA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Anniversary invite</td>
+            <td>Charlotte, do not make dinner plans July 26.</td>
+            <td>Owner at truck, oxtail reveal, QR sign, event details.</td>
+            <td>Register for faster check-in.</td>
+          </tr>
+          <tr>
+            <td>Reply-to-comment</td>
+            <td>Replying to: "Do y'all cater parties?"</td>
+            <td>Tray setup, plate handoffs, sides, truck window.</td>
+            <td>Register now or book catering.</td>
+          </tr>
+          <tr>
+            <td>Food hook</td>
+            <td>The plate that built the truck.</td>
+            <td>Oxtail gravy pour, fork pull, rice and sides.</td>
+            <td>Follow for this week's schedule.</td>
+          </tr>
+          <tr>
+            <td>Founder story</td>
+            <td>Seven years in business, and he is giving food away.</td>
+            <td>Owner interview plus old/new truck visuals if available.</td>
+            <td>Come celebrate with us.</td>
+          </tr>
+          <tr>
+            <td>Stitch local trend</td>
+            <td>Best food in Charlotte? Let's add one more.</td>
+            <td>Stitch/response, food closeups, truck, exact location.</td>
+            <td>Comment PLATE for the link.</td>
+          </tr>
+          <tr>
+            <td>Schedule video</td>
+            <td>Here is where the yellow truck is this week.</td>
+            <td>Truck exterior, menu, owner pointing to date/location card.</td>
+            <td>Save this and pull up.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section sources">
+      <p><strong>Research basis:</strong> TikTok recommends vertical 9:16, people on camera, a hook early, captions/text overlays, and a clear CTA. TikTok's 2026 trend report points toward unfiltered stories, process, comments, and community. TikTok Stitch and reply-to-comment formats are native ways to turn local questions into posts. Famous food truck examples like Kogi show the power of food + community + social location updates.</p>
+      <p>Sources: <a href="https://ads.tiktok.com/help/article/creative-best-practices">TikTok Creative Best Practices</a>, <a href="https://ads.tiktok.com/business/en-US/next">TikTok Next 2026</a>, <a href="https://support.tiktok.com/en/using-tiktok/creating-videos/stitch">TikTok Stitch</a>, <a href="https://newsroom.tiktok.com/product-tutorial-reply-to-comments-with-video?lang=en">TikTok Reply to Comments With Video</a>, <a href="https://kogibbq.com/about-kogi/">Kogi BBQ</a>, <a href="https://www.facebook.com/business/help/188534925073536">Meta Instagram Video Best Practices</a>.</p>
+    </section>
+  </main>
+</body>
+</html>

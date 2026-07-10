@@ -566,8 +566,10 @@
   padding: clamp(64px, 9vw, 104px) 0 58px;
   color: var(--ib-paper);
   background:
-    linear-gradient(160deg, rgba(13, 5, 0, 0.92) 8%, rgba(58, 16, 4, 0.62) 55%, rgba(13, 5, 0, 0.78)),
+    linear-gradient(100deg, rgba(13, 5, 0, 0.94) 26%, rgba(13, 5, 0, 0.66) 58%, rgba(13, 5, 0, 0.30)),
     var(--hero-img) center / cover no-repeat #1a0a00;
+  border-bottom: 4px solid transparent;
+  border-image: linear-gradient(90deg, #ffbd35, #f05a43 32%, #005aa9 62%, #1f7b4d) 1;
 }
 .ibx-crumbs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 12.5px; font-weight: 800; color: rgba(255, 232, 184, 0.66); margin-bottom: 22px; }
 .ibx-crumbs a { color: rgba(255, 232, 184, 0.9); }

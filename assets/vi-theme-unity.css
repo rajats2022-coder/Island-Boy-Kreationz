@@ -23,10 +23,8 @@ body {
 }
 
 body:after {
-  background:
-    linear-gradient(90deg, rgba(0, 90, 169, 0.08) 0 10px, transparent 10px calc(100% - 10px), rgba(0, 90, 169, 0.08) calc(100% - 10px)),
-    repeating-linear-gradient(45deg, rgba(255, 189, 53, 0.045) 0 14px, rgba(31, 123, 77, 0.035) 14px 28px, rgba(240, 90, 67, 0.035) 28px 42px, transparent 42px 76px) !important;
-  opacity: 0.72 !important;
+  background: none !important;
+  opacity: 0 !important;
 }
 
 .topbar {
@@ -42,8 +40,8 @@ body:after {
   left: 0;
   right: 0;
   bottom: -2px;
-  height: 4px;
-  background: linear-gradient(90deg, #fffdf6 0 16%, var(--vi-gold) 16% 32%, var(--vi-green) 32% 48%, var(--vi-blue) 48% 64%, var(--vi-coral) 64% 80%, #fffdf6 80%);
+  height: 3px;
+  background: linear-gradient(90deg, var(--vi-gold), var(--vi-coral) 32%, var(--vi-blue) 62%, var(--vi-green));
   pointer-events: none;
 }
 
@@ -100,22 +98,14 @@ footer a {
   background:
     linear-gradient(90deg, rgba(0, 90, 169, 0.34), transparent 30%, rgba(31, 123, 77, 0.28)),
     var(--vi-ink) !important;
-  border-image: linear-gradient(90deg, #fffdf6, var(--vi-gold), var(--vi-green), var(--vi-blue), var(--vi-coral), #fffdf6) 1 !important;
+  border-image: linear-gradient(90deg, var(--vi-gold), var(--vi-coral) 32%, var(--vi-blue) 62%, var(--vi-green)) 1 !important;
 }
 
-main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero) {
+main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero):not(.event-hero) {
   background:
-    linear-gradient(90deg, rgba(0, 90, 169, 0.10) 0 8px, transparent 8px calc(100% - 8px), rgba(0, 90, 169, 0.10) calc(100% - 8px)),
     radial-gradient(circle at 12% 8%, rgba(255, 189, 53, 0.18), transparent 26%),
     radial-gradient(circle at 90% 12%, rgba(0, 167, 167, 0.11), transparent 28%),
     linear-gradient(180deg, #fffaf0 0%, #fff4df 100%) !important;
-}
-
-main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero):before {
-  background:
-    repeating-linear-gradient(90deg, rgba(255, 253, 246, 0.28) 0 18px, rgba(255, 189, 53, 0.055) 18px 36px, rgba(31, 123, 77, 0.045) 36px 54px, rgba(0, 90, 169, 0.045) 54px 72px, rgba(240, 90, 67, 0.04) 72px 90px),
-    linear-gradient(90deg, rgba(0, 90, 169, 0.18) 0 10px, transparent 10px calc(100% - 10px), rgba(0, 90, 169, 0.18) calc(100% - 10px)) !important;
-  opacity: 0.58 !important;
 }
 
 .hero:not(.hero-fullscreen),
@@ -123,8 +113,8 @@ main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-h
   position: relative !important;
   overflow: hidden !important;
   color: #fff8ec !important;
-  border-bottom: 7px solid transparent !important;
-  border-image: linear-gradient(90deg, #fffdf6, var(--vi-gold), var(--vi-green), var(--vi-blue), var(--vi-coral), #fffdf6) 1 !important;
+  border-bottom: 4px solid transparent !important;
+  border-image: linear-gradient(90deg, var(--vi-gold), var(--vi-coral) 32%, var(--vi-blue) 62%, var(--vi-green)) 1 !important;
 }
 
 .hero:not(.hero-fullscreen):before,
@@ -174,11 +164,9 @@ main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-h
 .cart-panel,
 .builder,
 .menu-picker {
-  background:
-    linear-gradient(90deg, rgba(0, 90, 169, 0.055), transparent 18%, transparent 82%, rgba(0, 90, 169, 0.055)),
-    var(--vi-shell) !important;
-  border: 1px solid var(--vi-border) !important;
-  box-shadow: var(--vi-shadow), 0 0 0 1px rgba(255, 189, 53, 0.12) !important;
+  background: var(--vi-shell) !important;
+  border: 1px solid rgba(24, 9, 0, 0.08) !important;
+  box-shadow: var(--vi-shadow), 0 0 0 1px rgba(255, 189, 53, 0.10) !important;
 }
 
 .story-panel,
@@ -201,8 +189,8 @@ main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-h
   left: 0;
   right: 0;
   top: 0;
-  height: 7px;
-  background: linear-gradient(90deg, #fffdf6 0 16%, var(--vi-gold) 16% 32%, var(--vi-green) 32% 48%, var(--vi-blue) 48% 64%, var(--vi-coral) 64% 80%, #fffdf6 80%);
+  height: 4px;
+  background: linear-gradient(90deg, var(--vi-gold), var(--vi-coral) 32%, var(--vi-blue) 62%, var(--vi-green));
   pointer-events: none;
 }
 
@@ -223,10 +211,8 @@ main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-h
 }
 
 .menu-tabs {
-  background:
-    linear-gradient(90deg, var(--vi-blue) 0 10%, #fffdf6 10% 90%, var(--vi-blue) 90%),
-    var(--vi-shell) !important;
-  border-color: rgba(0, 90, 169, 0.22) !important;
+  background: var(--vi-shell) !important;
+  border-color: rgba(24, 9, 0, 0.10) !important;
 }
 
 .menu-tab {
@@ -236,7 +222,6 @@ main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-h
 
 .why-section {
   background:
-    linear-gradient(90deg, var(--vi-blue) 0 10px, transparent 10px calc(100% - 10px), var(--vi-blue) calc(100% - 10px)),
     radial-gradient(circle at 12% 18%, rgba(255, 189, 53, 0.24), transparent 26%),
     linear-gradient(135deg, #140704 0%, #371304 48%, #0f422c 100%) !important;
 }
@@ -251,9 +236,7 @@ main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-h
 }
 
 .catering-photo-placeholder {
-  background:
-    linear-gradient(90deg, var(--vi-blue) 0 13%, #fffdf6 13% 87%, var(--vi-blue) 87%),
-    linear-gradient(135deg, #fffdf8, #fff0cf) !important;
+  background: linear-gradient(135deg, #fffdf8, #fff0cf) !important;
 }
 
 .gallery img,
@@ -277,8 +260,8 @@ footer {
     linear-gradient(90deg, rgba(0, 90, 169, 0.24), transparent 28%, rgba(31, 123, 77, 0.18)),
     var(--vi-ink) !important;
   color: #fff1d2 !important;
-  border-top: 4px solid transparent !important;
-  border-image: linear-gradient(90deg, #fffdf6, var(--vi-gold), var(--vi-green), var(--vi-blue), var(--vi-coral), #fffdf6) 1 !important;
+  border-top: 3px solid transparent !important;
+  border-image: linear-gradient(90deg, var(--vi-gold), var(--vi-coral) 32%, var(--vi-blue) 62%, var(--vi-green)) 1 !important;
 }
 
 @media (max-width: 700px) {
@@ -286,10 +269,8 @@ footer {
     background-color: #120600 !important;
   }
 
-  main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero):before {
-    background:
-      linear-gradient(90deg, rgba(0, 90, 169, 0.16) 0 6px, transparent 6px calc(100% - 6px), rgba(0, 90, 169, 0.16) calc(100% - 6px)),
-      radial-gradient(circle at 16% 8%, rgba(255, 189, 53, 0.14), transparent 34%) !important;
+  main > section:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero):not(.event-hero):before {
+    background: radial-gradient(circle at 16% 8%, rgba(255, 189, 53, 0.14), transparent 34%) !important;
     opacity: 0.52 !important;
   }
 
@@ -565,8 +546,8 @@ body:has(.order-layout) .order-hero {
   background:
     radial-gradient(circle at 86% 20%, rgba(255, 189, 53, 0.24), transparent 30%),
     linear-gradient(135deg, #160805 0%, #2b0f05 44%, #063846 100%) !important;
-  border-bottom: 7px solid transparent !important;
-  border-image: linear-gradient(90deg, #fffdf6, var(--vi-gold), var(--vi-green), var(--vi-blue), var(--vi-coral), #fffdf6) 1 !important;
+  border-bottom: 4px solid transparent !important;
+  border-image: linear-gradient(90deg, var(--vi-gold), var(--vi-coral) 32%, var(--vi-blue) 62%, var(--vi-green)) 1 !important;
 }
 
 body:has(.order-layout) .order-hero:before {
@@ -580,9 +561,7 @@ body:has(.order-layout) .order-hero:before {
 }
 
 body:has(.order-layout) .order-hero:after {
-  background:
-    linear-gradient(180deg, rgba(5, 1, 0, 0.06), rgba(5, 1, 0, 0.42)),
-    repeating-linear-gradient(90deg, rgba(255, 253, 246, 0.15) 0 18px, rgba(255, 189, 53, 0.08) 18px 36px, rgba(31, 123, 77, 0.07) 36px 54px, rgba(0, 90, 169, 0.07) 54px 72px, rgba(240, 90, 67, 0.06) 72px 90px, transparent 90px 132px) !important;
+  background: linear-gradient(180deg, rgba(5, 1, 0, 0.06), rgba(5, 1, 0, 0.42)) !important;
   opacity: 0.76 !important;
 }
 
@@ -745,7 +724,7 @@ body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):
 body:has(.order-layout) .order-hero:before {
   background:
     linear-gradient(90deg, rgba(255, 248, 236, 0.82), rgba(255, 248, 236, 0.52)),
-    repeating-linear-gradient(90deg, rgba(255, 189, 53, 0.12) 0 24px, rgba(31, 123, 77, 0.08) 24px 48px, rgba(240, 90, 67, 0.08) 48px 72px, transparent 72px 120px) !important;
+    radial-gradient(circle at 82% 30%, rgba(255, 189, 53, 0.16), transparent 40%) !important;
   opacity: 1 !important;
   filter: none !important;
 }
