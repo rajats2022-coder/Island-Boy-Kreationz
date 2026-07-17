@@ -1,0 +1,33 @@
+name: Submit production URLs to IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**.html"
+      - "assets/**"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "indexnow-key.txt"
+      - "site-analytics.js"
+      - "scripts/submit-indexnow.mjs"
+      - ".github/workflows/indexnow.yml"
+  workflow_dispatch:
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for production deployment
+        run: |
+          for attempt in {1..18}; do
+            if curl --fail --silent --show-error "https://islandboykreationz.com/indexnow-key.txt" | grep --quiet "$(cat indexnow-key.txt)"; then
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Production key was not available after three minutes" >&2
+          exit 1
+      - name: Submit canonical URLs
+        run: node scripts/submit-indexnow.mjs

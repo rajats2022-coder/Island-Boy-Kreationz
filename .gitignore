@@ -1,3 +1,12 @@
 temporary screenshots/
 *.tmp
 .DS_Store
+.env.local
+.secrets/
+logs/*.log
+logs/*.err
+logs/*.json
+!logs/.gitkeep
+data/july-26-email-state.json
+data/google-reviews.json
+data/instagram-announcements.json

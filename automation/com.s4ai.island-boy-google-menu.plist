@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.s4ai.island-boy-google-menu</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-lc</string>
+    <string>cd '/Users/rajatsingh/Downloads/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering' &amp;&amp; /usr/bin/env node scripts/island-boy-gbp.mjs --sync-food-menu &gt;&gt; logs/gbp-menu.log 2&gt;&amp;1</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict><key>Hour</key><integer>7</integer><key>Minute</key><integer>50</integer></dict>
+  <key>RunAtLoad</key><false/>
+  <key>StandardOutPath</key><string>/Users/rajatsingh/Downloads/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/gbp-menu-launchd.log</string>
+  <key>StandardErrorPath</key><string>/Users/rajatsingh/Downloads/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/gbp-menu-launchd.err</string>
+</dict>
+</plist>

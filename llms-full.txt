@@ -34,13 +34,14 @@ Search positioning:
 - Caribbean food Charlotte NC
 - Caribbean soul food Charlotte NC
 - Caribbean food truck Charlotte NC
-- Oxtail catering North Carolina
+- Oxtail catering Charlotte area
 - Oxtail bowls Charlotte
 - Wing meal Charlotte
 - Food truck catering Charlotte NC
 - Food truck catering Concord NC
-- Caribbean catering Greensboro NC
-- Caribbean catering Raleigh, Durham, Cary, Winston-Salem, High Point, Gastonia, Huntersville, Kannapolis, and Mooresville
+- Caribbean catering Gastonia NC
+- Caribbean catering Huntersville NC
+- Caribbean catering Charlotte, Concord, Gastonia, and Huntersville
 
 Website structure:
 - / is the homepage for menu, story, catering, local SEO, and conversion.
@@ -55,10 +56,10 @@ Website structure:
 - /contact.html is the catering lead form page.
 - /about.html contains Deon Henry's Island Boy Kreationz story.
 - /gallery.html contains food truck and food photos.
-- /service-areas.html is the North Carolina service-area hub.
+- /service-areas.html lists the four verified Charlotte-area markets.
 - /blog.html is the catering guide hub.
 - /faq.html answers customer questions and includes FAQ schema.
-- City pages target catering searches across 24 North Carolina cities: Charlotte, Concord, Huntersville, Kannapolis, Mooresville, Gastonia, Matthews, Mint Hill, Indian Trail, Monroe, Pineville, Harrisburg, Salisbury, Statesville, Hickory, Greensboro, Winston-Salem, High Point, Raleigh, Durham, Cary, Asheville, Fayetteville, and Wilmington.
+- City pages cover only the four markets verified on the live Google Business Profile: Charlotte, Concord, Gastonia, and Huntersville.
 
 Known facts to preserve:
 - Business name: Island Boy Kreationz Food Truck & Catering.
