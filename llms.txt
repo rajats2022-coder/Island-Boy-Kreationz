@@ -31,11 +31,31 @@ Catering service pages:
 - /church-community-event-catering-nc.html (Church & Community Event Catering)
 - /tray-catering-nc.html (Party Trays & Drop-Off Catering)
 
-Local catering pages (4 verified Charlotte-area markets):
+Local catering pages (24 North Carolina markets; longer-distance bookings require advance confirmation):
 - /catering-charlotte-nc.html (Charlotte)
 - /catering-concord-nc.html (Concord)
 - /catering-huntersville-nc.html (Huntersville)
+- /catering-kannapolis-nc.html (Kannapolis)
+- /catering-mooresville-nc.html (Mooresville)
 - /catering-gastonia-nc.html (Gastonia)
+- /catering-matthews-nc.html (Matthews)
+- /catering-mint-hill-nc.html (Mint Hill)
+- /catering-indian-trail-nc.html (Indian Trail)
+- /catering-monroe-nc.html (Monroe)
+- /catering-pineville-nc.html (Pineville)
+- /catering-harrisburg-nc.html (Harrisburg)
+- /catering-salisbury-nc.html (Salisbury)
+- /catering-statesville-nc.html (Statesville)
+- /catering-hickory-nc.html (Hickory)
+- /catering-greensboro-nc.html (Greensboro)
+- /catering-winston-salem-nc.html (Winston-Salem)
+- /catering-high-point-nc.html (High Point)
+- /catering-raleigh-nc.html (Raleigh)
+- /catering-durham-nc.html (Durham)
+- /catering-cary-nc.html (Cary)
+- /catering-asheville-nc.html (Asheville)
+- /catering-fayetteville-nc.html (Fayetteville)
+- /catering-wilmington-nc.html (Wilmington)
 
 Contact and social:
 - Phone: 980-785-8372

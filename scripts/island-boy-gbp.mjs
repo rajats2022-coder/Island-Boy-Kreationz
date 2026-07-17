@@ -221,15 +221,15 @@ async function fetchGoogleUpdated(token) {
 function desiredServices() {
   const structured = [
     ["job_type_id:corporate_catering", "Caribbean food truck or drop-off catering for Charlotte-area office lunches, meetings, employee appreciation, team meals, and corporate events."],
-    ["job_type_id:event_catering", "Food truck and catering service for festivals, schools, churches, community days, neighborhood events, and public gatherings in the verified Charlotte-area market."],
+    ["job_type_id:event_catering", "Food truck and catering service for festivals, schools, churches, community days, neighborhood events, and public gatherings across the Charlotte metro and Triad service area."],
     ["job_type_id:graduation_catering", "Graduation catering with oxtails, wings, bowls, sides, truck service, or party trays for family and school celebrations."],
     ["job_type_id:party_catering", "Birthday and private-party catering with Caribbean mains, bowls, sides, cakes, drinks, food truck service, or drop-off trays."],
-    ["job_type_id:private_catering", "Flexible Caribbean food truck or drop-off catering for private events in Charlotte, Concord, Gastonia, and Huntersville."],
+    ["job_type_id:private_catering", "Flexible Caribbean food truck or drop-off catering for private events across the Charlotte metro and advance-booking North Carolina markets."],
     ["job_type_id:wedding_catering", "Wedding food truck and reception catering with Caribbean meals, bowls, sides, and service planned around the venue, guest count, and timeline."]
   ].map(([serviceTypeId, description]) => ({ structuredServiceItem: { serviceTypeId, description } }));
   const custom = [
     ["Caribbean food truck catering", "Book the Island Boy Kreationz truck for hot Caribbean meals at office lunches, weddings, parties, festivals, schools, churches, and community events."],
-    ["Caribbean catering", "Virgin Islands-rooted Caribbean catering with oxtails, wings, chicken, seafood bowls, sides, desserts, and drinks for events in Charlotte, Concord, Gastonia, and Huntersville."],
+    ["Caribbean catering", "Virgin Islands-rooted Caribbean catering with oxtails, wings, chicken, seafood bowls, sides, desserts, and drinks for Charlotte-metro, Triad, and advance-booking North Carolina events."],
     ["Oxtail catering", "Oxtail meals, bowls, and catering trays paired with rice and peas, cabbage, mac and cheese, candied yams, cornbread, and other verified sides."],
     ["Corporate lunch catering", "Food truck or drop-off office catering for meetings, company lunches, warehouse teams, employee appreciation, and client events."],
     ["Private party catering", "Food truck service or party trays for birthdays, anniversaries, graduations, family reunions, backyard parties, and private venue celebrations."],
@@ -242,6 +242,19 @@ function desiredServices() {
     freeFormServiceItem: { category: "gcid:mobile_catering", label: { displayName, description, languageCode: "en" } }
   }));
   return [...structured, ...custom];
+}
+
+const desiredGbpServiceAreaCities = [
+  "Charlotte", "Concord", "Huntersville", "Kannapolis", "Mooresville", "Gastonia",
+  "Matthews", "Mint Hill", "Indian Trail", "Monroe", "Pineville", "Harrisburg",
+  "Salisbury", "Statesville", "Hickory", "Greensboro", "Winston-Salem", "High Point"
+];
+
+function normalizedServiceAreaCities(profile) {
+  return (profile.serviceArea?.places?.placeInfos || [])
+    .map((item) => String(item.placeName || "").split(",")[0].trim())
+    .filter(Boolean)
+    .sort((left, right) => left.localeCompare(right));
 }
 
 function desiredRegularHours() {
@@ -277,7 +290,9 @@ function profileFindings(profile, attributes, media, posts, foodMenus, googleUpd
   if (profile.websiteUri !== "https://islandboykreationz.com/") findings.push("Website URL is not the preferred canonical homepage.");
   if (profile.categories?.primaryCategory?.name !== "categories/gcid:mobile_catering") findings.push("Mobile caterer is not the primary category.");
   if (!["categories/gcid:restaurant", "categories/gcid:catering_service", "categories/gcid:jamaican_restaurant", "categories/gcid:caribbean_restaurant"].every((item) => categories.includes(item))) findings.push("One or more verified restaurant/catering categories are missing.");
-  if (serviceAreas.length !== 4) findings.push("Service areas differ from the four verified markets: Charlotte, Concord, Gastonia, and Huntersville.");
+  if (JSON.stringify(normalizedServiceAreaCities(profile)) !== JSON.stringify([...desiredGbpServiceAreaCities].sort((left, right) => left.localeCompare(right)))) {
+    findings.push("GBP service areas differ from the 18 normal Charlotte-metro and Triad markets. The six longer-distance website markets remain advance-booking only.");
+  }
   if (JSON.stringify(hoursSignature(profile.regularHours)) !== JSON.stringify(hoursSignature(desiredRegularHours()))) findings.push("Regular GBP hours do not match the verified recurring truck schedule.");
   if ((profile.serviceItems || []).length < desiredServices().length) findings.push("Detailed GBP services are incomplete.");
   if (!attributeNames.has("attributes/url_instagram")) findings.push("Instagram is not linked to the profile.");

@@ -41,7 +41,7 @@ Search positioning:
 - Food truck catering Concord NC
 - Caribbean catering Gastonia NC
 - Caribbean catering Huntersville NC
-- Caribbean catering Charlotte, Concord, Gastonia, and Huntersville
+- Caribbean catering across 24 North Carolina markets by advance booking
 
 Website structure:
 - / is the homepage for menu, story, catering, local SEO, and conversion.
@@ -56,10 +56,10 @@ Website structure:
 - /contact.html is the catering lead form page.
 - /about.html contains Deon Henry's Island Boy Kreationz story.
 - /gallery.html contains food truck and food photos.
-- /service-areas.html lists the four verified Charlotte-area markets.
+- /service-areas.html lists 24 North Carolina catering markets grouped by Charlotte metro, Triad, Triangle, and extended travel.
 - /blog.html is the catering guide hub.
 - /faq.html answers customer questions and includes FAQ schema.
-- City pages cover only the four markets verified on the live Google Business Profile: Charlotte, Concord, Gastonia, and Huntersville.
+- City pages cover 24 real catering markets. Longer-distance requests require advance date, venue, guest-count, and travel confirmation.
 
 Known facts to preserve:
 - Business name: Island Boy Kreationz Food Truck & Catering.
