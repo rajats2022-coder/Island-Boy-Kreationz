@@ -63,3 +63,9 @@ Island Boy's defensible differentiation is its real founder story, Virgin Island
 - Review requests use honest-review language and never promise incentives or request a particular star rating.
 
 Primary policy references: [Google Business Profile representation guidelines](https://support.google.com/business/answer/3038177), [Google Analytics consent setup](https://support.google.com/analytics/answer/10000067), [Bing sitemap guidance](https://www.bing.com/webmasters/help/sitemaps-3b5cf6ed), and [IndexNow guidance](https://www.bing.com/webmasters/help/indexnow-0z209wby).
+
+## Verification record
+
+- Google Search Console URL-prefix verification is installed on the canonical homepage.
+- Bing Webmaster Tools verification is installed on the canonical homepage; the public verification value is intentionally omitted from this report.
+- The public IndexNow key file and post-deployment submission workflow are installed; the key value is intentionally omitted from this report.
