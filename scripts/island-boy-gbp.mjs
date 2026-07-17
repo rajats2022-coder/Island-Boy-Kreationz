@@ -244,6 +244,29 @@ function desiredServices() {
   return [...structured, ...custom];
 }
 
+function desiredRegularHours() {
+  const periods = [];
+  for (const day of ["TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"]) {
+    periods.push(
+      { openDay: day, openTime: { hours: 14, minutes: 30 }, closeDay: day, closeTime: { hours: 20, minutes: 30 } },
+      { openDay: day, openTime: { hours: 21 }, closeDay: day, closeTime: { hours: 23 } }
+    );
+  }
+  periods.push({ openDay: "SATURDAY", openTime: { hours: 21 }, closeDay: "SATURDAY", closeTime: { hours: 23 } });
+  return { periods };
+}
+
+function hoursSignature(hours) {
+  return (hours?.periods || []).map((period) => [
+    period.openDay,
+    Number(period.openTime?.hours || 0),
+    Number(period.openTime?.minutes || 0),
+    period.closeDay,
+    Number(period.closeTime?.hours || 0),
+    Number(period.closeTime?.minutes || 0)
+  ].join(":"));
+}
+
 function profileFindings(profile, attributes, media, posts, foodMenus, googleUpdated) {
   const categories = [profile.categories?.primaryCategory?.name, ...(profile.categories?.additionalCategories || []).map((item) => item.name)].filter(Boolean);
   const attributeNames = new Set((attributes.attributes || []).map((item) => item.name));
@@ -255,6 +278,7 @@ function profileFindings(profile, attributes, media, posts, foodMenus, googleUpd
   if (profile.categories?.primaryCategory?.name !== "categories/gcid:mobile_catering") findings.push("Mobile caterer is not the primary category.");
   if (!["categories/gcid:restaurant", "categories/gcid:catering_service", "categories/gcid:jamaican_restaurant", "categories/gcid:caribbean_restaurant"].every((item) => categories.includes(item))) findings.push("One or more verified restaurant/catering categories are missing.");
   if (serviceAreas.length !== 4) findings.push("Service areas differ from the four verified markets: Charlotte, Concord, Gastonia, and Huntersville.");
+  if (JSON.stringify(hoursSignature(profile.regularHours)) !== JSON.stringify(hoursSignature(desiredRegularHours()))) findings.push("Regular GBP hours do not match the verified recurring truck schedule.");
   if ((profile.serviceItems || []).length < desiredServices().length) findings.push("Detailed GBP services are incomplete.");
   if (!attributeNames.has("attributes/url_instagram")) findings.push("Instagram is not linked to the profile.");
   if ((media.totalMediaItemCount || media.mediaItems?.length || 0) < 8) findings.push("Owner photo coverage is thin.");
@@ -300,6 +324,16 @@ async function applyServices() {
   const result = dryRun ? body : await patchLocation(token, "serviceItems", body, { label: "serviceItems.patch" });
   console.log(`GBP services ${dryRun ? "validated" : "updated"}: ${result.serviceItems?.length || body.serviceItems.length} items.`);
   return { validated: true, applied: !dryRun, count: result.serviceItems?.length || body.serviceItems.length };
+}
+
+async function applyRegularHours() {
+  const token = await getGoogleAccessToken();
+  const body = { name: `locations/${rawLocationId()}`, regularHours: desiredRegularHours() };
+  await patchLocation(token, "regularHours", body, { validateOnly: true, label: "regularHours.patch" });
+  const dryRun = args.has("--dry-run-hours");
+  const result = dryRun ? body : await patchLocation(token, "regularHours", body, { label: "regularHours.patch" });
+  console.log(`GBP recurring truck hours ${dryRun ? "validated" : "updated"}: ${result.regularHours?.periods?.length || body.regularHours.periods.length} periods.`);
+  return { validated: true, applied: !dryRun, periodCount: result.regularHours?.periods?.length || body.regularHours.periods.length };
 }
 
 const verifiedMenuSections = [
@@ -1115,10 +1149,11 @@ async function main() {
     return;
   }
 
-  const actionFlags = ["--audit-profile", "--apply-services", "--sync-food-menu", "--sync-reviews", "--reply-unanswered", "--maybe-post", "--sync-analytics", "--sync-search-console"];
+  const actionFlags = ["--audit-profile", "--apply-services", "--apply-hours", "--sync-food-menu", "--sync-reviews", "--reply-unanswered", "--maybe-post", "--sync-analytics", "--sync-search-console"];
   if (!actionFlags.some((flag) => args.has(flag))) args.add("--audit-profile");
   const results = {};
   if (args.has("--apply-services")) results.services = await applyServices();
+  if (args.has("--apply-hours")) results.hours = await applyRegularHours();
   if (args.has("--sync-food-menu")) results.foodMenu = await syncFoodMenu();
   if (args.has("--audit-profile")) results.audit = await auditProfile();
   if (args.has("--sync-reviews") || args.has("--reply-unanswered")) {
@@ -1141,6 +1176,7 @@ async function main() {
   if (results.searchConsole) await sendTelegram(searchConsoleDigest(results.searchConsole));
   if (results.foodMenu) await sendTelegram(["✅ Island Boy GBP menu job complete", `Menu: ${results.foodMenu.dryRun ? "validated" : results.foodMenu.changed ? "updated" : "already current"}`, `Published items: ${results.foodMenu.publishedCount || results.foodMenu.itemCount}`].join("\n"));
   if (results.audit || results.services) await sendTelegram(["✅ Island Boy profile-health job complete", `Open audit findings: ${results.audit?.findings?.length ?? "not checked"}`, `Media on profile: ${results.audit?.media?.totalMediaItemCount ?? "not checked"}`, `Menu items: ${results.audit?.foodMenu?.itemCount ?? "not checked"}`, `Services: ${results.services ? `${results.services.applied ? "updated" : "validated"} (${results.services.count})` : "not requested"}`].join("\n"));
+  if (results.hours) await sendTelegram(["✅ Island Boy GBP hours job complete", `Recurring truck hours: ${results.hours.applied ? "updated" : "validated"}`, `Published schedule periods: ${results.hours.periodCount}`].join("\n"));
 }
 
 main().catch(async (error) => {
