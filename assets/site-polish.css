@@ -244,7 +244,7 @@ main > section:not(.hero):not(.contact-hero):not(.liquid-hero):not(.ibx-hero):no
   padding: 88px 0 64px !important;
   background:
     linear-gradient(135deg, rgba(17, 7, 0, 0.9), rgba(90, 23, 10, 0.72)),
-    url("new-hero-pic-island.png") !important;
+    url("new-hero-pic-island.jpg") !important;
   background-size: cover !important;
   background-position: center !important;
   color: #fff8ec !important;

@@ -553,7 +553,7 @@ body:has(.order-layout) .order-hero {
 body:has(.order-layout) .order-hero:before {
   background:
     linear-gradient(90deg, rgba(10, 3, 0, 0.94) 0%, rgba(10, 3, 0, 0.74) 44%, rgba(0, 90, 169, 0.30) 100%),
-    url("new-hero-pic-island.png") !important;
+    url("new-hero-pic-island.jpg") !important;
   background-size: cover !important;
   background-position: center 44% !important;
   opacity: 0.70 !important;
@@ -703,7 +703,7 @@ body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):
 body:has(.order-layout) main > section.order-hero:not(.hero):not(.contact-hero):not(.hero-fullscreen):not(.liquid-hero):not(.ibx-hero):before {
   background:
     linear-gradient(90deg, rgba(10, 3, 0, 0.94) 0%, rgba(10, 3, 0, 0.74) 44%, rgba(0, 90, 169, 0.30) 100%),
-    url("new-hero-pic-island.png") !important;
+    url("new-hero-pic-island.jpg") !important;
   background-size: cover !important;
   background-position: center 44% !important;
   opacity: 0.70 !important;
