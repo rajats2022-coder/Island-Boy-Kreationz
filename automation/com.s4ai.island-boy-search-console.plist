@@ -8,7 +8,7 @@
   <key>StartCalendarInterval</key>
   <dict><key>Weekday</key><integer>3</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>25</integer></dict>
   <key>RunAtLoad</key><false/>
-  <key>StandardOutPath</key><string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/search-console-launchd.log</string>
-  <key>StandardErrorPath</key><string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/search-console-launchd.err</string>
+  <key>StandardOutPath</key><string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-search-console-launchd.log</string>
+  <key>StandardErrorPath</key><string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-search-console-launchd.err</string>
 </dict>
 </plist>

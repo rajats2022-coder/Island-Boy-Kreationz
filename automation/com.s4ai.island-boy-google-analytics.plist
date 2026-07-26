@@ -18,8 +18,8 @@
   </dict>
   <key>RunAtLoad</key><false/>
   <key>StandardOutPath</key>
-  <string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/gbp-analytics-launchd.log</string>
+  <string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-google-analytics-launchd.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/gbp-analytics-launchd.err</string>
+  <string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-google-analytics-launchd.err</string>
 </dict>
 </plist>

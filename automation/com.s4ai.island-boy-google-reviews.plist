@@ -17,8 +17,8 @@
   </dict>
   <key>RunAtLoad</key><false/>
   <key>StandardOutPath</key>
-  <string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/gbp-reviews-launchd.log</string>
+  <string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-google-reviews-launchd.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/gbp-reviews-launchd.err</string>
+  <string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-google-reviews-launchd.err</string>
 </dict>
 </plist>

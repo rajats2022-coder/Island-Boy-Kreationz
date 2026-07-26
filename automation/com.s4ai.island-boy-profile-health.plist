@@ -18,8 +18,8 @@
   </dict>
   <key>RunAtLoad</key><false/>
   <key>StandardOutPath</key>
-  <string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/profile-health-launchd.log</string>
+  <string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-profile-health-launchd.log</string>
   <key>StandardErrorPath</key>
-  <string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/profile-health-launchd.err</string>
+  <string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-profile-health-launchd.err</string>
 </dict>
 </plist>

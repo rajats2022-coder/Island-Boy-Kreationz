@@ -72,7 +72,7 @@
 - Behavior: reads matching Formspree notifications in Deon's Gmail, deduplicates registrations, creates one private QR ticket per party, maintains the staff lookup manifest, and sends only tickets without a durable sent marker.
 - Audit: `node scripts/july-26-ticketing.mjs --audit` reconciles notification, registrant, party, duplicate, and missing-field counts without writing or emailing.
 - The public pass page never redeems a ticket. Staff use `/staff-checkin` and redemption occurs atomically at food handoff.
-- Logs: `logs/july26-email.log`, `logs/july26-email-launchd.log`, `logs/july26-email-launchd.err`
+- Logs: `~/Library/Logs/S4AI/island-boy-july26-email.log` plus the matching `-launchd.log` and `-launchd.err` files.
 - Telegram: reports new registrations, confirmation emails sent, backlog, failures, and the July 13 bulk-campaign Sent-mail check.
 
 ## Credentials

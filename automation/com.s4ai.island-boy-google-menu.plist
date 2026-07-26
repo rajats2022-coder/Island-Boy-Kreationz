@@ -13,7 +13,7 @@
   <key>StartCalendarInterval</key>
   <dict><key>Hour</key><integer>7</integer><key>Minute</key><integer>50</integer></dict>
   <key>RunAtLoad</key><false/>
-  <key>StandardOutPath</key><string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/gbp-menu-launchd.log</string>
-  <key>StandardErrorPath</key><string>/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck &amp; Catering/logs/gbp-menu-launchd.err</string>
+  <key>StandardOutPath</key><string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-google-menu-launchd.log</string>
+  <key>StandardErrorPath</key><string>/Users/rajatsingh/Library/Logs/S4AI/island-boy-google-menu-launchd.err</string>
 </dict>
 </plist>
