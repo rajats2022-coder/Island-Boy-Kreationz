@@ -645,7 +645,7 @@
         <div class="event-card-grid">
           <article class="event-card">
             <h3>Why sign up</h3>
-            <p>Your name, phone, email, and guest count help the team estimate portions and check you in faster on event day.</p>
+            <p>Your name, phone, email, and guest count create one personalized QR pass for your entire party and help the team check you in faster.</p>
           </article>
           <article class="event-card">
             <h3>What to expect</h3>
@@ -685,10 +685,10 @@
             </div>
             <label>Anything we should know?<textarea name="message" placeholder="Names in your party, accessibility needs, or any note for the team."></textarea></label>
             <label class="event-check"><input type="checkbox" name="supplies_acknowledgement" value="Acknowledged while supplies last and priority check-in limits" required><span>I understand signing up helps with planning and priority check-in, but free food is while supplies last and not guaranteed after supplies run out.</span></label>
-            <p class="event-disclaimer">This sign-up is not a paid ticket or a guaranteed meal. Registered parties may be checked before walk-ups during the posted window where possible. Late arrivals, duplicate entries, large parties, menu limits, weather, safety, or supply limits may affect service.</p>
+            <p class="event-disclaimer">This sign-up is not a paid ticket or a guaranteed meal. One QR pass covers the entire registered party and becomes unusable after staff redeems it at food handoff. Registered parties may be checked before walk-ups where possible. Late arrivals, duplicate entries, large parties, menu limits, weather, safety, or supply limits may affect service.</p>
             <p class="event-status" data-event-status role="status" aria-live="polite" hidden></p>
             <div class="event-submit-row">
-              <button class="event-btn primary" type="submit">Secure My Anniversary Spot</button>
+              <button class="event-btn primary" type="submit">Get My Party QR Pass</button>
               <a class="event-btn" href="https://www.instagram.com/islandboy_kreationz/" target="_blank" rel="noopener">Check Instagram Updates</a>
             </div>
           </form>
@@ -698,7 +698,7 @@
           <h3>July 26, 2026</h3>
           <ul class="event-save-list">
             <li><b>Event</b><span>Island Boy Kreationz 7-year anniversary free food giveaway.</span></li>
-            <li><b>Check-in</b><span>Use the same name and guest count from your RSVP.</span></li>
+            <li><b>Check-in</b><span>Bring the whole registered party together and show the personalized QR pass emailed to you.</span></li>
             <li><b>Before driving</b><span>Check Instagram or text the team for any final time, location, or supply updates.</span></li>
           </ul>
           <p class="event-note"><strong>Call/Text:</strong> <a href="tel:+19807858372">980-785-8372</a><br><strong>Instagram:</strong> <a href="https://www.instagram.com/islandboy_kreationz/" target="_blank" rel="noopener">@islandboy_kreationz</a></p>
@@ -766,7 +766,7 @@
           });
         }).then(function () {
           form.reset();
-          setStatus("success", "Success - your July 26 anniversary sign-up was sent.");
+          setStatus("success", "Success — your RSVP was received. Check your email for your personalized party QR pass.");
           window.islandBoyAnalytics?.track("generate_lead", { form_id: "anniversary_rsvp" });
         }).catch(function (error) {
           setStatus("error", error.message || "Something went wrong. Please call or text 980-785-8372.");

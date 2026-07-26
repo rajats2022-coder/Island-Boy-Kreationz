@@ -55,8 +55,10 @@ Island Boy's local operating automation is documented in `CLIENT_BASE_PROFILE.md
 - `scripts/site-health.mjs` checks page metadata, canonicals, structured data, internal links, sitemap truth, and production HTTP status.
 - `scripts/submit-indexnow.mjs` submits every canonical sitemap URL after deployment.
 - `scripts/setup-island-boy-gmail-oauth.mjs` connects Deon's Gmail for the July 26 attendee workflow.
-- `scripts/july-26-attendee-email.mjs` deduplicates Formspree notifications and sends the branded RSVP/review/website email only to newly registered attendees.
+- `scripts/july-26-ticketing.mjs` reconciles Formspree notifications, creates one private QR pass per party, sends personalized ticket emails, and maintains the staff lookup manifest.
+- `event-ticket.html` displays a guest's personalized pass without exposing redemption controls.
+- `staff-checkin.html` is the private, PIN-protected camera scanner used to atomically redeem a whole party at food handoff.
 - `data/island-boy-schedule.json` is the editable recurring schedule and date-override source used by the daily GBP post.
 - `automation/` contains seven unique macOS LaunchAgent templates for reviews, posts/Instagram, GBP analytics, menu sync, Search Console, profile/site health, and the July 26 attendee email workflow.
 
-Secrets remain in ignored `.env.local` files. Run the documented dry-run commands before installing or changing any live scheduler job.
+Secrets remain in ignored `.env.local` and `.env.vercel.local` files. Run the documented audit and tests before installing or changing any live scheduler job.

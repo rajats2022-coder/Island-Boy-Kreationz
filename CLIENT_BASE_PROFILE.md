@@ -2,7 +2,7 @@
 
 ## Source of truth
 
-- Repo: `/Users/rajatsingh/Downloads/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck & Catering`
+- Repo: `/Users/rajatsingh/Desktop/S4 AI Agency/S4 AI LLC/Client Database/Island Boy Kreationz Food Truck & Catering`
 - Live site: `https://islandboykreationz.com`
 - Primary market: Charlotte, North Carolina
 - Verified GBP service areas: Charlotte, Concord, Gastonia, and Huntersville
@@ -64,13 +64,14 @@
 - Command: `node scripts/run-profile-health.mjs`
 - Behavior: checks GBP fields, services, media count, menu count, pending edits, page metadata, structured data, broken links, sitemap truth, and production HTTP status. Both checks run even if one fails.
 
-### July 26 registration email follow-up
+### July 26 personalized QR ticket delivery
 
 - Label: `com.s4ai.island-boy-july26-email`
 - Schedule: daily at 9:00 AM local time
-- Command: `node scripts/july-26-attendee-email.mjs`
-- Behavior: reads matching Formspree notification emails in Deon's Gmail, deduplicates recipients, skips tests and already-processed messages, and sends the branded RSVP/review/website email only to newly registered people.
-- Initial safety step: `node scripts/july-26-attendee-email.mjs --bootstrap` marks the current list as already handled without sending.
+- Command: `node scripts/july-26-ticketing.mjs --sync --send-new`
+- Behavior: reads matching Formspree notifications in Deon's Gmail, deduplicates registrations, creates one private QR ticket per party, maintains the staff lookup manifest, and sends only tickets without a durable sent marker.
+- Audit: `node scripts/july-26-ticketing.mjs --audit` reconciles notification, registrant, party, duplicate, and missing-field counts without writing or emailing.
+- The public pass page never redeems a ticket. Staff use `/staff-checkin` and redemption occurs atomically at food handoff.
 - Logs: `logs/july26-email.log`, `logs/july26-email-launchd.log`, `logs/july26-email-launchd.err`
 - Telegram: reports new registrations, confirmation emails sent, backlog, failures, and the July 13 bulk-campaign Sent-mail check.
 
@@ -93,6 +94,7 @@ node scripts/island-boy-gbp.mjs --apply-services --dry-run-services --no-telegra
 node scripts/island-boy-gbp.mjs --sync-food-menu --dry-run-food-menu --no-telegram
 node scripts/island-boy-gbp.mjs --sync-search-console --no-telegram
 node scripts/site-health.mjs --production
+node scripts/july-26-ticketing.mjs --audit
 node scripts/submit-indexnow.mjs
 node scripts/setup-island-boy-gmail-oauth.mjs --check
 node scripts/july-26-attendee-email.mjs --dry-run

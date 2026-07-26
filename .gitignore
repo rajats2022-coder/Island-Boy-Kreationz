@@ -2,11 +2,17 @@ temporary screenshots/
 *.tmp
 .DS_Store
 .env.local
+.env.vercel.local
 .secrets/
+node_modules/
 logs/*.log
 logs/*.err
 logs/*.json
 !logs/.gitkeep
 data/july-26-email-state.json
+data/july-26-ticket-state.json
+data/event-staff-access.txt
 data/google-reviews.json
 data/instagram-announcements.json
+.vercel
+.env*

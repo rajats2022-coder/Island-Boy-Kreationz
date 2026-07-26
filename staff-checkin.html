@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#150801">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Event Staff Check-In | Island Boy Kreationz</title>
+  <link rel="icon" href="/assets/island-boy-logo.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/event-ticketing.css">
+</head>
+<body class="ticket-app">
+  <main class="ticket-shell">
+    <a class="ticket-brand" href="/" aria-label="Island Boy Kreationz home">
+      <img src="/assets/island-boy-logo.png" alt="">
+      <span><strong>Island Boy Kreationz</strong><span>Private Event Staff Check-In</span></span>
+    </a>
+    <section class="ticket-panel">
+      <header class="ticket-head">
+        <span class="ticket-kicker">Staff only · July 26</span>
+        <h1>Scan at food handoff</h1>
+        <p>Confirm the entire party is present. Redeem only when the food is being handed out.</p>
+      </header>
+      <div class="ticket-body">
+        <div class="connection" id="connection">Online · redemption system available</div>
+
+        <form class="staff-card" id="staff-login">
+          <h2>Staff sign-in</h2>
+          <p>Enter the private event PIN once on this device. The session remains active for 12 hours.</p>
+          <label class="staff-field">
+            <span>Staff PIN</span>
+            <input name="pin" type="password" inputmode="numeric" autocomplete="one-time-code" required>
+          </label>
+          <button class="ticket-button" type="submit">Open scanner</button>
+          <p class="ticket-help" id="login-status" role="status"></p>
+        </form>
+
+        <div class="staff-grid hidden" id="staff-tools">
+          <section class="staff-card">
+            <h2>Camera scanner</h2>
+            <p>Allow camera access, then hold the guest’s QR code inside the box.</p>
+            <div id="qr-reader"></div>
+          </section>
+
+          <section class="staff-card">
+            <h2>Manual lookup</h2>
+            <p>Use a name, email, phone’s last four digits, backup code, or paste the full pass link.</p>
+            <form id="manual-search">
+              <label class="staff-field">
+                <span>Guest or pass lookup</span>
+                <input name="query" type="search" autocomplete="off" placeholder="Name, phone, code, or QR link" required>
+              </label>
+              <button class="ticket-button secondary" type="submit">Find RSVP</button>
+            </form>
+            <div class="search-results" id="search-results"></div>
+          </section>
+
+          <section id="staff-result" aria-live="assertive"></section>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="/assets/vendor/html5-qrcode.min.js"></script>
+  <script src="/assets/staff-checkin.js" defer></script>
+</body>
+</html>

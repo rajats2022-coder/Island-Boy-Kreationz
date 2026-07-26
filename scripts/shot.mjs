@@ -9,7 +9,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { pathToFileURL } from 'url';
 
-const puppeteer = (await import(pathToFileURL('/Users/rajatsingh/Downloads/S4 AI Agency/agent dashboard/node_modules/puppeteer/lib/esm/puppeteer/puppeteer.js').href)).default;
+const puppeteer = (await import(pathToFileURL('/Users/rajatsingh/Desktop/S4 AI Agency/agent dashboard/node_modules/puppeteer/lib/esm/puppeteer/puppeteer.js').href)).default;
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = join(ROOT, 'temporary screenshots');

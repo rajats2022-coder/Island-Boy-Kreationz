@@ -1,0 +1,28 @@
+.git
+.github
+.vercel
+.DS_Store
+.env*
+.secrets
+node_modules
+
+automation
+content-projects
+data
+logs
+output
+reports
+scripts
+tests
+temporary screenshots
+Island Boy Creations
+assets/social
+
+*.HEIC
+17E89C4B-7A08-4359-9F1B-DAE4C308E327.JPG
+ChatGPT Image Jun 5, 2026, 02_49_58 PM.png
+IMG_4928.JPG
+newheropic.png
+research_brief.md
+screenshot*.mjs
+serve.mjs

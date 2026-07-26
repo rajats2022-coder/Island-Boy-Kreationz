@@ -26,22 +26,24 @@ for (const file of htmlFiles) {
   const canonical = match(html, /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i);
   const h1Count = (html.match(/<h1\b/gi) || []).length;
   const isPrivacy = file === "privacy.html";
+  const isNoIndex = /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html)
+    || /<meta[^>]+content=["'][^"']*noindex[^"']*["'][^>]+name=["']robots["']/i.test(html);
 
   if (!title) add("error", file, "title", "Missing title");
   else if (titles.has(title)) add("error", file, "title", `Duplicate of ${titles.get(title)}`);
   else titles.set(title, file);
-  if (!description) add("error", file, "description", "Missing meta description");
+  if (!description && !isNoIndex) add("error", file, "description", "Missing meta description");
   if (h1Count !== 1) add("error", file, "h1", `Expected one H1, found ${h1Count}`);
-  if (!canonical.startsWith("https://islandboykreationz.com/")) add("error", file, "canonical", canonical || "Missing canonical");
+  if (!canonical.startsWith("https://islandboykreationz.com/") && !isNoIndex) add("error", file, "canonical", canonical || "Missing canonical");
   else if (canonicals.has(canonical)) add("error", file, "canonical", `Duplicate of ${canonicals.get(canonical)}`);
-  else canonicals.set(canonical, file);
-  if (!/property=["']og:title["']/i.test(html) && !isPrivacy) add("error", file, "open-graph", "Missing og:title");
-  if (!/application\/ld\+json/i.test(html) && !isPrivacy) add("error", file, "structured-data", "Missing JSON-LD");
+  else if (canonical) canonicals.set(canonical, file);
+  if (!/property=["']og:title["']/i.test(html) && !isPrivacy && !isNoIndex) add("error", file, "open-graph", "Missing og:title");
+  if (!/application\/ld\+json/i.test(html) && !isPrivacy && !isNoIndex) add("error", file, "structured-data", "Missing JSON-LD");
   for (const block of html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
     try { JSON.parse(block[1]); } catch (error) { add("error", file, "structured-data", `Invalid JSON-LD: ${error.message}`); }
   }
   if (!/rel=["']apple-touch-icon["']/i.test(html)) add("error", file, "apple-icon", "Missing Apple touch icon");
-  if (!/site-analytics\.js/i.test(html)) add("error", file, "analytics", "Missing consent-aware analytics loader");
+  if (!/site-analytics\.js/i.test(html) && !isNoIndex) add("error", file, "analytics", "Missing consent-aware analytics loader");
 
   for (const href of [...html.matchAll(/href=["']([^"']+)["']/gi)].map((item) => item[1])) {
     if (/^(?:[a-z][a-z0-9+.-]*:|#)/i.test(href)) continue;
