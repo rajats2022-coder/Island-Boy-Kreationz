@@ -67,13 +67,23 @@
 ### July 26 personalized QR ticket delivery
 
 - Label: `com.s4ai.island-boy-july26-email`
-- Schedule: daily at 9:00 AM local time
+- Schedule: 9:00 AM local time with an explicit July 25–26, 2026 date guard; later calendar triggers are harmless no-ops.
 - Command: `node scripts/july-26-ticketing.mjs --sync --send-new`
 - Behavior: reads matching Formspree notifications in Deon's Gmail, deduplicates registrations, creates one private QR ticket per party, maintains the staff lookup manifest, and sends only tickets without a durable sent marker.
 - Audit: `node scripts/july-26-ticketing.mjs --audit` reconciles notification, registrant, party, duplicate, and missing-field counts without writing or emailing.
 - The public pass page never redeems a ticket. Staff use `/staff-checkin` and redemption occurs atomically at food handoff.
 - Logs: `~/Library/Logs/S4AI/island-boy-july26-email.log` plus the matching `-launchd.log` and `-launchd.err` files.
 - Telegram: reports new registrations, confirmation emails sent, backlog, failures, and the July 13 bulk-campaign Sent-mail check.
+
+### July 26 event-day QR reminder
+
+- Label: `com.s4ai.island-boy-july26-reminder`
+- Schedule: July 26 at 11:00 AM local time. The command has an explicit `2026-07-26` date guard, so the calendar label cannot resend in a later year.
+- Command: `node scripts/july-26-ticketing.mjs --sync --send-reminder`
+- Behavior: sends one personalized reminder per registered party with the 1:00–7:00 PM event window, exact RSVP party limit, embedded QR pass, reserved-line instructions, Instagram profile link, and optional honest Google review link.
+- Duplicate protection: each reminder receives its own durable private Blob marker under campaign `event-day-11am-2026-07-26`; reruns send only any remaining backlog.
+- Safe preview: `npm run tickets:reminder:dry-run`
+- Logs: `~/Library/Logs/S4AI/island-boy-july26-reminder.log` plus the matching `-launchd.log` and `-launchd.err` files.
 
 ## Credentials
 

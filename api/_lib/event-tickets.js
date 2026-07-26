@@ -32,6 +32,16 @@ export function mailMarkerPath(token) {
   return `events/${EVENT_ID}/mail/${tokenDigest(token)}.json`;
 }
 
+export function campaignMailMarkerPath(campaignId, token) {
+  const safeCampaignId = String(campaignId || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+  if (!safeCampaignId) throw new Error("A campaign ID is required.");
+  return `events/${EVENT_ID}/mail/${safeCampaignId}/${tokenDigest(token)}.json`;
+}
+
 export function manifestPath() {
   return `events/${EVENT_ID}/manifest.json`;
 }

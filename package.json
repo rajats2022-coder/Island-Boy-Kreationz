@@ -6,6 +6,8 @@
     "tickets:audit": "node scripts/july-26-ticketing.mjs --audit",
     "tickets:sync": "node scripts/july-26-ticketing.mjs --sync",
     "tickets:send-new": "node scripts/july-26-ticketing.mjs --sync --send-new",
+    "tickets:reminder:dry-run": "node scripts/july-26-ticketing.mjs --sync --dry-run-reminder",
+    "tickets:reminder:send": "node scripts/july-26-ticketing.mjs --sync --send-reminder",
     "test:event": "node --env-file=.env.local --env-file=.env.vercel.local --test tests/event-ticketing.test.mjs"
   },
   "dependencies": {

@@ -5,6 +5,7 @@ import { del } from "@vercel/blob";
 import {
   EVENT_ID,
   blobExists,
+  campaignMailMarkerPath,
   createStaffSession,
   redeemTicket,
   redemptionPath,
@@ -14,6 +15,9 @@ import {
 } from "../api/_lib/event-tickets.js";
 import {
   extractSubmission,
+  localEventClock,
+  reminderEmailHtml,
+  reminderEmailText,
   ticketEmailHtml,
   ticketEmailText,
   ticketForSubmission,
@@ -83,6 +87,35 @@ test("ticket generation is stable and email contains the one-party rule", () => 
   assert.match(mime, /multipart\/related/);
   assert.match(mime, /Content-ID: <island-boy-event-qr>/);
   assert.match(mime, /Content-Type: image\/png/);
+});
+
+test("event-day reminder has the verified links, schedule, QR, and exact party limit", () => {
+  const ticket = ticketForSubmission({
+    messageId: "message-reminder",
+    registeredAt: "2026-07-25T18:30:00.000Z",
+    name: "Jordan Guest",
+    email: "jordan@example.com",
+    phone: "7045550123",
+    guestsBringing: 4,
+    partySize: 5
+  });
+  const passUrl = `https://islandboykreationz.com/event-ticket?t=${ticket.token}`;
+  const text = reminderEmailText(ticket, passUrl);
+  const html = reminderEmailHtml(ticket, passUrl);
+
+  for (const body of [text, html]) {
+    assert.match(body, /1:00 PM[–-]7:00 PM/);
+    assert.match(body, /exactly (?:<strong>)?5 total people/i);
+    assert.match(body, /reserved RSVP line/i);
+    assert.match(body, /redeem(?:ed|s)?(?: the QR| it)? (?:only )?once/i);
+    assert.match(body, /instagram\.com\/islandboy_kreationz\//);
+    assert.match(body, /search\.google\.com\/local\/writereview\?placeid=ChIJfzWYLwcfVIgRJqnv34H5mi8/);
+    assert.match(body, /Reviews are optional/i);
+  }
+  assert.match(html, /cid:island-boy-event-qr/);
+  assert.equal(localEventClock(new Date("2026-07-26T15:00:00.000Z")).date, "2026-07-26");
+  assert.equal(localEventClock(new Date("2026-07-26T15:00:00.000Z")).hour, 11);
+  assert.match(campaignMailMarkerPath("event-day-11am", ticket.token), /mail\/event-day-11am\//);
 });
 
 test("staff sessions expire and reject tampering", () => {

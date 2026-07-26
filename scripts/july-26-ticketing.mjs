@@ -9,6 +9,7 @@ import {
   EVENT_DATE,
   EVENT_ID,
   blobExists,
+  campaignMailMarkerPath,
   mailMarkerPath,
   manifestPath,
   ticketPath,
@@ -25,6 +26,10 @@ const gmailClientFilePath = process.env.ISLAND_BOY_GMAIL_OAUTH_CLIENT_FILE
 const hermesEnvPath = process.env.HOME ? join(process.env.HOME, ".hermes", ".env") : "";
 const args = new Set(process.argv.slice(2));
 const EVENT_NAME = "Island Boy Kreationz 7-Year Anniversary";
+const EVENT_TIME = "1:00 PM–7:00 PM";
+const INSTAGRAM_URL = "https://www.instagram.com/islandboy_kreationz/";
+const GOOGLE_REVIEW_URL = "https://search.google.com/local/writereview?placeid=ChIJfzWYLwcfVIgRJqnv34H5mi8";
+const REMINDER_CAMPAIGN_ID = "event-day-11am-2026-07-26";
 
 loadDotEnv(envPath);
 loadDotEnv(vercelEnvPath);
@@ -433,6 +438,112 @@ export function ticketEmailHtml(ticket, passUrl) {
 </body></html>`;
 }
 
+export function reminderEmailText(ticket, passUrl) {
+  const greeting = firstName(ticket.name) ? `Hi ${firstName(ticket.name)},` : "Hi Island Boy family,";
+  return `${greeting}
+
+TODAY IS THE DAY!
+
+The Island Boy Kreationz 7-Year Anniversary celebration runs today, Sunday, July 26, from ${EVENT_TIME}.
+
+YOUR RSVP
+Registered party: ${ticket.name}
+Food is reserved for: ${ticket.partySize} total ${ticket.partySize === 1 ? "person" : "people"}
+Backup code: ${ticket.backupCode}
+
+Open your personalized QR pass:
+${passUrl}
+
+When you arrive:
+1. Get in the reserved RSVP line.
+2. Have this QR code open and ready.
+3. Bring the entire party together.
+4. Your QR covers exactly ${ticket.partySize} total ${ticket.partySize === 1 ? "person" : "people"}, based on the RSVP you submitted.
+5. Staff will redeem the QR once when your food is handed out. It cannot be used again.
+6. Free food remains available while supplies last.
+
+Follow Island Boy Kreationz on Instagram:
+${INSTAGRAM_URL}
+
+Already enjoyed Island Boy Kreationz? Share an honest Google review:
+${GOOGLE_REVIEW_URL}
+
+Reviews are optional and are never required for your RSVP or food. If today will be your first experience, please wait until after you have eaten so your review reflects your genuine experience.
+
+We cannot wait to celebrate with you!
+
+Deon Henry
+Island Boy Kreationz Food Truck & Catering
+980-785-8372
+
+Do not want event follow-up emails? Reply "unsubscribe."`;
+}
+
+export function reminderEmailHtml(ticket, passUrl) {
+  const greeting = firstName(ticket.name) ? `Hi ${escapeHtml(firstName(ticket.name))},` : "Hi Island Boy family,";
+  const peopleLabel = ticket.partySize === 1 ? "person" : "people";
+  return `<!doctype html>
+<html><body style="margin:0;padding:0;background:#fff7ed;font-family:Arial,Helvetica,sans-serif;color:#2d1a10;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Today from ${EVENT_TIME}: bring your party of ${ticket.partySize} and have your one-time QR pass ready.</div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#fff7ed;padding:22px 10px;"><tr><td align="center">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background:#ffffff;border:1px solid #f0d5bd;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px rgba(72,35,11,.12);">
+      <tr><td align="center" style="background:#2b1205;padding:27px 22px;">
+        <img src="https://islandboykreationz.com/assets/island-boy-logo.png" width="76" height="76" alt="Island Boy Kreationz" style="display:block;border-radius:50%;margin:0 auto 12px;">
+        <div style="font-size:11px;line-height:18px;letter-spacing:2px;text-transform:uppercase;color:#ffd59b;font-weight:bold;">Today · Sunday, July 26</div>
+        <h1 style="margin:7px 0 4px;color:#ffffff;font-size:31px;line-height:38px;">Today is the day!</h1>
+        <p style="margin:0;color:#ffd59b;font-size:20px;line-height:28px;font-weight:bold;">${EVENT_TIME}</p>
+      </td></tr>
+      <tr><td style="padding:28px 26px 10px;">
+        <p style="margin:0 0 16px;font-size:17px;line-height:26px;font-weight:bold;">${greeting}</p>
+        <p style="margin:0 0 18px;font-size:16px;line-height:26px;">We cannot wait to celebrate the <strong>${EVENT_NAME}</strong> with you today.</p>
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:0 0 20px;background:#fff3df;border:1px solid #f0c792;border-radius:14px;">
+          <tr><td style="padding:16px;">
+            <div style="font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#8a3f0a;font-weight:bold;">Registered party</div>
+            <div style="margin-top:4px;font-size:21px;font-weight:bold;color:#2b1205;">${escapeHtml(ticket.name)}</div>
+          </td><td align="center" style="padding:16px;border-left:1px solid #f0c792;">
+            <div style="font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#8a3f0a;font-weight:bold;">Food for</div>
+            <div style="margin-top:2px;font-size:34px;font-weight:bold;color:#e76f18;">${ticket.partySize}</div>
+            <div style="font-size:12px;color:#8a3f0a;">${peopleLabel}</div>
+          </td></tr>
+        </table>
+        <div style="margin:0 0 20px;padding:17px 18px;background:#2b1205;color:#fff7ed;border-radius:12px;font-size:15px;line-height:24px;">
+          <strong style="color:#ffd59b;">Reserved-line instructions</strong><br>
+          Get in the reserved RSVP line with your entire party and have this QR open. Your pass covers exactly <strong>${ticket.partySize} total ${peopleLabel}</strong>, based on the RSVP you submitted. Staff redeems it once when your food is handed out.
+        </div>
+        <p style="margin:0 0 8px;text-align:center;font-size:14px;color:#6e5140;">Keep this personalized QR ready for staff.</p>
+        <a href="${escapeHtml(passUrl)}" style="display:block;text-align:center;text-decoration:none;">
+          <img src="cid:island-boy-event-qr" width="280" height="280" alt="Personalized Island Boy event QR code" style="display:block;width:280px;max-width:100%;height:auto;margin:0 auto;border:10px solid #ffffff;">
+        </a>
+        <div style="margin:7px 0 18px;text-align:center;">
+          <div style="font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#8a6e5c;">Backup code</div>
+          <div style="margin-top:4px;font-family:monospace;font-size:23px;font-weight:bold;letter-spacing:3px;color:#2b1205;">${ticket.backupCode}</div>
+        </div>
+        <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto 24px;"><tr><td bgcolor="#e76f18" style="border-radius:999px;">
+          <a href="${escapeHtml(passUrl)}" style="display:inline-block;padding:14px 24px;color:#ffffff;text-decoration:none;font-size:16px;font-weight:bold;">Open My QR Pass</a>
+        </td></tr></table>
+        <div style="height:1px;background:#f1ddcd;margin:24px 0;"></div>
+        <h2 style="margin:0 0 10px;text-align:center;color:#2b1205;font-size:21px;">Stay connected</h2>
+        <p style="margin:0 0 16px;text-align:center;color:#6e5140;font-size:15px;line-height:24px;">Follow for Island Boy food, schedule, and event updates.</p>
+        <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto 24px;"><tr><td bgcolor="#d62976" style="border-radius:999px;">
+          <a href="${INSTAGRAM_URL}" style="display:inline-block;padding:14px 24px;color:#ffffff;text-decoration:none;font-size:16px;font-weight:bold;">Follow @islandboy_kreationz</a>
+        </td></tr></table>
+        <h2 style="margin:0 0 10px;text-align:center;color:#2b1205;font-size:21px;">Already enjoyed Island Boy?</h2>
+        <p style="margin:0 0 16px;text-align:center;color:#6e5140;font-size:15px;line-height:24px;">Share an honest Google review about your genuine experience. First visit today? Please wait until after you have eaten.</p>
+        <table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto 14px;"><tr><td bgcolor="#f6c453" style="border-radius:999px;">
+          <a href="${GOOGLE_REVIEW_URL}" style="display:inline-block;padding:14px 24px;color:#2b1205;text-decoration:none;font-size:16px;font-weight:bold;">Share an Honest Google Review</a>
+        </td></tr></table>
+        <p style="margin:0 0 22px;text-align:center;color:#785c48;font-size:12px;line-height:19px;">Reviews are optional and are never required for your RSVP or food.</p>
+        <p style="margin:0 0 8px;font-size:14px;line-height:23px;color:#6e5140;">Your QR can be redeemed only once. Free food remains available while supplies last.</p>
+        <p style="margin:0;font-size:15px;line-height:24px;"><strong>Deon Henry</strong><br>Island Boy Kreationz Food Truck &amp; Catering<br><a href="tel:+19807858372" style="color:#b45411;">980-785-8372</a></p>
+      </td></tr>
+      <tr><td style="padding:17px 26px 22px;background:#2b1205;color:#d9bfae;text-align:center;font-size:12px;line-height:19px;">
+        Do not want event follow-up emails? Reply <strong style="color:#ffffff;">unsubscribe</strong>.
+      </td></tr>
+    </table>
+  </td></tr></table>
+</body></html>`;
+}
+
 function wrapBase64(value) {
   const encoded = Buffer.isBuffer(value)
     ? value.toString("base64")
@@ -507,6 +618,34 @@ async function sendTicketEmail(gmailToken, ticket, overrideRecipient = "") {
   });
 }
 
+async function sendReminderEmail(gmailToken, ticket, overrideRecipient = "") {
+  const baseUrl = process.env.EVENT_BASE_URL || "https://islandboykreationz.com";
+  const passUrl = `${baseUrl.replace(/\/$/, "")}/event-ticket?t=${encodeURIComponent(ticket.token)}`;
+  const qrPng = await QRCode.toBuffer(passUrl, {
+    type: "png",
+    width: 420,
+    margin: 2,
+    errorCorrectionLevel: "M",
+    color: { dark: "#2b1205", light: "#ffffff" }
+  });
+  const recipient = overrideRecipient || ticket.email;
+  const toName = overrideRecipient ? "Reminder Test" : firstName(ticket.name);
+  const to = toName ? `${toName} <${recipient}>` : recipient;
+  const raw = ticketMimeMessage({
+    to,
+    subject: `Today 1–7 PM: Your Island Boy QR Pass — Party of ${ticket.partySize}`,
+    text: reminderEmailText(ticket, passUrl),
+    html: reminderEmailHtml(ticket, passUrl),
+    qrPng
+  });
+  await gmailApi("messages/send", gmailToken, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ raw: encodeBase64Url(raw) }),
+    label: "Gmail reminder messages.send"
+  });
+}
+
 async function sendNewTickets(gmailToken, tickets) {
   const state = readState();
   const locallySent = new Set(state.emailedTicketHashes || []);
@@ -568,6 +707,58 @@ async function sendNewTickets(gmailToken, tickets) {
   return { candidates: unsent.length, sent, backlog: Math.max(0, unsent.length - sent) };
 }
 
+async function reminderCandidates(tickets) {
+  const unsent = [];
+  for (const ticket of tickets) {
+    if (!await blobExists(campaignMailMarkerPath(REMINDER_CAMPAIGN_ID, ticket.token))) {
+      unsent.push(ticket);
+    }
+  }
+  return unsent;
+}
+
+async function sendEventDayReminders(gmailToken, tickets) {
+  const testTo = argumentValue("--test-reminder-to");
+  if (testTo) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(testTo)) throw new Error("Invalid --test-reminder-to email address.");
+    const sample = ticketForSubmission({
+      messageId: "staff-reminder-test",
+      registeredAt: new Date().toISOString(),
+      name: "Event Reminder Test",
+      email: testTo,
+      phone: "7045550000",
+      guestsBringing: 2,
+      partySize: 3
+    });
+    await writeJson(ticketPath(sample.token), sample, { allowOverwrite: true });
+    await sendReminderEmail(gmailToken, sample, testTo);
+    console.log("Sent one event-day reminder test email to the requested test recipient.");
+    return { candidates: 1, sent: 1, backlog: 0, test: true };
+  }
+
+  const unsent = await reminderCandidates(tickets);
+  if (args.has("--dry-run-reminder")) {
+    console.log(`Reminder dry run: recipients=${tickets.length} unsent=${unsent.length} alreadySent=${tickets.length - unsent.length}`);
+    return { candidates: unsent.length, sent: 0, backlog: unsent.length, dryRun: true };
+  }
+
+  let sent = 0;
+  for (const ticket of unsent) {
+    await sendReminderEmail(gmailToken, ticket);
+    await writeJson(campaignMailMarkerPath(REMINDER_CAMPAIGN_ID, ticket.token), {
+      version: 1,
+      eventId: EVENT_ID,
+      campaignId: REMINDER_CAMPAIGN_ID,
+      ticketHash: ticket.tokenHash,
+      sentAt: new Date().toISOString()
+    });
+    sent += 1;
+    console.log(`Sent event reminder ${sent}/${unsent.length}.`);
+  }
+  console.log(`Event reminder run complete: candidates=${unsent.length} sent=${sent} backlog=${Math.max(0, unsent.length - sent)}`);
+  return { candidates: unsent.length, sent, backlog: Math.max(0, unsent.length - sent) };
+}
+
 function localDateKey(date = new Date()) {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/New_York",
@@ -575,6 +766,31 @@ function localDateKey(date = new Date()) {
     month: "2-digit",
     day: "2-digit"
   }).format(date);
+}
+
+export function localEventClock(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return {
+    date: `${values.year}-${values.month}-${values.day}`,
+    hour: Number(values.hour),
+    minute: Number(values.minute)
+  };
+}
+
+function enforceReminderWindow() {
+  const clock = localEventClock();
+  if (clock.date !== EVENT_DATE || clock.hour < 11 || clock.hour >= 19) {
+    throw new Error(`Refusing to send the event-day reminder outside 11:00 AM–7:00 PM Eastern on ${EVENT_DATE}.`);
+  }
 }
 
 async function main() {
@@ -592,6 +808,13 @@ async function main() {
       throw new Error(`Refusing to send event tickets after ${EVENT_DATE}; use --force only for an approved exception.`);
     }
     await sendNewTickets(gmailToken, tickets);
+  }
+  if (args.has("--send-reminder") || args.has("--dry-run-reminder") || argumentValue("--test-reminder-to")) {
+    if (!args.has("--sync")) throw new Error("Reminder sending requires --sync so every emailed pass is live.");
+    if (!args.has("--dry-run-reminder") && !argumentValue("--test-reminder-to") && !args.has("--force")) {
+      enforceReminderWindow();
+    }
+    await sendEventDayReminders(gmailToken, tickets);
   }
 }
 
