@@ -802,6 +802,9 @@ function normalizeInstagramPosts(payload) {
 
 function isScheduleAnnouncement(post) {
   const caption = String(post.caption || "");
+  if (/(anniversary|tomorrow only|free food|community giveback|one day[.! ]+all love)/i.test(caption)) {
+    return false;
+  }
   return /(weekly schedule|where (?:we|we're|were) serving this week|this week(?:'s|s)? schedule)/i.test(caption)
     || (/(hunter ave|6100 hunter|amazon)/i.test(caption) && /(tue|wed|thu|fri|sat|2:30|8:30|9\s*(?:pm|p\.m\.)|11\s*(?:pm|p\.m\.))/i.test(caption));
 }
@@ -882,6 +885,83 @@ async function maybePost() {
   writeJsonIfChanged(postStatePath, nextState);
   console.log(`Created Google post: ${selected.kind}.`);
   return { attempted: true, published: true, kind: selected.kind, resourceName: result.name || null, latestInstagramShortcode: schedule?.shortcode || null };
+}
+
+function scheduleAndCateringReplacement() {
+  const schedule = readSchedule();
+  return {
+    kind: "weekly-schedule-and-catering",
+    url: trackedPostUrl("https://islandboykreationz.com/contact", "weekly-schedule-and-catering"),
+    summary: `Island Boy Kreationz regular weekly schedule: Tuesday–Friday at ${schedule.hunterAvenue} from 2:30–8:30 PM, plus the Amazon late stop Tuesday–Saturday from 9–11 PM. Saturday daytime locations can move, so check Instagram ${schedule.instagram} or text ${schedule.phone} before driving. Planning an office lunch, wedding, birthday, church event, school function, community day, or private celebration? Book the food truck, party trays, or drop-off catering through our website.`
+  };
+}
+
+async function replaceLatestStaleEventPost() {
+  const token = await getGoogleAccessToken();
+  if (!token || !locationName()) {
+    throw new Error("Google OAuth or Island Boy GBP location is not configured for posts.");
+  }
+  const state = readJson(postStatePath, { postIndex: 0, posts: [] });
+  const expectedPost = state.posts?.[0];
+  if (!expectedPost?.name) {
+    throw new Error("No tracked latest Island Boy Google post is available for replacement.");
+  }
+  const livePosts = await fetchLocalPosts(token);
+  const stalePost = (livePosts.localPosts || []).find((post) => post.name === expectedPost.name);
+  if (!stalePost) {
+    throw new Error("The tracked latest Island Boy Google post is not live; refusing to delete another post.");
+  }
+  if (!/(7 years|tomorrow only|free food|anniversary)/i.test(stalePost.summary || expectedPost.summary || "")) {
+    throw new Error("The latest live Island Boy post is not the stale anniversary event; refusing deletion.");
+  }
+  const replacement = scheduleAndCateringReplacement();
+  if (args.has("--dry-run-post")) {
+    console.log(`[dry-run] Would delete stale Google post ${stalePost.name}.`);
+    console.log(`[dry-run] Would publish schedule and catering post: ${replacement.summary} ${replacement.url}`);
+    return { attempted: true, published: false, deleted: false, kind: replacement.kind };
+  }
+
+  await fetchJson(`https://mybusiness.googleapis.com/v4/${stalePost.name}`, {
+    method: "DELETE",
+    headers: authHeaders(token),
+    label: "Google Business Profile localPosts.delete"
+  });
+  const created = await fetchJson(`https://mybusiness.googleapis.com/v4/${locationName()}/localPosts`, {
+    method: "POST",
+    headers: { ...authHeaders(token), "content-type": "application/json" },
+    body: JSON.stringify({
+      languageCode: "en-US",
+      summary: replacement.summary,
+      topicType: "STANDARD",
+      callToAction: { actionType: "LEARN_MORE", url: replacement.url }
+    }),
+    label: "Google Business Profile localPosts.create"
+  });
+  const verifiedPosts = await fetchLocalPosts(token);
+  const staleStillLive = (verifiedPosts.localPosts || []).some((post) => post.name === stalePost.name);
+  const replacementLive = (verifiedPosts.localPosts || []).some((post) => post.name === created.name);
+  if (staleStillLive || !replacementLive) {
+    throw new Error("Google post replacement could not be verified after publication.");
+  }
+  const now = new Date();
+  writeJsonIfChanged(postStatePath, {
+    ...state,
+    lastPostedAt: now.toISOString(),
+    lastPostedDate: localDateKey(now),
+    postIndex: Number(state.postIndex || 0) + 1,
+    posts: [
+      { createdAt: now.toISOString(), name: created.name || null, ...replacement },
+      ...(state.posts || []).filter((post) => post.name !== stalePost.name)
+    ].slice(0, 100)
+  });
+  console.log("Replaced stale anniversary Google post with the current weekly schedule and catering post.");
+  return {
+    attempted: true,
+    published: true,
+    deleted: true,
+    kind: replacement.kind,
+    resourceName: created.name || null
+  };
 }
 
 const performanceMetrics = [
@@ -1169,7 +1249,7 @@ async function main() {
     return;
   }
 
-  const actionFlags = ["--audit-profile", "--apply-services", "--apply-hours", "--sync-food-menu", "--sync-reviews", "--reply-unanswered", "--maybe-post", "--sync-analytics", "--sync-search-console"];
+  const actionFlags = ["--audit-profile", "--apply-services", "--apply-hours", "--sync-food-menu", "--sync-reviews", "--reply-unanswered", "--maybe-post", "--replace-stale-post", "--sync-analytics", "--sync-search-console"];
   if (!actionFlags.some((flag) => args.has(flag))) args.add("--audit-profile");
   const results = {};
   if (args.has("--apply-services")) results.services = await applyServices();
@@ -1185,7 +1265,8 @@ async function main() {
     results.review = { status: "complete", changed, reviewCount: data.reviewCount, rating: data.rating, replies, unansweredRemaining: data.reviews.filter((review) => !review.reply).length };
     console.log(`Review sync complete: changed=${changed} reviewCount=${data.reviewCount} rating=${data.rating} replies=${replies.published}/${replies.attempted}`);
   }
-  if (args.has("--maybe-post")) results.post = await maybePost();
+  if (args.has("--replace-stale-post")) results.post = await replaceLatestStaleEventPost();
+  else if (args.has("--maybe-post")) results.post = await maybePost();
   if (args.has("--sync-analytics")) results.analytics = await syncPerformanceAnalytics();
   if (args.has("--sync-search-console")) results.searchConsole = await syncSearchConsoleAnalytics();
 
