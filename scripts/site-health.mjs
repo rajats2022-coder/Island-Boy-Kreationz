@@ -65,8 +65,21 @@ const expectedCitySlugs = [
   "raleigh", "durham", "cary", "asheville", "fayetteville", "wilmington"
 ];
 for (const slug of expectedCitySlugs) {
-  const url = `https://islandboykreationz.com/catering-${slug}-nc.html`;
+  const url = `https://islandboykreationz.com/catering-${slug}-nc`;
   if (!sitemapUrls.includes(url)) add("error", "sitemap.xml", "service-area-coverage", `Missing ${url}`);
+}
+
+for (const url of sitemapUrls) {
+  const parsed = new URL(url);
+  const route = parsed.pathname.replace(/^\/|\/$/g, "");
+  const file = route ? `${route}.html` : "index.html";
+  if (!existsSync(join(root, file))) {
+    add("error", "sitemap.xml", "local-page", `Missing local page for ${url}`);
+    continue;
+  }
+  const html = await readFile(join(root, file), "utf8");
+  const canonical = match(html, /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i);
+  if (canonical !== url) add("error", file, "sitemap-canonical", `Expected ${url}, found ${canonical || "none"}`);
 }
 
 const productionChecks = [];
@@ -74,8 +87,12 @@ if (production) {
   for (const url of sitemapUrls) {
     try {
       const response = await fetch(url, { redirect: "follow" });
-      productionChecks.push({ url, status: response.status, finalUrl: response.url, ok: response.ok });
+      const html = response.ok ? await response.text() : "";
+      const canonical = match(html, /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i);
+      productionChecks.push({ url, status: response.status, finalUrl: response.url, canonical, ok: response.ok });
       if (!response.ok) add("error", url, "production-http", `HTTP ${response.status}`);
+      if (response.url !== url) add("error", url, "production-redirect", `Resolved to ${response.url}`);
+      if (canonical !== url) add("error", url, "production-canonical", `Expected ${url}, found ${canonical || "none"}`);
     } catch (error) {
       productionChecks.push({ url, status: 0, ok: false, error: error.message });
       add("error", url, "production-http", error.message);

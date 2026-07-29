@@ -11,11 +11,11 @@ import { fileURLToPath } from 'url';
 import {
   SITE, CITIES, REGIONS, SERVICES,
   cityHref, cityBySlug, serviceHref,
-  headerHTML, footerHTML, cssLinkBlock,
+  headerHTML, footerHTML, cssLinkBlock, normalizePublicUrls, publicUrl,
 } from './shell-snippets.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const DATE = '2026-07-17';
+const DATE = '2026-07-29';
 
 const TILES = [
   ['island-boy-oxtail-trays.jpg', 'Oxtails & rice and peas'],
@@ -38,7 +38,7 @@ function bandHTML(heroImg, offset = 0) {
 const STEPS = `<div class="ibx-steps"><div class="ibx-step"><h3>Send the details</h3><p>Date, address, guest count, service window, and menu direction — through the form, or by call or text at <a href="${SITE.phoneHref}" style="font-weight:900;color:#8a4a12;text-decoration:underline;text-underline-offset:3px">${SITE.phone}</a>.</p></div><div class="ibx-step"><h3>The team reviews fit</h3><p>Event fit, travel, timing, and menu get checked before anything is quoted — no surprises on either side.</p></div><div class="ibx-step"><h3>Lock the date</h3><p>Once the window is confirmed, the truck rolls or the trays land — hot, on time, and portioned for your crowd.</p></div></div>`;
 
 function pageShell({ file, title, description, ogImg, schemaGraph, bodyClass, main }) {
-  const url = `${SITE.origin}/${file}`;
+  const url = publicUrl(file);
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#110700"><title>${title}</title><meta name="description" content="${description}"><link rel="icon" type="image/png" href="/assets/favicon-32x32.png"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="canonical" href="${url}"><meta name="robots" content="index, follow, max-image-preview:large"><meta property="og:title" content="${title}"><meta property="og:description" content="${description}"><meta property="og:type" content="website"><meta property="og:url" content="${url}"><meta property="og:image" content="${SITE.origin}/assets/${ogImg}"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': schemaGraph })}</script><script src="/site-analytics.js" defer></script>${cssLinkBlock()}</head><body class="ibx-body ${bodyClass}">${headerHTML()}<main>${main}</main>${footerHTML()}<script src="assets/mobile-polish.js"></script><script src="assets/island-chatbot.js"></script></body></html>`;
 }
 
@@ -53,7 +53,7 @@ const BUSINESS_NODE = {
   servesCuisine: ['Caribbean', 'Soul Food', 'Oxtail', 'Wings'],
   sameAs: [SITE.instagram],
   areaServed: CITIES.map((city) => ({ '@type': 'City', name: city.name, address: { '@type': 'PostalAddress', addressRegion: 'NC' } })),
-  hasMenu: `${SITE.origin}/order.html`,
+  hasMenu: publicUrl('order.html'),
 };
 
 /* ------------------------------------------------------------ city page */
@@ -89,8 +89,8 @@ function cityPage(city, idx) {
     { '@type': 'Service', name: `Caribbean food truck catering in ${city.name}, NC`, provider: { '@id': `${SITE.origin}/#business` }, serviceType: 'Food truck and event catering', areaServed: { '@type': 'City', name: city.name, address: { '@type': 'PostalAddress', addressRegion: 'NC' } } },
     { '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.origin}/` },
-      { '@type': 'ListItem', position: 2, name: 'Service Areas', item: `${SITE.origin}/service-areas.html` },
-      { '@type': 'ListItem', position: 3, name: city.name, item: `${SITE.origin}/${file}` },
+      { '@type': 'ListItem', position: 2, name: 'Service Areas', item: publicUrl('service-areas.html') },
+      { '@type': 'ListItem', position: 3, name: city.name, item: publicUrl(file) },
     ] },
   ];
 
@@ -157,7 +157,7 @@ function servicesHub() {
 
   const schemaGraph = [
     BUSINESS_NODE,
-    { '@type': 'OfferCatalog', name: 'Island Boy Kreationz catering services', itemListElement: SERVICES.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, url: `${SITE.origin}/${serviceHref(s)}` } })) },
+    { '@type': 'OfferCatalog', name: 'Island Boy Kreationz catering services', itemListElement: SERVICES.map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, url: publicUrl(serviceHref(s)) } })) },
   ];
 
   return { file, html: pageShell({ file, title, description, ogImg: 'island-boy-oxtail-trays.jpg', schemaGraph, bodyClass: 'page-services-hub', main }) };
@@ -202,12 +202,12 @@ ${sections}
 /* -------------------------------------------------- sitemap + llms.txt */
 
 function sitemap() {
-  const statics = ['', 'order.html', SITE.eventHref, 'services.html', 'service-areas.html', 'contact.html', 'about.html', 'gallery.html', 'blog.html', 'blog-oxtail-catering-nc.html', 'blog-caribbean-catering-charlotte.html', 'blog-food-truck-catering-concord-greensboro.html', 'faq.html'];
+  const statics = ['', 'order.html', 'services.html', 'service-areas.html', 'contact.html', 'about.html', 'gallery.html', 'blog.html', 'blog-oxtail-catering-nc.html', 'blog-caribbean-catering-charlotte.html', 'blog-food-truck-catering-concord-greensboro.html', 'faq.html'];
   const urls = [
     ...statics,
     ...SERVICES.map((s) => serviceHref(s)),
     ...CITIES.map((c) => cityHref(c.slug)),
-  ].map((p) => `  <url><loc>${SITE.origin}/${p}</loc><lastmod>${DATE}</lastmod></url>`).join('\n');
+  ].map((p) => `  <url><loc>${publicUrl(p)}</loc><lastmod>${DATE}</lastmod></url>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
 
@@ -227,21 +227,20 @@ Known menu and catering directions:
 
 Primary pages:
 - Home: /
-- Order: /order.html
-- July 26 free event sign-up: /${SITE.eventHref}
-- Catering services hub: /services.html
-- Catering inquiry: /contact.html
-- About: /about.html
-- Gallery: /gallery.html
-- Service areas hub: /service-areas.html
-- Blog: /blog.html
-- FAQ: /faq.html
+- Order: /order
+- Catering services hub: /services
+- Catering inquiry: /contact
+- About: /about
+- Gallery: /gallery
+- Service areas hub: /service-areas
+- Blog: /blog
+- FAQ: /faq
 
 Catering service pages:
-${SERVICES.map((s) => `- /${serviceHref(s)} (${s.title})`).join('\n')}
+${SERVICES.map((s) => `- ${publicUrl(serviceHref(s)).replace(SITE.origin, '')} (${s.title})`).join('\n')}
 
 Local catering pages (24 North Carolina markets; longer-distance bookings require advance confirmation):
-${CITIES.map((c) => `- /${cityHref(c.slug)} (${c.name})`).join('\n')}
+${CITIES.map((c) => `- ${publicUrl(cityHref(c.slug)).replace(SITE.origin, '')} (${c.name})`).join('\n')}
 
 Contact and social:
 - Phone: ${SITE.phone}
@@ -267,7 +266,7 @@ const pages = [
 ];
 
 for (const { file, html } of pages) {
-  await writeFile(join(ROOT, file), html);
+  await writeFile(join(ROOT, file), normalizePublicUrls(html));
 }
 await writeFile(join(ROOT, 'sitemap.xml'), sitemap());
 await writeFile(join(ROOT, 'llms.txt'), llms());

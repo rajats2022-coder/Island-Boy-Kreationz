@@ -16,6 +16,37 @@ export const SITE = {
   eventHref: 'july-26-free-event-signup.html',
 };
 
+export function cleanPublicPath(value = '') {
+  const [pathPart, suffix = ''] = value.split(/(?=[?#])/u, 2);
+  const path = pathPart
+    .replace(SITE.origin, '')
+    .replace(/^\/+/u, '')
+    .replace(/^index\.html$/u, '')
+    .replace(/\.html$/u, '');
+  return `${path ? `/${path}` : '/'}${suffix}`;
+}
+
+export function publicUrl(value = '') {
+  return `${SITE.origin}${cleanPublicPath(value)}`;
+}
+
+export function normalizePublicUrls(html) {
+  return html
+    .replaceAll(`${SITE.origin}/index.html`, `${SITE.origin}/`)
+    .replace(
+      new RegExp(`${SITE.origin.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&')}/([^"'<>\\s?#]+)\\.html(?=([?#][^"'<>\\s]*)?["'<>\\s])`, 'gu'),
+      `${SITE.origin}/$1`,
+    )
+    .replace(
+      /((?:href|action)=["'])(?:\/)?index\.html([?#][^"']*)?(["'])/giu,
+      '$1/$2$3',
+    )
+    .replace(
+      /((?:href|action)=["'])(?![a-z][a-z0-9+.-]*:|\/\/|#)(?:\/)?([^"'?#]+)\.html([?#][^"']*)?(["'])/giu,
+      '$1/$2$3$4',
+    );
+}
+
 /* ---------------------------------------------------------------- cities */
 
 const NOTE_BY_REGION = {
@@ -292,7 +323,7 @@ export function headerHTML() {
       .map((c) => `<a href="${cityHref(c.slug)}">${c.name}</a>`).join('');
     return `<div class="dd-col${r.key === 'metro' ? ' dd-col-2up' : ''}"><span class="dd-col-title">${r.label}</span><div class="dd-col-links">${links}</div></div>`;
   }).join('');
-  return `<header class="topbar"><div class="wrap nav"><a class="brand" href="index.html"><span class="mark logo-mark"><img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo"></span><span><strong>Island Boy Kreationz</strong><small>Food Truck &amp; Catering</small></span></a><nav class="links" aria-label="Primary navigation"><a href="index.html#menu">Menu</a><a class="event-nav-link" href="${SITE.eventHref}">Free Event</a><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">Catering <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-list"><a class="dd-lead" href="services.html">All Catering Services</a>${cateringLinks}</div></div><div class="nav-dropdown nav-dropdown-wide"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">Locations <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-mega">${megaCols}<a class="dd-all" href="service-areas.html">View all North Carolina service areas →</a></div></div><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">About <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-list"><a href="about.html">Our Story</a><a href="gallery.html">Gallery</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></div></div><a class="pill booking-pill" href="contact.html#lead-form">Book Catering</a><a class="pill" href="order.html">Order Now</a></nav></div></header>`;
+  return `<header class="topbar"><div class="wrap nav"><a class="brand" href="index.html"><span class="mark logo-mark"><img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo"></span><span><strong>Island Boy Kreationz</strong><small>Food Truck &amp; Catering</small></span></a><nav class="links" aria-label="Primary navigation"><a href="index.html#menu">Menu</a><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">Catering <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-list"><a class="dd-lead" href="services.html">All Catering Services</a>${cateringLinks}</div></div><div class="nav-dropdown nav-dropdown-wide"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">Locations <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-mega">${megaCols}<a class="dd-all" href="service-areas.html">View all North Carolina service areas →</a></div></div><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">About <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-list"><a href="about.html">Our Story</a><a href="gallery.html">Gallery</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></div></div><a class="pill booking-pill" href="contact.html#lead-form">Book Catering</a><a class="pill" href="order.html">Order Now</a></nav></div></header>`;
 }
 
 /* ---------------------------------------------------------------- footer */
@@ -301,5 +332,5 @@ export function footerHTML() {
   const svc = SERVICES.map((s) => `<a href="${serviceHref(s)}">${s.nav}</a>`).join('');
   const footCities = ['charlotte', 'concord', 'huntersville', 'matthews', 'mooresville', 'gastonia', 'raleigh', 'durham', 'greensboro', 'winston-salem']
     .map((slug) => `<a href="${cityHref(slug)}">${cityBySlug[slug].name}</a>`).join('');
-  return `<footer class="site-footer"><div class="wrap"><div class="foot-grid"><div class="foot-brand"><a class="brand" href="index.html"><span class="mark logo-mark"><img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo"></span><span><strong>Island Boy Kreationz</strong><small>Food Truck &amp; Catering</small></span></a><p class="foot-tag">Virgin Islands born, Charlotte based. Caribbean soul food from the truck or delivered in trays — oxtails, wings, bowls, and full event spreads. No pork kitchen.</p><p class="foot-contact">${SITE.address}<br><a href="${SITE.phoneHref}">${SITE.phone}</a> · <a href="mailto:${SITE.email}">${SITE.email}</a><br><a href="${SITE.instagram}" target="_blank" rel="noopener">@islandboy_kreationz</a></p><p class="foot-hours">Truck: Tue–Fri 2:30–8:30 PM · Amazon stop: Tue–Sat 9–11 PM<br>Saturday spots move — call, text, or check Instagram first.</p></div><nav class="foot-col" aria-label="Catering services"><span class="foot-title">Catering</span><a href="services.html">All Services</a>${svc}<a class="foot-cta" href="contact.html#lead-form">Book Catering →</a></nav><nav class="foot-col" aria-label="Service areas"><span class="foot-title">Service Areas</span>${footCities}<a class="foot-cta" href="service-areas.html">All 24 service areas →</a></nav><nav class="foot-col" aria-label="Explore"><span class="foot-title">Explore</span><a href="index.html#menu">Menu</a><a href="${SITE.eventHref}">July 26 Free Event</a><a href="order.html">Order Online</a><a href="about.html">Our Story</a><a href="gallery.html">Gallery</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a></nav></div><div class="foot-bottom"><span>© ${SITE.year} ${SITE.name} · Charlotte, NC</span><span>Site by S4 AI Agency</span></div></div></footer>`;
+  return `<footer class="site-footer"><div class="wrap"><div class="foot-grid"><div class="foot-brand"><a class="brand" href="index.html"><span class="mark logo-mark"><img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo"></span><span><strong>Island Boy Kreationz</strong><small>Food Truck &amp; Catering</small></span></a><p class="foot-tag">Virgin Islands born, Charlotte based. Caribbean soul food from the truck or delivered in trays — oxtails, wings, bowls, and full event spreads. No pork kitchen.</p><p class="foot-contact">${SITE.address}<br><a href="${SITE.phoneHref}">${SITE.phone}</a> · <a href="mailto:${SITE.email}">${SITE.email}</a><br><a href="${SITE.instagram}" target="_blank" rel="noopener">@islandboy_kreationz</a></p><p class="foot-hours">Truck: Tue–Fri 2:30–8:30 PM · Amazon stop: Tue–Sat 9–11 PM<br>Saturday spots move — call, text, or check Instagram first.</p></div><nav class="foot-col" aria-label="Catering services"><span class="foot-title">Catering</span><a href="services.html">All Services</a>${svc}<a class="foot-cta" href="contact.html#lead-form">Book Catering →</a></nav><nav class="foot-col" aria-label="Service areas"><span class="foot-title">Service Areas</span>${footCities}<a class="foot-cta" href="service-areas.html">All 24 service areas →</a></nav><nav class="foot-col" aria-label="Explore"><span class="foot-title">Explore</span><a href="index.html#menu">Menu</a><a href="order.html">Order Online</a><a href="about.html">Our Story</a><a href="gallery.html">Gallery</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a></nav></div><div class="foot-bottom"><span>© ${SITE.year} ${SITE.name} · Charlotte, NC</span><span>Site by S4 AI Agency</span></div></div></footer>`;
 }

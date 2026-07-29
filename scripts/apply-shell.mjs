@@ -8,7 +8,7 @@
 import { readFile, writeFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { headerHTML, footerHTML, CSS_LINKS } from './shell-snippets.mjs';
+import { headerHTML, footerHTML, CSS_LINKS, normalizePublicUrls } from './shell-snippets.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -43,6 +43,6 @@ for (const page of PAGES) {
     notes.push(`css +${missing.length} (${missing.map((m) => m.split('/')[1]).join(', ')})`);
   } else notes.push('css ✓');
 
-  await writeFile(path, html);
+  await writeFile(path, normalizePublicUrls(html));
   console.log(`${page}: ${notes.join(' · ')}`);
 }

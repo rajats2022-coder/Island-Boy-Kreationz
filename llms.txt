@@ -13,49 +13,48 @@ Known menu and catering directions:
 
 Primary pages:
 - Home: /
-- Order: /order.html
-- July 26 free event sign-up: /july-26-free-event-signup.html
-- Catering services hub: /services.html
-- Catering inquiry: /contact.html
-- About: /about.html
-- Gallery: /gallery.html
-- Service areas hub: /service-areas.html
-- Blog: /blog.html
-- FAQ: /faq.html
+- Order: /order
+- Catering services hub: /services
+- Catering inquiry: /contact
+- About: /about
+- Gallery: /gallery
+- Service areas hub: /service-areas
+- Blog: /blog
+- FAQ: /faq
 
 Catering service pages:
-- /food-truck-catering-nc.html (Food Truck Catering)
-- /oxtail-catering-nc.html (Oxtail Catering)
-- /private-party-catering-nc.html (Private Party Catering)
-- /office-lunch-catering-nc.html (Office Lunch Catering)
-- /church-community-event-catering-nc.html (Church & Community Event Catering)
-- /tray-catering-nc.html (Party Trays & Drop-Off Catering)
+- /food-truck-catering-nc (Food Truck Catering)
+- /oxtail-catering-nc (Oxtail Catering)
+- /private-party-catering-nc (Private Party Catering)
+- /office-lunch-catering-nc (Office Lunch Catering)
+- /church-community-event-catering-nc (Church & Community Event Catering)
+- /tray-catering-nc (Party Trays & Drop-Off Catering)
 
 Local catering pages (24 North Carolina markets; longer-distance bookings require advance confirmation):
-- /catering-charlotte-nc.html (Charlotte)
-- /catering-concord-nc.html (Concord)
-- /catering-huntersville-nc.html (Huntersville)
-- /catering-kannapolis-nc.html (Kannapolis)
-- /catering-mooresville-nc.html (Mooresville)
-- /catering-gastonia-nc.html (Gastonia)
-- /catering-matthews-nc.html (Matthews)
-- /catering-mint-hill-nc.html (Mint Hill)
-- /catering-indian-trail-nc.html (Indian Trail)
-- /catering-monroe-nc.html (Monroe)
-- /catering-pineville-nc.html (Pineville)
-- /catering-harrisburg-nc.html (Harrisburg)
-- /catering-salisbury-nc.html (Salisbury)
-- /catering-statesville-nc.html (Statesville)
-- /catering-hickory-nc.html (Hickory)
-- /catering-greensboro-nc.html (Greensboro)
-- /catering-winston-salem-nc.html (Winston-Salem)
-- /catering-high-point-nc.html (High Point)
-- /catering-raleigh-nc.html (Raleigh)
-- /catering-durham-nc.html (Durham)
-- /catering-cary-nc.html (Cary)
-- /catering-asheville-nc.html (Asheville)
-- /catering-fayetteville-nc.html (Fayetteville)
-- /catering-wilmington-nc.html (Wilmington)
+- /catering-charlotte-nc (Charlotte)
+- /catering-concord-nc (Concord)
+- /catering-huntersville-nc (Huntersville)
+- /catering-kannapolis-nc (Kannapolis)
+- /catering-mooresville-nc (Mooresville)
+- /catering-gastonia-nc (Gastonia)
+- /catering-matthews-nc (Matthews)
+- /catering-mint-hill-nc (Mint Hill)
+- /catering-indian-trail-nc (Indian Trail)
+- /catering-monroe-nc (Monroe)
+- /catering-pineville-nc (Pineville)
+- /catering-harrisburg-nc (Harrisburg)
+- /catering-salisbury-nc (Salisbury)
+- /catering-statesville-nc (Statesville)
+- /catering-hickory-nc (Hickory)
+- /catering-greensboro-nc (Greensboro)
+- /catering-winston-salem-nc (Winston-Salem)
+- /catering-high-point-nc (High Point)
+- /catering-raleigh-nc (Raleigh)
+- /catering-durham-nc (Durham)
+- /catering-cary-nc (Cary)
+- /catering-asheville-nc (Asheville)
+- /catering-fayetteville-nc (Fayetteville)
+- /catering-wilmington-nc (Wilmington)
 
 Contact and social:
 - Phone: 980-785-8372
