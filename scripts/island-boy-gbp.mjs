@@ -553,32 +553,37 @@ function fallbackReply(review) {
 async function draftReply(review) {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) return fallbackReply(review);
-  const payload = await fetchJson("https://openrouter.ai/api/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${apiKey}`,
-      "content-type": "application/json",
-      "http-referer": "https://islandboykreationz.com",
-      "x-title": "Island Boy Review Reply Automation"
-    },
-    body: JSON.stringify({
-      model: process.env.ISLAND_BOY_REVIEW_REPLY_MODEL || "openai/gpt-4.1-nano",
-      temperature: 0.3,
-      max_tokens: 120,
-      messages: [
-        {
-          role: "system",
-          content: "Write one warm, concise Google Business Profile owner reply for Island Boy Kreationz Food Truck & Catering. Return only the reply, under 55 words. Do not invent details or offer incentives. For negative feedback, acknowledge it and invite direct follow-up without arguing."
-        },
-        {
-          role: "user",
-          content: JSON.stringify({ reviewer: review.author, rating: review.rating, review: review.text })
-        }
-      ]
-    }),
-    label: "OpenRouter review reply draft"
-  });
-  return payload?.choices?.[0]?.message?.content?.trim() || fallbackReply(review);
+  try {
+    const payload = await fetchJson("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${apiKey}`,
+        "content-type": "application/json",
+        "http-referer": "https://islandboykreationz.com",
+        "x-title": "Island Boy Review Reply Automation"
+      },
+      body: JSON.stringify({
+        model: process.env.ISLAND_BOY_REVIEW_REPLY_MODEL || "openai/gpt-4.1-nano",
+        temperature: 0.3,
+        max_tokens: 120,
+        messages: [
+          {
+            role: "system",
+            content: "Write one warm, concise Google Business Profile owner reply for Island Boy Kreationz Food Truck & Catering. Return only the reply, under 55 words. Do not invent details or offer incentives. For negative feedback, acknowledge it and invite direct follow-up without arguing."
+          },
+          {
+            role: "user",
+            content: JSON.stringify({ reviewer: review.author, rating: review.rating, review: review.text })
+          }
+        ]
+      }),
+      label: "OpenRouter review reply draft"
+    });
+    return payload?.choices?.[0]?.message?.content?.trim() || fallbackReply(review);
+  } catch {
+    console.warn("OpenRouter draft unavailable; using the local Island Boy reply template.");
+    return fallbackReply(review);
+  }
 }
 
 async function replyToUnanswered(data) {
