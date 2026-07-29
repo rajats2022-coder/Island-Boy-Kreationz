@@ -206,6 +206,27 @@ async function fetchLocalPosts(token) {
   });
 }
 
+function summarizePostStates(posts) {
+  const localPosts = posts.localPosts || [];
+  return {
+    total: localPosts.length,
+    live: localPosts.filter((post) => post.state === "LIVE").length,
+    rejected: localPosts.filter((post) => post.state === "REJECTED").length,
+    pending: localPosts.filter((post) => !["LIVE", "REJECTED"].includes(post.state)).length
+  };
+}
+
+async function waitForLocalPostState(token, postName, { attempts = 5, intervalMs = 1500 } = {}) {
+  let post = null;
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    const posts = await fetchLocalPosts(token);
+    post = (posts.localPosts || []).find((item) => item.name === postName) || null;
+    if (post?.state === "LIVE" || post?.state === "REJECTED") return post;
+    if (attempt < attempts - 1) await new Promise((resolve) => setTimeout(resolve, intervalMs));
+  }
+  return post;
+}
+
 async function fetchFoodMenus(token) {
   return fetchJson(`https://mybusiness.googleapis.com/v4/${locationName()}/foodMenus`, {
     headers: authHeaders(token), label: "Google Business Profile foodMenus.get"
@@ -285,6 +306,7 @@ function profileFindings(profile, attributes, media, posts, foodMenus, googleUpd
   const attributeNames = new Set((attributes.attributes || []).map((item) => item.name));
   const serviceAreas = (profile.serviceArea?.places?.placeInfos || []).map((item) => item.placeName || item.placeId);
   const menuItemCount = (foodMenus.menus || []).reduce((total, menu) => total + (menu.sections || []).reduce((sum, section) => sum + (section.items || []).length, 0), 0);
+  const postStates = summarizePostStates(posts);
   const findings = [];
   if (profile.title !== "Island Boy Kreationz Food Truck & Catering") findings.push("Business name differs from the verified real-world logo and website name.");
   if (profile.websiteUri !== "https://islandboykreationz.com/") findings.push("Website URL is not the preferred canonical homepage.");
@@ -297,11 +319,12 @@ function profileFindings(profile, attributes, media, posts, foodMenus, googleUpd
   if ((profile.serviceItems || []).length < desiredServices().length) findings.push("Detailed GBP services are incomplete.");
   if (!attributeNames.has("attributes/url_instagram")) findings.push("Instagram is not linked to the profile.");
   if ((media.totalMediaItemCount || media.mediaItems?.length || 0) < 8) findings.push("Owner photo coverage is thin.");
-  if (!(posts.localPosts || []).length) findings.push("No owner-created GBP posts are currently returned by the API.");
+  if (!postStates.live) findings.push("No live owner-created GBP posts are currently returned by the API.");
+  if (postStates.rejected) findings.push(`${postStates.rejected} owner-created GBP post(s) were rejected by Google and need revised content.`);
   if (profile.metadata?.canHaveFoodMenus && menuItemCount < 18) findings.push("The structured menu has fewer items than the verified website menu.");
   if (googleUpdated.diffMask) findings.push("Google has suggested profile updates that need review.");
   if (googleUpdated.pendingMask) findings.push("Submitted profile edits are pending Google publication.");
-  return { categories, serviceAreas, menuItemCount, findings };
+  return { categories, serviceAreas, menuItemCount, postStates, findings };
 }
 
 async function auditProfile() {
@@ -314,7 +337,10 @@ async function auditProfile() {
   const audit = {
     business: businessName(), fetchedAt: new Date().toISOString(), profile, attributes,
     media: { totalMediaItemCount: media.totalMediaItemCount ?? media.mediaItems?.length ?? 0, categories: [...new Set((media.mediaItems || []).map((item) => item.locationAssociation?.category).filter(Boolean))] },
-    ownerPostCount: (posts.localPosts || []).length,
+    ownerPostCount: summary.postStates.total,
+    liveOwnerPostCount: summary.postStates.live,
+    rejectedOwnerPostCount: summary.postStates.rejected,
+    pendingOwnerPostCount: summary.postStates.pending,
     foodMenu: { menuCount: (foodMenus.menus || []).length, itemCount: summary.menuItemCount },
     googleUpdated: { diffMask: googleUpdated.diffMask || "", pendingMask: googleUpdated.pendingMask || "" },
     categories: summary.categories, serviceAreas: summary.serviceAreas, findings: summary.findings
@@ -875,6 +901,10 @@ async function maybePost() {
     body: JSON.stringify({ languageCode: "en-US", summary: selected.summary, topicType: "STANDARD", callToAction: { actionType: "LEARN_MORE", url: selected.url } }),
     label: "Google Business Profile localPosts.create"
   });
+  const verifiedPost = await waitForLocalPostState(token, result.name);
+  if (verifiedPost?.state !== "LIVE") {
+    throw new Error(`Google created the ${selected.kind} post but its publication state is ${verifiedPost?.state || "UNKNOWN"}, not LIVE.`);
+  }
   const nextState = {
     ...state, lastPostedAt: new Date().toISOString(), lastPostedDate: localDateKey(postDate),
     lastInstagramShortcode: selected.instagramShortcode || state.lastInstagramShortcode || null,
@@ -892,7 +922,7 @@ function scheduleAndCateringReplacement() {
   return {
     kind: "weekly-schedule-and-catering",
     url: trackedPostUrl("https://islandboykreationz.com/contact", "weekly-schedule-and-catering"),
-    summary: `Island Boy Kreationz regular weekly schedule: Tuesday–Friday at ${schedule.hunterAvenue} from 2:30–8:30 PM, plus the Amazon late stop Tuesday–Saturday from 9–11 PM. Saturday daytime locations can move, so check Instagram ${schedule.instagram} or text ${schedule.phone} before driving. Planning an office lunch, wedding, birthday, church event, school function, community day, or private celebration? Book the food truck, party trays, or drop-off catering through our website.`
+    summary: `Island Boy Kreationz regular weekly schedule: Tuesday–Friday at ${schedule.hunterAvenue} from 2:30–8:30 PM, plus the Amazon late stop Tuesday–Saturday from 9–11 PM. Saturday daytime locations can move, so check Instagram ${schedule.instagram} before driving. Planning an office lunch, wedding, birthday, church event, school function, community day, or private celebration? Book the food truck, party trays, or drop-off catering through our website.`
   };
 }
 
@@ -937,9 +967,13 @@ async function replaceLatestStaleEventPost() {
     }),
     label: "Google Business Profile localPosts.create"
   });
+  const verifiedCreated = await waitForLocalPostState(token, created.name);
+  if (verifiedCreated?.state !== "LIVE") {
+    throw new Error(`Google created the replacement post but its publication state is ${verifiedCreated?.state || "UNKNOWN"}, not LIVE.`);
+  }
   const verifiedPosts = await fetchLocalPosts(token);
   const staleStillLive = (verifiedPosts.localPosts || []).some((post) => post.name === stalePost.name);
-  const replacementLive = (verifiedPosts.localPosts || []).some((post) => post.name === created.name);
+  const replacementLive = (verifiedPosts.localPosts || []).some((post) => post.name === created.name && post.state === "LIVE");
   if (staleStillLive || !replacementLive) {
     throw new Error("Google post replacement could not be verified after publication.");
   }
@@ -962,6 +996,94 @@ async function replaceLatestStaleEventPost() {
     kind: replacement.kind,
     resourceName: created.name || null
   };
+}
+
+async function retryTrackedRejectedPost() {
+  const token = await getGoogleAccessToken();
+  if (!token || !locationName()) {
+    throw new Error("Google OAuth or Island Boy GBP location is not configured for posts.");
+  }
+  const state = readJson(postStatePath, { postIndex: 0, posts: [] });
+  const expectedPost = state.posts?.[0];
+  if (!expectedPost?.name) throw new Error("No tracked latest Island Boy Google post is available for retry.");
+
+  const currentPosts = await fetchLocalPosts(token);
+  const rejectedPost = (currentPosts.localPosts || []).find((post) => post.name === expectedPost.name);
+  if (rejectedPost?.state !== "REJECTED") {
+    throw new Error("The tracked latest Island Boy Google post is not rejected; refusing to replace it.");
+  }
+
+  const replacement = scheduleAndCateringReplacement();
+  if (args.has("--dry-run-post")) {
+    console.log(`[dry-run] Would retry rejected Google post with revised content: ${replacement.summary} ${replacement.url}`);
+    return { attempted: true, published: false, deleted: false, kind: replacement.kind };
+  }
+
+  const created = await fetchJson(`https://mybusiness.googleapis.com/v4/${locationName()}/localPosts`, {
+    method: "POST",
+    headers: { ...authHeaders(token), "content-type": "application/json" },
+    body: JSON.stringify({
+      languageCode: "en-US",
+      summary: replacement.summary,
+      topicType: "STANDARD",
+      callToAction: { actionType: "LEARN_MORE", url: replacement.url }
+    }),
+    label: "Google Business Profile localPosts.create"
+  });
+  const verifiedCreated = await waitForLocalPostState(token, created.name);
+  if (verifiedCreated?.state !== "LIVE") {
+    throw new Error(`Google created the revised post but its publication state is ${verifiedCreated?.state || "UNKNOWN"}, not LIVE.`);
+  }
+
+  await fetchJson(`https://mybusiness.googleapis.com/v4/${rejectedPost.name}`, {
+    method: "DELETE",
+    headers: authHeaders(token),
+    label: "Google Business Profile localPosts.delete"
+  });
+  const verifiedPosts = await fetchLocalPosts(token);
+  const rejectedStillPresent = (verifiedPosts.localPosts || []).some((post) => post.name === rejectedPost.name);
+  const replacementLive = (verifiedPosts.localPosts || []).some((post) => post.name === created.name && post.state === "LIVE");
+  if (rejectedStillPresent || !replacementLive) {
+    throw new Error("Google post retry could not be verified after publication.");
+  }
+
+  const now = new Date();
+  writeJsonIfChanged(postStatePath, {
+    ...state,
+    lastPostedAt: now.toISOString(),
+    lastPostedDate: localDateKey(now),
+    posts: [
+      { createdAt: now.toISOString(), name: created.name || null, ...replacement },
+      ...(state.posts || []).filter((post) => post.name !== rejectedPost.name)
+    ].slice(0, 100)
+  });
+  console.log("Replaced the rejected Island Boy post with a revised live schedule and catering post.");
+  return { attempted: true, published: true, deleted: true, kind: replacement.kind, resourceName: created.name || null };
+}
+
+async function cleanupRejectedPosts() {
+  const token = await getGoogleAccessToken();
+  if (!token || !locationName()) {
+    throw new Error("Google OAuth or Island Boy GBP location is not configured for post cleanup.");
+  }
+  const currentPosts = await fetchLocalPosts(token);
+  const rejectedPosts = (currentPosts.localPosts || []).filter((post) => post.state === "REJECTED");
+  if (args.has("--dry-run-post")) {
+    console.log(`[dry-run] Would delete ${rejectedPosts.length} rejected Island Boy Google post(s).`);
+    return { deleted: 0, rejectedFound: rejectedPosts.length, dryRun: true };
+  }
+  for (const post of rejectedPosts) {
+    await fetchJson(`https://mybusiness.googleapis.com/v4/${post.name}`, {
+      method: "DELETE",
+      headers: authHeaders(token),
+      label: "Google Business Profile localPosts.delete"
+    });
+  }
+  const verifiedPosts = await fetchLocalPosts(token);
+  const rejectedRemaining = (verifiedPosts.localPosts || []).filter((post) => post.state === "REJECTED").length;
+  if (rejectedRemaining) throw new Error(`${rejectedRemaining} rejected Island Boy Google post(s) remain after cleanup.`);
+  console.log(`Deleted ${rejectedPosts.length} rejected Island Boy Google post(s).`);
+  return { deleted: rejectedPosts.length, rejectedFound: rejectedPosts.length, dryRun: false };
 }
 
 const performanceMetrics = [
@@ -1266,13 +1388,12 @@ async function main() {
     return;
   }
 
-  const actionFlags = ["--audit-profile", "--apply-services", "--apply-hours", "--sync-food-menu", "--sync-reviews", "--reply-unanswered", "--maybe-post", "--replace-stale-post", "--sync-analytics", "--sync-search-console", "--submit-sitemap"];
+  const actionFlags = ["--audit-profile", "--apply-services", "--apply-hours", "--sync-food-menu", "--sync-reviews", "--reply-unanswered", "--maybe-post", "--replace-stale-post", "--retry-rejected-post", "--cleanup-rejected-posts", "--sync-analytics", "--sync-search-console", "--submit-sitemap"];
   if (!actionFlags.some((flag) => args.has(flag))) args.add("--audit-profile");
   const results = {};
   if (args.has("--apply-services")) results.services = await applyServices();
   if (args.has("--apply-hours")) results.hours = await applyRegularHours();
   if (args.has("--sync-food-menu")) results.foodMenu = await syncFoodMenu();
-  if (args.has("--audit-profile")) results.audit = await auditProfile();
   if (args.has("--sync-reviews") || args.has("--reply-unanswered")) {
     const previousData = readJson(reviewsPath, null);
     const data = await fetchReviews();
@@ -1282,8 +1403,11 @@ async function main() {
     results.review = { status: "complete", changed, reviewCount: data.reviewCount, rating: data.rating, replies, unansweredRemaining: data.reviews.filter((review) => !review.reply).length };
     console.log(`Review sync complete: changed=${changed} reviewCount=${data.reviewCount} rating=${data.rating} replies=${replies.published}/${replies.attempted}`);
   }
-  if (args.has("--replace-stale-post")) results.post = await replaceLatestStaleEventPost();
+  if (args.has("--retry-rejected-post")) results.post = await retryTrackedRejectedPost();
+  else if (args.has("--replace-stale-post")) results.post = await replaceLatestStaleEventPost();
   else if (args.has("--maybe-post")) results.post = await maybePost();
+  if (args.has("--cleanup-rejected-posts")) results.postCleanup = await cleanupRejectedPosts();
+  if (args.has("--audit-profile")) results.audit = await auditProfile();
   if (args.has("--sync-analytics")) results.analytics = await syncPerformanceAnalytics();
   if (args.has("--submit-sitemap")) results.sitemap = await submitSearchConsoleSitemap();
   if (args.has("--sync-search-console")) results.searchConsole = await syncSearchConsoleAnalytics();
@@ -1291,6 +1415,7 @@ async function main() {
   writeJsonIfChanged(digestPath, { business: businessName(), completedAt: new Date().toISOString(), ...results });
   if (results.review) await sendTelegram(["✅ Island Boy review job complete", `Reviews synced: ${results.review.reviewCount} (${results.review.rating}★)`, `New replies posted: ${results.review.replies.published}`, `Unanswered remaining: ${results.review.unansweredRemaining}`].join("\n"));
   if (results.post) await sendTelegram(["✅ Island Boy GBP post job complete", `Post: ${results.post.published ? "published" : results.post.attempted ? "dry run / not published" : "not due"}`, `Type: ${results.post.kind || results.post.reason || "n/a"}`].join("\n"));
+  if (results.postCleanup) await sendTelegram(["✅ Island Boy GBP post cleanup complete", `Rejected posts found: ${results.postCleanup.rejectedFound}`, `Rejected posts deleted: ${results.postCleanup.deleted}`].join("\n"));
   if (results.analytics) await sendTelegram(analyticsDigest(results.analytics));
   if (results.searchConsole) await sendTelegram(searchConsoleDigest(results.searchConsole));
   if (results.sitemap) await sendTelegram(["✅ Island Boy Search Console sitemap submitted", `Sitemap: ${results.sitemap.sitemapUrl}`, "Google processing is now monitored; submission does not guarantee indexing."].join("\n"));
