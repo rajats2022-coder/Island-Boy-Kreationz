@@ -59,14 +59,11 @@ const sitemap = await readFile(join(root, "sitemap.xml"), "utf8");
 const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((item) => item[1]);
 if (!sitemapUrls.length) add("error", "sitemap.xml", "sitemap", "No URLs found");
 const expectedCitySlugs = [
-  "charlotte", "concord", "huntersville", "kannapolis", "mooresville", "gastonia",
-  "matthews", "mint-hill", "indian-trail", "monroe", "pineville", "harrisburg",
-  "salisbury", "statesville", "hickory", "greensboro", "winston-salem", "high-point",
-  "raleigh", "durham", "cary", "asheville", "fayetteville", "wilmington"
+  "charlotte"
 ];
 for (const slug of expectedCitySlugs) {
   const url = `https://islandboykreationz.com/catering-${slug}-nc`;
-  if (!sitemapUrls.includes(url)) add("error", "sitemap.xml", "service-area-coverage", `Missing ${url}`);
+  if (!sitemapUrls.includes(url)) add("error", "sitemap.xml", "featured-service-area-coverage", `Missing ${url}`);
 }
 
 for (const url of sitemapUrls) {

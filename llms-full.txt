@@ -41,7 +41,7 @@ Search positioning:
 - Food truck catering Concord NC
 - Caribbean catering Gastonia NC
 - Caribbean catering Huntersville NC
-- Caribbean catering across 24 North Carolina markets by advance booking
+- Caribbean catering across 18 verified North Carolina service areas by advance booking
 
 Website structure:
 - / is the homepage for menu, story, catering, local SEO, and conversion.
@@ -56,7 +56,7 @@ Website structure:
 - /contact.html is the catering lead form page.
 - /about.html contains Deon Henry's Island Boy Kreationz story.
 - /gallery.html contains food truck and food photos.
-- /service-areas.html lists 24 North Carolina catering markets grouped by Charlotte metro, Triad, Triangle, and extended travel.
+- /service-areas.html lists 18 verified North Carolina service areas covering Charlotte metro and the verified advance-booking areas.
 - /blog.html is the catering guide hub.
 - /faq.html answers customer questions and includes FAQ schema.
 - City pages cover 24 real catering markets. Longer-distance requests require advance date, venue, guest-count, and travel confirmation.

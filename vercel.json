@@ -6,6 +6,121 @@
       "source": "/july-26-free-event-signup",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/catering-kannapolis-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-concord-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-gastonia-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-huntersville-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-mooresville-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-matthews-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-mint-hill-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-indian-trail-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-monroe-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-pineville-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-harrisburg-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-salisbury-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-statesville-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-hickory-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-greensboro-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-winston-salem-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-high-point-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-raleigh-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-durham-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-cary-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-asheville-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-fayetteville-nc",
+      "destination": "/service-areas",
+      "permanent": true
+    },
+    {
+      "source": "/catering-wilmington-nc",
+      "destination": "/service-areas",
+      "permanent": true
     }
   ],
   "headers": [

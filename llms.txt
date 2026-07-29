@@ -30,31 +30,28 @@ Catering service pages:
 - /church-community-event-catering-nc (Church & Community Event Catering)
 - /tray-catering-nc (Party Trays & Drop-Off Catering)
 
-Local catering pages (24 North Carolina markets; longer-distance bookings require advance confirmation):
+Featured local catering pages:
 - /catering-charlotte-nc (Charlotte)
-- /catering-concord-nc (Concord)
-- /catering-huntersville-nc (Huntersville)
-- /catering-kannapolis-nc (Kannapolis)
-- /catering-mooresville-nc (Mooresville)
-- /catering-gastonia-nc (Gastonia)
-- /catering-matthews-nc (Matthews)
-- /catering-mint-hill-nc (Mint Hill)
-- /catering-indian-trail-nc (Indian Trail)
-- /catering-monroe-nc (Monroe)
-- /catering-pineville-nc (Pineville)
-- /catering-harrisburg-nc (Harrisburg)
-- /catering-salisbury-nc (Salisbury)
-- /catering-statesville-nc (Statesville)
-- /catering-hickory-nc (Hickory)
-- /catering-greensboro-nc (Greensboro)
-- /catering-winston-salem-nc (Winston-Salem)
-- /catering-high-point-nc (High Point)
-- /catering-raleigh-nc (Raleigh)
-- /catering-durham-nc (Durham)
-- /catering-cary-nc (Cary)
-- /catering-asheville-nc (Asheville)
-- /catering-fayetteville-nc (Fayetteville)
-- /catering-wilmington-nc (Wilmington)
+
+Verified service areas (18; requests are confirmed for date, address, guest count, access, and travel fit):
+- Charlotte, NC
+- Concord, NC
+- Huntersville, NC
+- Kannapolis, NC
+- Mooresville, NC
+- Gastonia, NC
+- Matthews, NC
+- Mint Hill, NC
+- Indian Trail, NC
+- Monroe, NC
+- Pineville, NC
+- Harrisburg, NC
+- Salisbury, NC
+- Statesville, NC
+- Hickory, NC
+- Greensboro, NC
+- Winston-Salem, NC
+- High Point, NC
 
 Contact and social:
 - Phone: 980-785-8372

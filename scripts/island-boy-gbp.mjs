@@ -1132,6 +1132,23 @@ function searchConsoleSiteUrl() {
   return process.env.ISLAND_BOY_SEARCH_CONSOLE_SITE_URL || "https://islandboykreationz.com/";
 }
 
+async function submitSearchConsoleSitemap() {
+  const token = await getGoogleAccessToken();
+  if (!token) throw new Error("Google OAuth credentials are not configured for Search Console.");
+  const site = searchConsoleSiteUrl();
+  const sitemapUrl = new URL("/sitemap.xml", site).href;
+  await fetchJson(
+    `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(site)}/sitemaps/${encodeURIComponent(sitemapUrl)}`,
+    {
+      method: "PUT",
+      headers: authHeaders(token),
+      label: "Google Search Console sitemaps.submit"
+    }
+  );
+  console.log(`Search Console sitemap submitted: ${sitemapUrl}`);
+  return { submitted: true, site, sitemapUrl, submittedAt: new Date().toISOString() };
+}
+
 async function searchConsoleQuery(token, body) {
   return fetchJson(`https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(searchConsoleSiteUrl())}/searchAnalytics/query`, {
     method: "POST", headers: { ...authHeaders(token), "content-type": "application/json" },
@@ -1249,7 +1266,7 @@ async function main() {
     return;
   }
 
-  const actionFlags = ["--audit-profile", "--apply-services", "--apply-hours", "--sync-food-menu", "--sync-reviews", "--reply-unanswered", "--maybe-post", "--replace-stale-post", "--sync-analytics", "--sync-search-console"];
+  const actionFlags = ["--audit-profile", "--apply-services", "--apply-hours", "--sync-food-menu", "--sync-reviews", "--reply-unanswered", "--maybe-post", "--replace-stale-post", "--sync-analytics", "--sync-search-console", "--submit-sitemap"];
   if (!actionFlags.some((flag) => args.has(flag))) args.add("--audit-profile");
   const results = {};
   if (args.has("--apply-services")) results.services = await applyServices();
@@ -1268,6 +1285,7 @@ async function main() {
   if (args.has("--replace-stale-post")) results.post = await replaceLatestStaleEventPost();
   else if (args.has("--maybe-post")) results.post = await maybePost();
   if (args.has("--sync-analytics")) results.analytics = await syncPerformanceAnalytics();
+  if (args.has("--submit-sitemap")) results.sitemap = await submitSearchConsoleSitemap();
   if (args.has("--sync-search-console")) results.searchConsole = await syncSearchConsoleAnalytics();
 
   writeJsonIfChanged(digestPath, { business: businessName(), completedAt: new Date().toISOString(), ...results });
@@ -1275,6 +1293,7 @@ async function main() {
   if (results.post) await sendTelegram(["✅ Island Boy GBP post job complete", `Post: ${results.post.published ? "published" : results.post.attempted ? "dry run / not published" : "not due"}`, `Type: ${results.post.kind || results.post.reason || "n/a"}`].join("\n"));
   if (results.analytics) await sendTelegram(analyticsDigest(results.analytics));
   if (results.searchConsole) await sendTelegram(searchConsoleDigest(results.searchConsole));
+  if (results.sitemap) await sendTelegram(["✅ Island Boy Search Console sitemap submitted", `Sitemap: ${results.sitemap.sitemapUrl}`, "Google processing is now monitored; submission does not guarantee indexing."].join("\n"));
   if (results.foodMenu) await sendTelegram(["✅ Island Boy GBP menu job complete", `Menu: ${results.foodMenu.dryRun ? "validated" : results.foodMenu.changed ? "updated" : "already current"}`, `Published items: ${results.foodMenu.publishedCount || results.foodMenu.itemCount}`].join("\n"));
   if (results.audit || results.services) await sendTelegram(["✅ Island Boy profile-health job complete", `Open audit findings: ${results.audit?.findings?.length ?? "not checked"}`, `Media on profile: ${results.audit?.media?.totalMediaItemCount ?? "not checked"}`, `Menu items: ${results.audit?.foodMenu?.itemCount ?? "not checked"}`, `Services: ${results.services ? `${results.services.applied ? "updated" : "validated"} (${results.services.count})` : "not requested"}`].join("\n"));
   if (results.hours) await sendTelegram(["✅ Island Boy GBP hours job complete", `Recurring truck hours: ${results.hours.applied ? "updated" : "validated"}`, `Published schedule periods: ${results.hours.periodCount}`].join("\n"));

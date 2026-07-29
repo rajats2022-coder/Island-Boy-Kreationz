@@ -52,15 +52,11 @@ export function normalizePublicUrls(html) {
 const NOTE_BY_REGION = {
   metro: (n) => `${n} is home turf — the truck is based in Charlotte, so metro dates are the easiest to fit. Send your date early and the team can confirm fast.`,
   triad: (n) => `${n} catering is available with advance booking. Send the exact venue, date, guest count, and service format so travel and prep can be confirmed.`,
-  triangle: (n) => `The Triangle is a longer run from Charlotte, so ${n} bookings fit best for bigger events planned in advance — drop-off trays or full truck service.`,
-  extended: (n) => `${n} is extended-travel territory. Requests are reviewed case by case and work best for larger events booked well ahead.`,
 };
 
 export const REGIONS = [
   { key: 'metro', label: 'Charlotte Metro', badge: 'Based in Charlotte' },
-  { key: 'triad', label: 'Triad & I-85 North', badge: 'Regular I-85 route' },
-  { key: 'triangle', label: 'The Triangle', badge: 'Advance bookings' },
-  { key: 'extended', label: 'Extended Travel', badge: 'Big-event travel' },
+  { key: 'triad', label: 'Advance-Booking Service Areas', badge: 'Advance booking' },
 ];
 
 const HERO_IMGS = [
@@ -148,36 +144,12 @@ export const CITIES = [
     'Furniture Market crowds and year-round local events',
     'market-week meals, office lunches, church events, private parties, and community days',
     ['greensboro', 'winston-salem', 'salisbury']),
-  // Triangle
-  C('Raleigh', 'raleigh', 'triangle',
-    'state-capital offices, campuses, and neighborhood festivals',
-    'office lunches, corporate events, university gatherings, church functions, private parties, and graduations',
-    ['durham', 'cary', 'fayetteville']),
-  C('Durham', 'durham', 'triangle',
-    'Bull City offices, Duke-area events, and community days',
-    'office lunches, corporate meals, university events, church functions, private parties, and graduations',
-    ['raleigh', 'cary', 'greensboro']),
-  C('Cary', 'cary', 'triangle',
-    'tech-park lunches and family celebrations across western Wake',
-    'office lunches, corporate events, private parties, church functions, birthdays, and graduations',
-    ['raleigh', 'durham', 'fayetteville']),
-  // Extended travel
-  C('Asheville', 'asheville', 'extended',
-    'mountain weddings-adjacent gatherings, festivals, and big group meals',
-    'large private parties, community festivals, company retreats, church events, and family reunions',
-    ['hickory', 'statesville', 'charlotte']),
-  C('Fayetteville', 'fayetteville', 'extended',
-    'military-family celebrations and big community cookouts',
-    'large private parties, military and unit functions, church events, community days, and family reunions',
-    ['raleigh', 'cary', 'monroe']),
-  C('Wilmington', 'wilmington', 'extended',
-    'coastal celebrations worth the drive',
-    'large private parties, beach-week gatherings, church events, community festivals, and family reunions',
-    ['fayetteville', 'raleigh']),
 ];
 
 CITIES.forEach((c, i) => { c.img = HERO_IMGS[i % HERO_IMGS.length]; c.note = NOTE_BY_REGION[c.region](c.name); });
 
+export const FEATURED_CITY_SLUGS = ['charlotte'];
+export const FEATURED_CITIES = FEATURED_CITY_SLUGS.map((slug) => CITIES.find((city) => city.slug === slug));
 export const cityHref = (slug) => `catering-${slug}-nc.html`;
 export const cityBySlug = Object.fromEntries(CITIES.map((c) => [c.slug, c]));
 
@@ -196,7 +168,7 @@ export const SERVICES = [
       ['What to send', 'Date, address, guest count, service window, and menu direction. The team confirms fit, travel, and timing before anything is locked in.'],
     ],
     menuLine: 'Oxtails, wings, chopped chicken, curry chicken, shrimp and salmon bowls, rice and peas, yellow rice, cabbage, candied yams, mac and cheese, cornbread, cakes, and drinks.',
-    note: 'The truck is based in Charlotte and accepts advance-booking requests across the 24 North Carolina markets listed on the website. Distance, date, guest count, and site access determine final availability.',
+    note: 'The truck is based in Charlotte and accepts advance-booking requests across the 18 verified North Carolina service areas listed on the website. Distance, date, guest count, and site access determine final availability.',
     faq: [
       ['Does the truck need anything on site?', 'Level parking with safe access for guests. Send venue instructions with your inquiry and the team will flag anything else.'],
       ['Can guests order individually?', 'Yes — open-line service or a set menu for your guest count both work. Say which direction you want when you inquire.'],
@@ -291,7 +263,7 @@ export const SERVICES = [
       ['What to send', 'Date, drop-off address, guest count, serving time, and menu direction — mains, sides, and desserts.'],
     ],
     menuLine: 'Oxtail trays, wing trays, chopped chicken, curry chicken, rice and peas, yellow rice, cabbage, candied yams, mac and cheese, cornbread, cakes, and desserts.',
-    note: 'Trays are the most flexible way to book across the website’s 24 North Carolina markets. Final travel, pickup or delivery, timing, and order size are confirmed before payment.',
+    note: 'Trays are the most flexible way to book across the website’s 18 verified North Carolina service areas. Final travel, pickup or delivery, timing, and order size are confirmed before payment.',
     faq: [
       ['How many people does a tray feed?', 'Depends on the dish and whether it is a half or full tray — send your headcount and the team sizes the order.'],
       ['Do trays come with serving gear?', 'Ask in your inquiry — setups vary by event, and the team will tell you exactly what arrives.'],
@@ -318,19 +290,16 @@ export const cssLinkBlock = () => CSS_LINKS.map((h) => `<link rel="stylesheet" h
 
 export function headerHTML() {
   const cateringLinks = SERVICES.map((s) => `<a href="${serviceHref(s)}">${s.nav}</a>`).join('');
-  const megaCols = REGIONS.map((r) => {
-    const links = CITIES.filter((c) => c.region === r.key)
-      .map((c) => `<a href="${cityHref(c.slug)}">${c.name}</a>`).join('');
-    return `<div class="dd-col${r.key === 'metro' ? ' dd-col-2up' : ''}"><span class="dd-col-title">${r.label}</span><div class="dd-col-links">${links}</div></div>`;
-  }).join('');
-  return `<header class="topbar"><div class="wrap nav"><a class="brand" href="index.html"><span class="mark logo-mark"><img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo"></span><span><strong>Island Boy Kreationz</strong><small>Food Truck &amp; Catering</small></span></a><nav class="links" aria-label="Primary navigation"><a href="index.html#menu">Menu</a><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">Catering <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-list"><a class="dd-lead" href="services.html">All Catering Services</a>${cateringLinks}</div></div><div class="nav-dropdown nav-dropdown-wide"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">Locations <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-mega">${megaCols}<a class="dd-all" href="service-areas.html">View all North Carolina service areas →</a></div></div><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">About <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-list"><a href="about.html">Our Story</a><a href="gallery.html">Gallery</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></div></div><a class="pill booking-pill" href="contact.html#lead-form">Book Catering</a><a class="pill" href="order.html">Order Now</a></nav></div></header>`;
+  const featuredLinks = FEATURED_CITIES
+    .map((city) => `<a href="${cityHref(city.slug)}">${city.name}</a>`).join('');
+  return `<header class="topbar"><div class="wrap nav"><a class="brand" href="index.html"><span class="mark logo-mark"><img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo"></span><span><strong>Island Boy Kreationz</strong><small>Food Truck &amp; Catering</small></span></a><nav class="links" aria-label="Primary navigation"><a href="index.html#menu">Menu</a><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">Catering <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-list"><a class="dd-lead" href="services.html">All Catering Services</a>${cateringLinks}</div></div><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">Locations <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-list"><a class="dd-lead" href="service-areas.html">All 18 verified service areas</a>${featuredLinks}</div></div><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">About <span class="dd-caret" aria-hidden="true">▾</span></button><div class="nav-dropdown-menu dd-list"><a href="about.html">Our Story</a><a href="gallery.html">Gallery</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a></div></div><a class="pill booking-pill" href="contact.html#lead-form">Book Catering</a><a class="pill" href="order.html">Order Now</a></nav></div></header>`;
 }
 
 /* ---------------------------------------------------------------- footer */
 
 export function footerHTML() {
   const svc = SERVICES.map((s) => `<a href="${serviceHref(s)}">${s.nav}</a>`).join('');
-  const footCities = ['charlotte', 'concord', 'huntersville', 'matthews', 'mooresville', 'gastonia', 'raleigh', 'durham', 'greensboro', 'winston-salem']
-    .map((slug) => `<a href="${cityHref(slug)}">${cityBySlug[slug].name}</a>`).join('');
-  return `<footer class="site-footer"><div class="wrap"><div class="foot-grid"><div class="foot-brand"><a class="brand" href="index.html"><span class="mark logo-mark"><img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo"></span><span><strong>Island Boy Kreationz</strong><small>Food Truck &amp; Catering</small></span></a><p class="foot-tag">Virgin Islands born, Charlotte based. Caribbean soul food from the truck or delivered in trays — oxtails, wings, bowls, and full event spreads. No pork kitchen.</p><p class="foot-contact">${SITE.address}<br><a href="${SITE.phoneHref}">${SITE.phone}</a> · <a href="mailto:${SITE.email}">${SITE.email}</a><br><a href="${SITE.instagram}" target="_blank" rel="noopener">@islandboy_kreationz</a></p><p class="foot-hours">Truck: Tue–Fri 2:30–8:30 PM · Amazon stop: Tue–Sat 9–11 PM<br>Saturday spots move — call, text, or check Instagram first.</p></div><nav class="foot-col" aria-label="Catering services"><span class="foot-title">Catering</span><a href="services.html">All Services</a>${svc}<a class="foot-cta" href="contact.html#lead-form">Book Catering →</a></nav><nav class="foot-col" aria-label="Service areas"><span class="foot-title">Service Areas</span>${footCities}<a class="foot-cta" href="service-areas.html">All 24 service areas →</a></nav><nav class="foot-col" aria-label="Explore"><span class="foot-title">Explore</span><a href="index.html#menu">Menu</a><a href="order.html">Order Online</a><a href="about.html">Our Story</a><a href="gallery.html">Gallery</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a></nav></div><div class="foot-bottom"><span>© ${SITE.year} ${SITE.name} · Charlotte, NC</span><span>Site by S4 AI Agency</span></div></div></footer>`;
+  const footCities = FEATURED_CITIES
+    .map((city) => `<a href="${cityHref(city.slug)}">${city.name}</a>`).join('');
+  return `<footer class="site-footer"><div class="wrap"><div class="foot-grid"><div class="foot-brand"><a class="brand" href="index.html"><span class="mark logo-mark"><img src="assets/island-boy-logo.png" alt="Island Boy Kreationz logo"></span><span><strong>Island Boy Kreationz</strong><small>Food Truck &amp; Catering</small></span></a><p class="foot-tag">Virgin Islands born, Charlotte based. Caribbean soul food from the truck or delivered in trays — oxtails, wings, bowls, and full event spreads. No pork kitchen.</p><p class="foot-contact">${SITE.address}<br><a href="${SITE.phoneHref}">${SITE.phone}</a> · <a href="mailto:${SITE.email}">${SITE.email}</a><br><a href="${SITE.instagram}" target="_blank" rel="noopener">@islandboy_kreationz</a></p><p class="foot-hours">Truck: Tue–Fri 2:30–8:30 PM · Amazon stop: Tue–Sat 9–11 PM<br>Saturday spots move — call, text, or check Instagram first.</p></div><nav class="foot-col" aria-label="Catering services"><span class="foot-title">Catering</span><a href="services.html">All Services</a>${svc}<a class="foot-cta" href="contact.html#lead-form">Book Catering →</a></nav><nav class="foot-col" aria-label="Service areas"><span class="foot-title">Featured Areas</span>${footCities}<a class="foot-cta" href="service-areas.html">All 18 verified areas →</a></nav><nav class="foot-col" aria-label="Explore"><span class="foot-title">Explore</span><a href="index.html#menu">Menu</a><a href="order.html">Order Online</a><a href="about.html">Our Story</a><a href="gallery.html">Gallery</a><a href="blog.html">Blog</a><a href="faq.html">FAQ</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a></nav></div><div class="foot-bottom"><span>© ${SITE.year} ${SITE.name} · Charlotte, NC</span><span>Site by S4 AI Agency</span></div></div></footer>`;
 }

@@ -9,7 +9,7 @@ import { writeFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import {
-  SITE, CITIES, REGIONS, SERVICES,
+  SITE, CITIES, FEATURED_CITIES, FEATURED_CITY_SLUGS, REGIONS, SERVICES,
   cityHref, cityBySlug, serviceHref,
   headerHTML, footerHTML, cssLinkBlock, normalizePublicUrls, publicUrl,
 } from './shell-snippets.mjs';
@@ -63,7 +63,9 @@ function cityPage(city, idx) {
   const region = REGIONS.find((r) => r.key === city.region);
   const title = `Caribbean Food Truck Catering ${city.name} NC | Island Boy Kreationz`;
   const description = `Book Island Boy Kreationz for Caribbean catering in ${city.name}, NC — oxtails, wings, chopped chicken, bowls, and soul food sides by food truck or drop-off trays.`;
-  const nearby = city.nearby.map((slug) => `<a href="${cityHref(slug)}">${cityBySlug[slug].name}</a>`).join('');
+  const nearby = city.nearby
+    .filter((slug) => FEATURED_CITY_SLUGS.includes(slug))
+    .map((slug) => `<a href="${cityHref(slug)}">${cityBySlug[slug].name}</a>`).join('');
 
   const main = `
 <section class="ibx-hero" style="--hero-img:url('assets/${city.img}')"><div class="wrap">
@@ -81,7 +83,7 @@ function cityPage(city, idx) {
 </div></div></section>
 <section class="ibx-section"><div class="wrap"><h2>Crowd favorites.</h2><p class="ibx-sub">The plates ${city.name} guests line up for — cooked the same way they come off the truck in Charlotte.</p>${bandHTML(city.img, idx)}<p class="ibx-menu-links"><a href="index.html#menu">See the full menu</a> · <a href="order.html">Order online</a></p></div></section>
 <section class="ibx-section"><div class="wrap"><h2>How booking works.</h2>${STEPS}<div class="ibx-note"><p><strong>Travel note:</strong> ${city.note}</p></div></div></section>
-<section class="ibx-section"><div class="wrap"><h2>Nearby catering markets.</h2><div class="ibx-cloud">${nearby}<a class="ibx-cloud-all" href="service-areas.html">All 24 service areas</a></div></div></section>
+<section class="ibx-section"><div class="wrap"><h2>Nearby featured catering pages.</h2><div class="ibx-cloud">${nearby}<a class="ibx-cloud-all" href="service-areas.html">All 18 verified service areas</a></div></div></section>
 <section class="ibx-section ibx-cta-wrap"><div class="wrap"><div class="ibx-cta"><div><h2>Request ${city.name} catering.</h2><p>Send the date, guest count, and menu direction — the team reviews fit, travel, and timing before quoting.</p></div><div class="ibx-cta-actions"><a class="ibx-btn" href="contact.html#lead-form">Start Inquiry</a><a class="ibx-btn ibx-btn-dark" href="${SITE.phoneHref}">${SITE.phone}</a></div></div></div></section>`;
 
   const schemaGraph = [
@@ -105,7 +107,7 @@ function servicePage(svc, idx) {
   const description = `${svc.lead.slice(0, 150).replace(/\s+\S*$/, '')}…`;
   const others = SERVICES.filter((s) => s.slug !== svc.slug)
     .map((s) => `<a href="${serviceHref(s)}">${s.nav}</a>`).join('');
-  const popularCities = ['charlotte', 'concord', 'matthews', 'huntersville', 'gastonia', 'greensboro', 'winston-salem', 'high-point']
+  const popularCities = FEATURED_CITY_SLUGS
     .map((slug) => `<a href="${cityHref(slug)}">${cityBySlug[slug].name}</a>`).join('');
 
   const main = `
@@ -121,7 +123,7 @@ function servicePage(svc, idx) {
 <section class="ibx-section"><div class="wrap"><h2>What lands on the table.</h2><p class="ibx-sub">${esc(svc.menuLine)}</p>${bandHTML(svc.img, idx)}<p class="ibx-menu-links"><a href="index.html#menu">See the full menu</a> · <a href="order.html">Order online</a></p></div></section>
 <section class="ibx-section"><div class="wrap"><h2>Booking, step by step.</h2>${STEPS}<div class="ibx-note"><p><strong>Good to know:</strong> ${esc(svc.note)}</p></div></div></section>
 <section class="ibx-section"><div class="wrap"><h2>Quick answers.</h2><div class="ibx-faq">${svc.faq.map(([q, a]) => `<article class="ibx-card"><h3>${esc(q)}</h3><p>${esc(a)}</p></article>`).join('')}</div><p class="ibx-menu-links"><a href="faq.html">Read the full catering FAQ</a></p></div></section>
-<section class="ibx-section"><div class="wrap"><h2>More ways to book.</h2><div class="ibx-cloud"><a href="services.html"><strong>All services</strong></a>${others}</div><h2 style="margin-top:38px">Popular catering markets.</h2><div class="ibx-cloud">${popularCities}<a class="ibx-cloud-all" href="service-areas.html">All 24 service areas</a></div></div></section>
+<section class="ibx-section"><div class="wrap"><h2>More ways to book.</h2><div class="ibx-cloud"><a href="services.html"><strong>All services</strong></a>${others}</div><h2 style="margin-top:38px">Featured catering areas.</h2><div class="ibx-cloud">${popularCities}<a class="ibx-cloud-all" href="service-areas.html">All 18 verified service areas</a></div></div></section>
 <section class="ibx-section ibx-cta-wrap"><div class="wrap"><div class="ibx-cta"><div><h2>Request ${svc.title.toLowerCase()}.</h2><p>Use the form so the team can review event fit, travel, timing, and menu before quoting.</p></div><div class="ibx-cta-actions"><a class="ibx-btn" href="contact.html#lead-form">Start Inquiry</a><a class="ibx-btn ibx-btn-dark" href="${SITE.phoneHref}">${SITE.phone}</a></div></div></div></section>`;
 
   const schemaGraph = [
@@ -138,7 +140,7 @@ function servicePage(svc, idx) {
 function servicesHub() {
   const file = 'services.html';
   const title = 'Caribbean Catering Services NC | Island Boy Kreationz';
-  const description = 'Caribbean food truck catering, oxtails, private parties, office lunches, church and community events, and advance-booking trays across 24 North Carolina markets.';
+  const description = 'Caribbean food truck catering, oxtails, private parties, office lunches, church and community events, and advance-booking trays across 18 verified North Carolina service areas.';
   const cards = SERVICES.map((s) => `<article class="ibx-card"><h3><a href="${serviceHref(s)}" style="color:inherit">${s.title}</a></h3><p>${esc(s.lead)}</p><p class="ibx-menu-links" style="margin-top:12px"><a href="${serviceHref(s)}">See ${s.nav} →</a></p></article>`).join('');
 
   const main = `
@@ -148,7 +150,7 @@ function servicesHub() {
 <h1>Six ways to put Island Boy on the menu.</h1>
 <p class="ibx-lead">Truck on site, trays dropped off, or both — pick the format that fits your event and the team handles the rest. Every booking starts with one simple inquiry.</p>
 <div class="ibx-cta-row"><a class="ibx-btn" href="contact.html#lead-form">Book Catering</a><a class="ibx-btn ibx-btn-ghost" href="${SITE.phoneHref}">Call or text ${SITE.phone}</a></div>
-<ul class="ibx-badges"><li>Virgin Islands recipes</li><li>24 North Carolina markets</li><li>No pork kitchen</li></ul>
+<ul class="ibx-badges"><li>Virgin Islands recipes</li><li>18 verified service areas</li><li>No pork kitchen</li></ul>
 </div></section>
 <section class="ibx-section"><div class="wrap"><h2>Pick your format.</h2><div class="ibx-grid3">${cards}</div></div></section>
 <section class="ibx-section"><div class="wrap"><h2>Crowd favorites.</h2>${bandHTML('island-boy-oxtail-trays.jpg', 1)}<p class="ibx-menu-links"><a href="index.html#menu">See the full menu</a> · <a href="order.html">Order online</a></p></div></section>
@@ -166,16 +168,16 @@ function servicesHub() {
 function serviceAreasHub() {
   const file = 'service-areas.html';
   const title = 'North Carolina Catering Service Areas | Island Boy Kreationz';
-  const description = 'Explore 24 North Carolina catering markets served by Island Boy Kreationz, from Charlotte metro to advance-booking Triangle and extended-travel events.';
+  const description = 'Explore 18 verified North Carolina catering service areas for Island Boy Kreationz, with a dedicated local page for its Charlotte home base.';
   const regionIntro = {
     metro: 'Home turf. The truck lives here, so metro dates are the easiest to fit — including short-notice asks.',
     triad: 'Available with advance booking. Send the venue, date, guest count, and service format so travel can be confirmed.',
-    triangle: 'Longer-distance catering from Charlotte, reviewed for larger events planned well in advance.',
-    extended: 'Case-by-case travel for larger events with enough lead time to confirm the route and service plan.',
   };
   const sections = REGIONS.map((r) => {
     const chips = CITIES.filter((c) => c.region === r.key)
-      .map((c) => `<a href="${cityHref(c.slug)}">${c.name}</a>`).join('');
+      .map((c) => FEATURED_CITY_SLUGS.includes(c.slug)
+        ? `<a href="${cityHref(c.slug)}">${c.name}</a>`
+        : `<span>${c.name}</span>`).join('');
     return `<section class="ibx-section"><div class="wrap"><h2>${r.label}.</h2><p class="ibx-sub">${regionIntro[r.key]}</p><div class="ibx-cloud">${chips}</div></div></section>`;
   }).join('');
 
@@ -184,9 +186,9 @@ function serviceAreasHub() {
 <nav class="ibx-crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><span aria-current="page">Service Areas</span></nav>
 <span class="kicker">North Carolina catering markets</span>
 <h1>From Charlotte to advance-booking destinations.</h1>
-<p class="ibx-lead">Island Boy Kreationz is based in Charlotte and accepts catering requests across the 24 North Carolina markets below. Metro, Triad, Triangle, and extended-travel bookings are all confirmed for date, address, guest count, truck access, and travel fit before quoting.</p>
+<p class="ibx-lead">Island Boy Kreationz is based in Charlotte and accepts catering requests across the 18 verified North Carolina service areas below. Charlotte has a dedicated local page because it is the business home base; every other area is handled through this hub so the site stays useful and honest instead of repeating the same city page.</p>
 <div class="ibx-cta-row"><a class="ibx-btn" href="contact.html#lead-form">Start Catering Inquiry</a><a class="ibx-btn ibx-btn-ghost" href="${SITE.phoneHref}">Call or text ${SITE.phone}</a></div>
-<ul class="ibx-badges"><li>24 catering markets</li><li>Truck service or drop-off trays</li><li>No pork kitchen</li></ul>
+<ul class="ibx-badges"><li>18 verified service areas</li><li>Truck service or drop-off trays</li><li>No pork kitchen</li></ul>
 </div></section>
 ${sections}
 <section class="ibx-section"><div class="wrap"><h2>Outside the listed area?</h2><p class="ibx-sub">Send the exact event address, date, guest count, and service format. The team will confirm honestly whether the travel and setup fit before quoting.</p></div></section>
@@ -206,7 +208,7 @@ function sitemap() {
   const urls = [
     ...statics,
     ...SERVICES.map((s) => serviceHref(s)),
-    ...CITIES.map((c) => cityHref(c.slug)),
+    ...FEATURED_CITIES.map((c) => cityHref(c.slug)),
   ].map((p) => `  <url><loc>${publicUrl(p)}</loc><lastmod>${DATE}</lastmod></url>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
@@ -239,8 +241,11 @@ Primary pages:
 Catering service pages:
 ${SERVICES.map((s) => `- ${publicUrl(serviceHref(s)).replace(SITE.origin, '')} (${s.title})`).join('\n')}
 
-Local catering pages (24 North Carolina markets; longer-distance bookings require advance confirmation):
-${CITIES.map((c) => `- ${publicUrl(cityHref(c.slug)).replace(SITE.origin, '')} (${c.name})`).join('\n')}
+Featured local catering pages:
+${FEATURED_CITIES.map((c) => `- ${publicUrl(cityHref(c.slug)).replace(SITE.origin, '')} (${c.name})`).join('\n')}
+
+Verified service areas (18; requests are confirmed for date, address, guest count, access, and travel fit):
+${CITIES.map((c) => `- ${c.name}, NC`).join('\n')}
 
 Contact and social:
 - Phone: ${SITE.phone}
@@ -259,7 +264,7 @@ Operational notes:
 /* ------------------------------------------------------------------ run */
 
 const pages = [
-  ...CITIES.map((c, i) => cityPage(c, i)),
+  ...FEATURED_CITIES.map((c, i) => cityPage(c, i)),
   ...SERVICES.map((s, i) => servicePage(s, i)),
   servicesHub(),
   serviceAreasHub(),

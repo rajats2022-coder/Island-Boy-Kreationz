@@ -14,7 +14,7 @@ Static website for Island Boy Kreationz Food Truck & Catering.
 - `service-areas.html` - verified Charlotte-area service-area hub (generated)
 - `blog.html`, `blog-*.html` - catering SEO guides
 - `faq.html` - FAQ page with FAQ schema
-- `catering-*-nc.html` - 4 verified city catering pages for Charlotte, Concord, Gastonia, and Huntersville (generated)
+- `catering-charlotte-nc.html` - dedicated local page for the verified Charlotte home base (generated)
 - `food-truck-catering-nc.html`, `oxtail-catering-nc.html`, `private-party-catering-nc.html`, `office-lunch-catering-nc.html`, `church-community-event-catering-nc.html`, `tray-catering-nc.html` - 6 service pages (generated)
 - `assets/` - images, shared CSS (`site-shell.css` owns nav/footer/page kit), nav behavior (`mobile-polish.js`), chatbot
 - `robots.txt`, `sitemap.xml`, `llms.txt`, `llms-full.txt` - SEO and AI discovery files
@@ -24,14 +24,19 @@ Static website for Island Boy Kreationz Food Truck & Catering.
 City pages, service pages, and the two hubs are built from data in `scripts/shell-snippets.mjs`:
 
 ```bash
-node scripts/build-pages.mjs          # regenerates 12 pages + sitemap.xml + llms.txt
+node scripts/build-pages.mjs          # regenerates 9 pages + sitemap.xml + llms.txt
 node scripts/apply-shell.mjs          # re-installs shared header/footer into hand-built pages
 node scripts/normalize-local-seo.mjs  # enforces verified service-area language
 node scripts/apply-site-basics.mjs    # installs icons, analytics, and image hints
 node scripts/site-health.mjs          # validates page SEO, links, and sitemap
 ```
 
-Only add a city after the real service area is verified. Add verified cities or services to `CITIES` or `SERVICES` in `scripts/shell-snippets.mjs`, then run the commands above. The nav, footer, and sitemap update automatically.
+Only add a service area after it is verified against the live business profile.
+`CITIES` holds the 18 verified areas used in business schema and the service-area
+hub. `FEATURED_CITY_SLUGS` controls the distinct home-base landing pages that
+enter navigation and the sitemap. Add another featured page only when it has
+independent user intent and real local evidence. The nav, footer, and sitemap
+update automatically.
 
 ## Dev loop
 

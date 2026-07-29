@@ -53,6 +53,6 @@ for (const file of files) {
   });
   if (changed) {
     await writeFile(path, html);
-    console.log(`${file}: 24-market business schema applied`);
+    console.log(`${file}: 18-area business schema applied`);
   }
 }

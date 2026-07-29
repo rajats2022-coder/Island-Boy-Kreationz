@@ -695,7 +695,8 @@
 .ibx-note strong { color: #1d0c00; }
 
 .ibx-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-.ibx-cloud a {
+.ibx-cloud a,
+.ibx-cloud span {
   background: var(--ib-shell);
   border: 1px solid rgba(24, 9, 0, 0.12);
   border-radius: 999px;
@@ -705,6 +706,7 @@
   color: #5a2100;
   transition: transform 150ms var(--ib-ease), background-color 150ms var(--ib-ease), border-color 150ms var(--ib-ease);
 }
+.ibx-cloud span { color: #6f625a; font-weight: 800; }
 .ibx-cloud a:hover { background: rgba(255, 189, 53, 0.22); border-color: rgba(255, 189, 53, 0.6); transform: translateY(-1px); }
 .ibx-cloud a:active { transform: translateY(0) scale(0.97); }
 .ibx-cloud a:focus-visible { outline: 3px solid rgba(31, 123, 77, 0.6); outline-offset: 2px; }
