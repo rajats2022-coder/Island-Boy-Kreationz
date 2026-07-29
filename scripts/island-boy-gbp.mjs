@@ -227,6 +227,72 @@ async function waitForLocalPostState(token, postName, { attempts = 5, intervalMs
   return post;
 }
 
+async function deleteLocalPost(token, postName) {
+  if (!postName) return;
+  await fetchJson(`https://mybusiness.googleapis.com/v4/${postName}`, {
+    method: "DELETE",
+    headers: authHeaders(token),
+    label: "Google Business Profile localPosts.delete"
+  });
+}
+
+function sanitizeGooglePostSummary(value) {
+  return String(value || "")
+    .replace(/\b(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b/g, "")
+    .replace(/https?:\/\/\S+/gi, "")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+function safeIslandBoyPost(selected) {
+  return {
+    ...selected,
+    summary: "Island Boy Kreationz serves island-inspired food from its Charlotte food truck and offers catering for offices, weddings, birthdays, churches, schools, and private events. Use the button below for the current schedule, menu, ordering, or catering details."
+  };
+}
+
+async function createVerifiedLocalPost(token, selected, { dryRun = false } = {}) {
+  const prepared = { ...selected, summary: sanitizeGooglePostSummary(selected.summary) };
+  if (dryRun) {
+    console.log(`[dry-run] Would create ${prepared.kind} Google post: ${prepared.summary} ${prepared.url}`);
+    return { published: false, resourceName: null, selected: prepared, recoveredFromRejection: false };
+  }
+
+  const attempts = [prepared, safeIslandBoyPost(prepared)];
+  for (const [attemptIndex, candidate] of attempts.entries()) {
+    const created = await fetchJson(`https://mybusiness.googleapis.com/v4/${locationName()}/localPosts`, {
+      method: "POST",
+      headers: { ...authHeaders(token), "content-type": "application/json" },
+      body: JSON.stringify({
+        languageCode: "en-US",
+        summary: candidate.summary,
+        topicType: "STANDARD",
+        callToAction: { actionType: "LEARN_MORE", url: candidate.url }
+      }),
+      label: "Google Business Profile localPosts.create"
+    });
+    const verifiedPost = await waitForLocalPostState(token, created.name, { attempts: 10, intervalMs: 3000 });
+    if (verifiedPost?.state === "LIVE") {
+      return {
+        published: true,
+        resourceName: created.name || null,
+        result: verifiedPost,
+        selected: candidate,
+        recoveredFromRejection: attemptIndex > 0
+      };
+    }
+    if (verifiedPost?.state !== "REJECTED") {
+      throw new Error(`Google created the ${candidate.kind} post but its publication state remained ${verifiedPost?.state || "UNKNOWN"}, not LIVE.`);
+    }
+    await deleteLocalPost(token, created.name);
+    if (attemptIndex < attempts.length - 1) {
+      console.warn("Google rejected the Island Boy post; retrying once with conservative policy-safe copy.");
+    }
+  }
+  throw new Error("Google rejected the policy-safe Island Boy retry; the incident remains open and the cadence was not advanced.");
+}
+
 async function fetchFoodMenus(token) {
   return fetchJson(`https://mybusiness.googleapis.com/v4/${locationName()}/foodMenus`, {
     headers: authHeaders(token), label: "Google Business Profile foodMenus.get"
@@ -760,30 +826,19 @@ async function legacyMaybePost() {
     return { attempted: true, published: false };
   }
   const token = await getGoogleAccessToken();
-  const location = locationName();
-  const result = await fetchJson(`https://mybusiness.googleapis.com/v4/${location}/localPosts`, {
-    method: "POST",
-    headers: { ...authHeaders(token), "content-type": "application/json" },
-    body: JSON.stringify({
-      languageCode: "en-US",
-      summary: selected.summary,
-      topicType: "STANDARD",
-      callToAction: { actionType: "LEARN_MORE", url: selected.url }
-    }),
-    label: "Google Business Profile localPosts.create"
-  });
+  const published = await createVerifiedLocalPost(token, selected);
   const nextState = {
     lastPostedAt: new Date().toISOString(),
     lastPostedDate: localDateKey(postDate),
     postIndex: Number(state.postIndex || 0) + 1,
     posts: [
-      { createdAt: new Date().toISOString(), name: result.name || null, ...selected },
+      { createdAt: new Date().toISOString(), name: published.resourceName, ...published.selected, recoveredFromRejection: published.recoveredFromRejection },
       ...(state.posts || [])
     ].slice(0, 50)
   };
   writeJsonIfChanged(postStatePath, nextState);
-  console.log(`Created Google post ${result.name || "(no resource name returned)"}`);
-  return { attempted: true, published: true };
+  console.log(`Created and verified LIVE Google post ${published.resourceName || "(no resource name returned)"}`);
+  return { attempted: true, published: true, recoveredFromRejection: published.recoveredFromRejection };
 }
 
 function fetchNativeJson(url, headers = {}, label = "Request") {
@@ -896,25 +951,18 @@ async function maybePost() {
     console.log(`[dry-run] Would create ${selected.kind} Google post: ${selected.summary} ${selected.url}`);
     return { attempted: true, published: false, kind: selected.kind, latestInstagramShortcode: schedule?.shortcode || null };
   }
-  const result = await fetchJson(`https://mybusiness.googleapis.com/v4/${locationName()}/localPosts`, {
-    method: "POST", headers: { ...authHeaders(token), "content-type": "application/json" },
-    body: JSON.stringify({ languageCode: "en-US", summary: selected.summary, topicType: "STANDARD", callToAction: { actionType: "LEARN_MORE", url: selected.url } }),
-    label: "Google Business Profile localPosts.create"
-  });
-  const verifiedPost = await waitForLocalPostState(token, result.name);
-  if (verifiedPost?.state !== "LIVE") {
-    throw new Error(`Google created the ${selected.kind} post but its publication state is ${verifiedPost?.state || "UNKNOWN"}, not LIVE.`);
-  }
+  const published = await createVerifiedLocalPost(token, selected);
+  const publishedSelection = published.selected || selected;
   const nextState = {
     ...state, lastPostedAt: new Date().toISOString(), lastPostedDate: localDateKey(postDate),
     lastInstagramShortcode: selected.instagramShortcode || state.lastInstagramShortcode || null,
     lastInstagramCheckedAt: feed.fetchedAt || new Date().toISOString(),
     postIndex: Number(state.postIndex || 0) + (selected.kind === "instagram-weekly-schedule" ? 0 : 1),
-    posts: [{ createdAt: new Date().toISOString(), name: result.name || null, ...selected }, ...(state.posts || [])].slice(0, 100)
+    posts: [{ createdAt: new Date().toISOString(), name: published.resourceName, ...publishedSelection, recoveredFromRejection: published.recoveredFromRejection }, ...(state.posts || [])].slice(0, 100)
   };
   writeJsonIfChanged(postStatePath, nextState);
   console.log(`Created Google post: ${selected.kind}.`);
-  return { attempted: true, published: true, kind: selected.kind, resourceName: result.name || null, latestInstagramShortcode: schedule?.shortcode || null };
+  return { attempted: true, published: true, kind: selected.kind, resourceName: published.resourceName, recoveredFromRejection: published.recoveredFromRejection, latestInstagramShortcode: schedule?.shortcode || null };
 }
 
 function scheduleAndCateringReplacement() {
@@ -956,24 +1004,10 @@ async function replaceLatestStaleEventPost() {
     headers: authHeaders(token),
     label: "Google Business Profile localPosts.delete"
   });
-  const created = await fetchJson(`https://mybusiness.googleapis.com/v4/${locationName()}/localPosts`, {
-    method: "POST",
-    headers: { ...authHeaders(token), "content-type": "application/json" },
-    body: JSON.stringify({
-      languageCode: "en-US",
-      summary: replacement.summary,
-      topicType: "STANDARD",
-      callToAction: { actionType: "LEARN_MORE", url: replacement.url }
-    }),
-    label: "Google Business Profile localPosts.create"
-  });
-  const verifiedCreated = await waitForLocalPostState(token, created.name);
-  if (verifiedCreated?.state !== "LIVE") {
-    throw new Error(`Google created the replacement post but its publication state is ${verifiedCreated?.state || "UNKNOWN"}, not LIVE.`);
-  }
+  const published = await createVerifiedLocalPost(token, replacement);
   const verifiedPosts = await fetchLocalPosts(token);
   const staleStillLive = (verifiedPosts.localPosts || []).some((post) => post.name === stalePost.name);
-  const replacementLive = (verifiedPosts.localPosts || []).some((post) => post.name === created.name && post.state === "LIVE");
+  const replacementLive = (verifiedPosts.localPosts || []).some((post) => post.name === published.resourceName && post.state === "LIVE");
   if (staleStillLive || !replacementLive) {
     throw new Error("Google post replacement could not be verified after publication.");
   }
@@ -984,7 +1018,7 @@ async function replaceLatestStaleEventPost() {
     lastPostedDate: localDateKey(now),
     postIndex: Number(state.postIndex || 0) + 1,
     posts: [
-      { createdAt: now.toISOString(), name: created.name || null, ...replacement },
+      { createdAt: now.toISOString(), name: published.resourceName, ...published.selected, recoveredFromRejection: published.recoveredFromRejection },
       ...(state.posts || []).filter((post) => post.name !== stalePost.name)
     ].slice(0, 100)
   });
@@ -994,7 +1028,8 @@ async function replaceLatestStaleEventPost() {
     published: true,
     deleted: true,
     kind: replacement.kind,
-    resourceName: created.name || null
+    resourceName: published.resourceName,
+    recoveredFromRejection: published.recoveredFromRejection
   };
 }
 
@@ -1019,30 +1054,12 @@ async function retryTrackedRejectedPost() {
     return { attempted: true, published: false, deleted: false, kind: replacement.kind };
   }
 
-  const created = await fetchJson(`https://mybusiness.googleapis.com/v4/${locationName()}/localPosts`, {
-    method: "POST",
-    headers: { ...authHeaders(token), "content-type": "application/json" },
-    body: JSON.stringify({
-      languageCode: "en-US",
-      summary: replacement.summary,
-      topicType: "STANDARD",
-      callToAction: { actionType: "LEARN_MORE", url: replacement.url }
-    }),
-    label: "Google Business Profile localPosts.create"
-  });
-  const verifiedCreated = await waitForLocalPostState(token, created.name);
-  if (verifiedCreated?.state !== "LIVE") {
-    throw new Error(`Google created the revised post but its publication state is ${verifiedCreated?.state || "UNKNOWN"}, not LIVE.`);
-  }
+  const published = await createVerifiedLocalPost(token, replacement);
 
-  await fetchJson(`https://mybusiness.googleapis.com/v4/${rejectedPost.name}`, {
-    method: "DELETE",
-    headers: authHeaders(token),
-    label: "Google Business Profile localPosts.delete"
-  });
+  await deleteLocalPost(token, rejectedPost.name);
   const verifiedPosts = await fetchLocalPosts(token);
   const rejectedStillPresent = (verifiedPosts.localPosts || []).some((post) => post.name === rejectedPost.name);
-  const replacementLive = (verifiedPosts.localPosts || []).some((post) => post.name === created.name && post.state === "LIVE");
+  const replacementLive = (verifiedPosts.localPosts || []).some((post) => post.name === published.resourceName && post.state === "LIVE");
   if (rejectedStillPresent || !replacementLive) {
     throw new Error("Google post retry could not be verified after publication.");
   }
@@ -1053,12 +1070,12 @@ async function retryTrackedRejectedPost() {
     lastPostedAt: now.toISOString(),
     lastPostedDate: localDateKey(now),
     posts: [
-      { createdAt: now.toISOString(), name: created.name || null, ...replacement },
+      { createdAt: now.toISOString(), name: published.resourceName, ...published.selected, recoveredFromRejection: published.recoveredFromRejection },
       ...(state.posts || []).filter((post) => post.name !== rejectedPost.name)
     ].slice(0, 100)
   });
   console.log("Replaced the rejected Island Boy post with a revised live schedule and catering post.");
-  return { attempted: true, published: true, deleted: true, kind: replacement.kind, resourceName: created.name || null };
+  return { attempted: true, published: true, deleted: true, kind: replacement.kind, resourceName: published.resourceName, recoveredFromRejection: published.recoveredFromRejection };
 }
 
 async function cleanupRejectedPosts() {
@@ -1414,7 +1431,7 @@ async function main() {
 
   writeJsonIfChanged(digestPath, { business: businessName(), completedAt: new Date().toISOString(), ...results });
   if (results.review) await sendTelegram(["✅ Island Boy review job complete", `Reviews synced: ${results.review.reviewCount} (${results.review.rating}★)`, `New replies posted: ${results.review.replies.published}`, `Unanswered remaining: ${results.review.unansweredRemaining}`].join("\n"));
-  if (results.post) await sendTelegram(["✅ Island Boy GBP post job complete", `Post: ${results.post.published ? "published" : results.post.attempted ? "dry run / not published" : "not due"}`, `Type: ${results.post.kind || results.post.reason || "n/a"}`].join("\n"));
+  if (results.post) await sendTelegram(["✅ Island Boy GBP post job complete", `Post: ${results.post.published ? "published and verified live" : results.post.attempted ? "dry run / not published" : "not due"}`, `Type: ${results.post.kind || results.post.reason || "n/a"}`, `Automatic rejection recovery: ${results.post.recoveredFromRejection ? "used" : "not needed"}`].join("\n"));
   if (results.postCleanup) await sendTelegram(["✅ Island Boy GBP post cleanup complete", `Rejected posts found: ${results.postCleanup.rejectedFound}`, `Rejected posts deleted: ${results.postCleanup.deleted}`].join("\n"));
   if (results.analytics) await sendTelegram(analyticsDigest(results.analytics));
   if (results.searchConsole) await sendTelegram(searchConsoleDigest(results.searchConsole));
